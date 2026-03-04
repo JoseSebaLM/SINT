@@ -34,7 +34,13 @@ export default function Navbar() {
     >
       <div className="flex justify-between items-center h-16 px-6 md:px-12">
         {/* Left: Logo */}
-        <Logo className="text-2xl" animated={true} />
+        <button
+          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          className="cursor-pointer"
+          aria-label="Ir al inicio"
+        >
+          <Logo className="text-2xl" animated={true} />
+        </button>
 
         {/* Center: Navigation Links (Desktop) */}
         <div className="hidden md:flex items-center gap-8">

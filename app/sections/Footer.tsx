@@ -18,7 +18,13 @@ export default function Footer(): JSX.Element {
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 items-start">
           {/* Columna izquierda: Logo + tagline */}
           <div>
-            <Logo className="text-xl mb-1" animated={false} />
+            <button
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              className="cursor-pointer block mb-1"
+              aria-label="Ir al inicio"
+            >
+              <Logo className="text-xl" animated={false} />
+            </button>
             <p className="text-[#8A8F98] text-sm">
               Software basado en diagnóstico organizacional.
             </p>
