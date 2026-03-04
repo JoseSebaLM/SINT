@@ -19,9 +19,7 @@ export default function Navbar() {
   }, []);
 
   const navLinks = [
-    { label: "Inicio", href: "#inicio" },
     { label: "Pipeline", href: "#pipeline" },
-    { label: "Manifesto", href: "#manifesto" },
     { label: "Servicios", href: "#servicios" },
     { label: "Equipo", href: "#equipo" },
   ];

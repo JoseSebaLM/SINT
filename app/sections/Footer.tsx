@@ -27,22 +27,10 @@ export default function Footer(): JSX.Element {
           {/* Columna central: Navegación */}
           <nav className="flex flex-col gap-3">
             <button
-              onClick={() => scrollTo("#inicio")}
-              className="text-[#8A8F98] hover:text-[#E5E6EB] transition-colors text-sm text-left"
-            >
-              Inicio
-            </button>
-            <button
               onClick={() => scrollTo("#pipeline")}
               className="text-[#8A8F98] hover:text-[#E5E6EB] transition-colors text-sm text-left"
             >
               Pipeline
-            </button>
-            <button
-              onClick={() => scrollTo("#manifesto")}
-              className="text-[#8A8F98] hover:text-[#E5E6EB] transition-colors text-sm text-left"
-            >
-              Manifesto
             </button>
             <button
               onClick={() => scrollTo("#servicios")}
