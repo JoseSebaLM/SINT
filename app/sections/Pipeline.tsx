@@ -1,167 +1,147 @@
 "use client";
 
 import { motion } from "framer-motion";
+import Link from "next/link";
+import { ScanLine, LayoutTemplate, Code2 } from "lucide-react";
 
 interface StepCardProps {
   index: number;
-  color: string;
-  colorClass: string;
+  iconColor: string;
   icon: React.ReactNode;
   title: string;
   description: string;
+  badge: string;
+  badgeHref?: string;
 }
 
 function StepCard({
   index,
-  colorClass,
+  iconColor,
   icon,
   title,
   description,
+  badge,
+  badgeHref,
 }: StepCardProps): JSX.Element {
+  const BadgeWrapper = ({ children }: { children: React.ReactNode }) => {
+    if (badgeHref) {
+      return (
+        <Link
+          href={badgeHref}
+          className="inline-block mt-4 px-4 py-1.5 text-sm font-medium bg-white/10 text-[#E5E6EB] rounded-full border border-[#FF6B4A]/50 hover:bg-[#FF6B4A]/20 hover:scale-105 transition-all animate-pulse"
+        >
+          {children}
+        </Link>
+      );
+    }
+    return (
+      <span className="inline-block mt-4 px-4 py-1.5 text-sm font-medium bg-white/5 text-[#8A8F98] rounded-full border border-white/10">
+        {children}
+      </span>
+    );
+  };
+
   return (
     <motion.div
-      className="w-full md:w-80 bg-white/5 border border-white/10 rounded-xl p-8 text-center"
+      className="w-full md:w-80 min-h-[300px] bg-white/5 border border-white/10 rounded-xl p-8 text-center flex flex-col items-center"
       initial={{ opacity: 0, y: 30 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5, delay: index * 0.2 }}
     >
-      <div className={`mb-4 inline-block ${colorClass}`}>{icon}</div>
-      <h3 className={`text-xl font-semibold mb-2 ${colorClass}`}>{title}</h3>
-      <p className="text-text-cool-grey text-sm leading-relaxed">
-        {description}
-      </p>
+      <div className="mb-4" style={{ color: iconColor }}>
+        {icon}
+      </div>
+      <h3 className="text-lg font-semibold mb-3 text-[#E5E6EB]">{title}</h3>
+      <p className="text-[#8A8F98] text-base leading-relaxed flex-grow">{description}</p>
+      <div className="mt-auto pt-4">
+        <BadgeWrapper>{badge}</BadgeWrapper>
+      </div>
     </motion.div>
   );
 }
 
-// Iconos SVG inline
-const SearchIcon = (): JSX.Element => (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <circle cx="11" cy="11" r="8" />
-    <path d="m21 21-4.3-4.3" />
-  </svg>
+// Conectores con gradientes específicos
+const Connector1to2 = (): JSX.Element => (
+  <>
+    <div className="hidden md:block h-px w-12 bg-gradient-to-r from-[#2EB886] to-[#A371F7]" />
+    <div className="md:hidden w-px h-8 bg-gradient-to-b from-[#2EB886] to-[#A371F7]" />
+  </>
 );
 
-const LayersIcon = (): JSX.Element => (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <polygon points="12 2 2 7 12 12 22 7 12 2" />
-    <polyline points="2 17 12 22 22 17" />
-    <polyline points="2 12 12 17 22 12" />
-  </svg>
-);
-
-const RocketIcon = (): JSX.Element => (
-  <svg
-    width="24"
-    height="24"
-    viewBox="0 0 24 24"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-  >
-    <path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z" />
-    <path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z" />
-    <path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0" />
-    <path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5" />
-  </svg>
-);
-
-// Separador con gradiente
-const HorizontalConnector = (): JSX.Element => (
-  <div className="hidden md:block h-px w-12 bg-gradient-to-r from-accent-synth-purple via-brand-flux-orange to-accent-terminal-green" />
-);
-
-const VerticalConnector = (): JSX.Element => (
-  <div className="md:hidden w-px h-12 bg-gradient-to-b from-accent-synth-purple via-brand-flux-orange to-accent-terminal-green" />
+const Connector2to3 = (): JSX.Element => (
+  <>
+    <div className="hidden md:block h-px w-12 bg-gradient-to-r from-[#A371F7] to-[#FF6B4A]" />
+    <div className="md:hidden w-px h-8 bg-gradient-to-b from-[#A371F7] to-[#FF6B4A]" />
+  </>
 );
 
 export default function Pipeline(): JSX.Element {
   const steps: Omit<StepCardProps, "index">[] = [
     {
-      color: "#A371F7",
-      colorClass: "text-accent-synth-purple",
-      icon: <SearchIcon />,
-      title: "Decode",
-      description: "Traducción de estrategia a requerimientos técnicos",
+      iconColor: "#2EB886",
+      icon: <ScanLine size={32} />,
+      title: "Diagnóstico",
+      description:
+        "Completa una evaluación de 3 minutos. Recibes un reporte ejecutivo que identifica exactamente qué fricciones le están costando dinero a tu operación.",
+      badge: "Gratuito · Ingresa Aquí",
+      badgeHref: "/diagnostico",
     },
     {
-      color: "#FF6B4A",
-      colorClass: "text-brand-flux-orange",
-      icon: <LayersIcon />,
-      title: "Architect",
-      description: "Diseño de sistemas asistido por IA",
+      iconColor: "#A371F7",
+      icon: <LayoutTemplate size={32} />,
+      title: "Estrategia",
+      description:
+        "Diagnóstico organizacional a medida. Diseñamos la arquitectura de la solución antes de escribir el código. El costo se descuenta del proyecto final si decides implementar.",
+      badge: "Paid Discovery",
     },
     {
-      color: "#2EB886",
-      colorClass: "text-accent-terminal-green",
-      icon: <RocketIcon />,
-      title: "Deploy",
-      description: "Construcción y entrega del activo funcional",
+      iconColor: "#FF6B4A",
+      icon: <Code2 size={32} />,
+      title: "Implementación",
+      description:
+        "Construimos el software sobre la especificación aprobada. Sin sorpresas de alcance ni deuda técnica. Entregamos un activo funcional que tu equipo usa desde el día uno.",
+      badge: "Invierte en la solución",
     },
   ];
 
   return (
     <motion.section
+      id="pipeline"
       className="py-24 px-6 md:px-12 max-w-7xl mx-auto"
       initial={{ opacity: 0 }}
       whileInView={{ opacity: 1 }}
       viewport={{ once: true }}
       transition={{ duration: 0.6 }}
     >
-      {/* Título */}
-      <motion.h2
-        className="text-3xl font-semibold text-text-off-white text-center mb-4"
+      {/* Header */}
+      <motion.p
+        className="text-[#8A8F98] text-sm uppercase tracking-widest text-center mb-4"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5 }}
       >
-        The Sint Pipeline
-      </motion.h2>
+        Cómo trabajamos
+      </motion.p>
 
-      {/* Subtítulo */}
-      <motion.p
-        className="text-text-cool-grey text-center mb-16"
+      <motion.h2
+        className="text-3xl md:text-4xl font-bold text-[#E5E6EB] text-center mb-16"
         initial={{ opacity: 0, y: 20 }}
         whileInView={{ opacity: 1, y: 0 }}
         viewport={{ once: true }}
         transition={{ duration: 0.5, delay: 0.1 }}
       >
-        De la estrategia al activo funcional en tres pasos
-      </motion.p>
+        Software Intelligence. Un proceso claro para tu gerencia
+      </motion.h2>
 
       {/* Cards Container */}
-      <div className="flex flex-col md:flex-row gap-8 md:gap-0 items-center justify-center">
+      <div className="flex flex-col md:flex-row gap-4 md:gap-0 items-center justify-center">
         {steps.map((step, index) => (
           <div key={step.title} className="flex items-center">
             <StepCard index={index} {...step} />
-            {index < steps.length - 1 && (
-              <>
-                <HorizontalConnector />
-                <VerticalConnector />
-              </>
-            )}
+            {index === 0 && <Connector1to2 />}
+            {index === 1 && <Connector2to3 />}
           </div>
         ))}
       </div>

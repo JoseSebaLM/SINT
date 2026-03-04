@@ -1,119 +1,266 @@
-# SINT - Logo V1
+# SINT - Digital Agency Website
 
-## Descripción General del Proyecto
+## Project Overview
 
-Este es un proyecto simple y estático que consiste en una única página HTML para mostrar el logo de "sint". El diseño presenta un estilo minimalista tipo terminal/código con un cursor parpadeante.
+SINT (Software Intelligence) is a modern digital agency landing page built with Next.js 14 and React. The website showcases the agency's services, workflow pipeline, and target industries with a sophisticated dark-themed UI featuring smooth animations and a terminal-inspired aesthetic.
 
-### Características Principales
+### Key Features
 
-- **Logo visual**: Muestra el texto "sint" seguido de un cursor parpadeante (`_`)
-- **Estilo terminal**: Utiliza la fuente JetBrains Mono para evocar una sensación de código/terminal
-- **Animación CSS**: El cursor tiene una animación de parpadeo suave con transiciones de opacidad
-- **Diseño responsive**: Centrado vertical y horizontalmente en la viewport
+- **Dark Theme UI**: Deep zinc background (`#09090B`) with off-white text and vibrant accent colors
+- **Terminal Aesthetic**: JetBrains Mono font for logo and code-like elements
+- **Smooth Animations**: Framer Motion for scroll-triggered and entrance animations
+- **Responsive Design**: Mobile-first approach with Tailwind CSS
+- **WhatsApp Integration**: Direct contact via floating button and CTA buttons
+- **Single Page Layout**: Sections include Navbar, Hero, Pipeline, Services, Targets, and Footer
 
-## Estructura del Proyecto
+## Technology Stack
+
+| Technology | Version | Purpose |
+|------------|---------|---------|
+| Next.js | 14.2.35 | React framework with App Router |
+| React | 18.x | UI library |
+| TypeScript | 5.x | Type safety |
+| Tailwind CSS | 3.4.1 | Utility-first styling |
+| Framer Motion | 12.33.0 | Animation library |
+| ESLint | 8.x | Code linting |
+
+### Fonts
+
+- **Inter**: Primary font for body text and headings (loaded via `next/font/google`)
+- **JetBrains Mono**: Monospace font for logo and terminal-style elements (loaded via `next/font/google`)
+- **Geist**: Local font files available in `app/fonts/` (VF.woff variants)
+
+## Project Structure
 
 ```
 SINT/
-├── logosint.html    # Único archivo del proyecto (página HTML completa)
-└── AGENTS.md        # Este archivo
+├── app/
+│   ├── components/          # Reusable UI components
+│   │   ├── Logo.tsx         # Animated logo with blinking cursor
+│   │   └── WhatsAppFloat.tsx # Floating WhatsApp contact button
+│   ├── sections/            # Page section components
+│   │   ├── Navbar.tsx       # Sticky navigation bar
+│   │   ├── Hero.tsx         # Hero section with CTA
+│   │   ├── Pipeline.tsx     # 3-step workflow (Decode/Architect/Deploy)
+│   │   ├── Services.tsx     # Service offerings with pricing
+│   │   ├── Targets.tsx      # Target industries grid
+│   │   └── Footer.tsx       # Footer with contact and copyright
+│   ├── fonts/               # Local font files (GeistVF.woff, GeistMonoVF.woff)
+│   ├── globals.css          # Global styles and Tailwind imports
+│   ├── layout.tsx           # Root layout with metadata and font configuration
+│   └── page.tsx             # Main page composing all sections
+├── public/                  # Static assets
+│   ├── Carlos Martínez Sint.jpeg
+│   └── José Latorre Sint.png
+├── .eslintrc.json          # ESLint configuration (extends Next.js presets)
+├── next.config.js          # Next.js configuration (strict mode enabled)
+├── tailwind.config.ts      # Tailwind CSS with custom colors
+├── tsconfig.json           # TypeScript configuration (strict mode)
+├── postcss.config.mjs      # PostCSS configuration for Tailwind
+├── package.json            # Dependencies and scripts
+└── AGENTS.md               # This file
 ```
 
-## Tecnologías Utilizadas
+## Build and Development Commands
 
-| Tecnología | Uso |
-|------------|-----|
-| HTML5      | Estructura de la página |
-| CSS3       | Estilos y animaciones |
-| Google Fonts | Fuente JetBrains Mono |
+```bash
+# Install dependencies
+npm install
 
-## Paleta de Colores
+# Start development server (http://localhost:3000)
+npm run dev
 
-| Elemento | Color | Código HEX |
-|----------|-------|------------|
-| Fondo | Deep Zinc | `#09090B` |
-| Texto (sint) | Off-White | `#E5E6EB` |
-| Cursor | Flux Orange | `#FF6B4A` |
+# Build for production
+npm run build
 
-## Especificaciones de Tipografía
+# Start production server
+npm start
 
-- **Fuente**: JetBrains Mono (monospace)
-- **Peso**: 500 (Medium)
-- **Tamaño**: 3rem (~48px)
-- **Tracking (letter-spacing)**: -0.03em (compacto)
-- **Line-height**: 1
+# Run ESLint
+npm run lint
+```
 
-## Animaciones
+## Design System
 
-### Cursor Parpadeante
+### Color Palette
 
+| Token | Hex | Usage |
+|-------|-----|-------|
+| `deep-zinc` | `#09090B` | Background |
+| `text-off-white` | `#E5E6EB` | Primary text |
+| `text-cool-grey` | `#8A8F98` | Secondary text |
+| `brand-flux-orange` | `#FF6B4A` | Primary accent, CTAs, cursor |
+| `accent-terminal-green` | `#2EB886` | Success states, Service 1 |
+| `accent-synth-purple` | `#A371F7` | Purple accent, Service 2 |
+| `accent-cyan-ray` | `#06B6D4` | Cyan accent, Service 3 |
+
+### Animation Specifications
+
+**Logo Cursor Blink:**
 ```css
-@keyframes blink-cursor {
+@keyframes blink {
   0%, 100% { opacity: 1; }
   50% { opacity: 0.2; }
 }
+/* Duration: 1.2s, infinite */
 ```
 
-- **Duración**: 1.2 segundos
-- **Timing**: ease-in-out
-- **Iteración**: infinita
-- **Efecto**: El cursor nunca desaparece completamente (mínimo 20% opacidad) para un efecto más orgánico
+**Framer Motion Patterns:**
+- Entrance animations: `initial={{ opacity: 0, y: 20/30 }}` → `animate={{ opacity: 1, y: 0 }}`
+- Scroll-triggered: `whileInView` with `viewport={{ once: true }}`
+- Stagger delays: `delay: index * 0.1/0.15/0.2`
+- Duration: 0.5s - 0.6s for most transitions
+- Hover effects: `whileHover={{ scale: 1.05/1.1 }}`
 
-## Cómo Usar
+## Code Style Guidelines
 
-### Visualización Local
+### Component Structure
 
-Simplemente abre el archivo `logosint.html` en cualquier navegador web moderno:
+1. **"use client" directive**: Required for components using Framer Motion or browser APIs
+2. **TypeScript interfaces**: Define props with explicit types
+3. **Return type**: Use `JSX.Element` for function components
+4. **SVG icons**: Inline as functional components with consistent viewBox
+
+Example pattern:
+```tsx
+"use client";
+
+import { motion } from "framer-motion";
+
+interface Props {
+  // prop definitions
+}
+
+export default function ComponentName({ prop }: Props): JSX.Element {
+  return (
+    // JSX
+  );
+}
+```
+
+### Naming Conventions
+
+- **Files**: PascalCase for components (e.g., `Navbar.tsx`)
+- **Components**: PascalCase function names
+- **Props interfaces**: PascalCase with `Props` suffix
+- **CSS classes**: Tailwind utility classes, kebab-case for custom colors
+
+### Styling Patterns
+
+- Use Tailwind utility classes exclusively
+- Custom colors defined in `tailwind.config.ts`
+- Responsive breakpoints: `md:` for tablet/desktop
+- Glassmorphism: `bg-white/5`, `backdrop-blur-md`, `border-white/10`
+- Hover transitions: `hover:border-brand-flux-orange`, `transition-all duration-300`
+
+## Section Details
+
+### Navbar (`app/sections/Navbar.tsx`)
+- Sticky positioning with blur backdrop
+- Logo (animated) on left
+- Navigation links: Pipeline, Servicios, Targets
+- CTA button: "Iniciar Sprint"
+
+### Hero (`app/sections/Hero.tsx`)
+- Badge: "sint — Software Intelligence"
+- H1: "Inteligencia Operativa"
+- Subtitle describing value proposition
+- WhatsApp CTA button
+
+### Pipeline (`app/sections/Pipeline.tsx`)
+- 3-step horizontal workflow visualization
+- Steps: Decode → Architect → Deploy
+- Gradient connectors between steps
+- Cards with icons, titles, and descriptions
+
+### Services (`app/sections/Services.tsx`)
+- 3-column grid of service cards
+- Services: Operational Software, Research & Insights, Knowledge Assets
+- Each card: icon, title, description, badge, price
+- Top border accent color per service
+
+### Targets (`app/sections/Targets.tsx`)
+- 4-column grid (responsive to 2, then 1)
+- Target industries: PropTech, Minería & Industria, Agencias, VC & Family Offices
+- Cards show: icon, industry, role, pain point
+
+### Footer (`app/sections/Footer.tsx`)
+- Logo, WhatsApp CTA, copyright
+- Horizontal layout with flexbox
+
+## WhatsApp Integration
+
+Contact number: `+56 9 8779 1156`
+
+Used in:
+- Hero section CTA button
+- Footer CTA button
+- Floating WhatsApp button (fixed position, bottom-right)
+
+URL format:
+```
+https://wa.me/56987791156?text=Hola%20sint,%20quiero%20iniciar%20un%20sprint
+```
+
+## Deployment
+
+This is a static Next.js site optimized for deployment on Vercel:
 
 ```bash
-# En Windows
-start logosint.html
+# Build command
+npm run build
 
-# O arrastra el archivo a una ventana del navegador
+# Output: .next/ directory
 ```
 
-No se requiere servidor web ni proceso de construcción (build).
+The project can also be exported as static HTML by modifying `next.config.js`:
+```js
+const nextConfig = {
+  output: 'export',
+  distDir: 'dist',
+}
+```
 
-### Integración en Otros Proyectos
+## Testing
 
-Para usar este logo en otro proyecto:
+**No testing framework** is currently configured. The project relies on:
+- TypeScript strict mode for type checking
+- ESLint for code quality
+- Manual testing during development
 
-1. Copia el contenido del `<style>` al CSS de tu proyecto
-2. Copia el HTML del logo:
-   ```html
-   <div class="logo-container" aria-label="sint logo">
-     <span class="logo-text">sint</span><span class="logo-cursor">_</span>
-   </div>
-   ```
-3. Asegúrate de incluir la fuente JetBrains Mono desde Google Fonts
+To add testing, consider:
+- **Jest** with React Testing Library for unit tests
+- **Playwright** or **Cypress** for E2E tests
 
-## Convenciones de Código
+## Development Notes
 
-### CSS
+- **No API routes** - this is a purely static marketing site
+- **No state management** - components are stateless
+- **No backend** - contact is via WhatsApp link only
+- **Image optimization**: Uses Next.js Image component where needed
+- **SEO**: Basic metadata configured in `layout.tsx`
 
-- Uso de clases BEM-like (`.logo-container`, `.logo-text`, `.logo-cursor`)
-- Colores definidos con comentarios descriptivos
-- Propiedades organizadas de forma lógica (layout → tipografía → color → animación)
+## Browser Support
 
-### HTML
+- Chrome/Edge (latest)
+- Firefox (latest)
+- Safari (latest)
+- Mobile browsers (iOS Safari, Chrome Mobile)
 
-- Estructura semántica con etiquetas apropiadas
-- Atributo `aria-label` para accesibilidad
-- Meta tags para viewport y charset
+## Future Considerations
 
-## Notas de Desarrollo
+If extending this project:
+1. Add contact form with API route for non-WhatsApp inquiries
+2. Implement blog/content sections
+3. Add case studies/portfolio showcase
+4. Internationalization (i18n) for English version
+5. Analytics integration (Google Analytics, Plausible)
+6. E2E testing with Playwright or Cypress
+7. Add unit tests for components
 
-- Este es un proyecto **estático** - no requiere build, compilación ni dependencias
-- No hay pruebas automatizadas (testing) configuradas
-- No hay proceso de despliegue (deployment) - puede servirse desde cualquier servidor web estático o CDN
-- El proyecto está diseñado para ser autocontenido y funciona offline una vez cargada la fuente
+## Security Considerations
 
-## Compatibilidad
-
-- **Navegadores soportados**: Todos los navegadores modernos (Chrome, Firefox, Safari, Edge)
-- **Requisitos**: Soporte CSS para `@keyframes` y `animation`
-- **Responsive**: Sí, se adapta a cualquier tamaño de pantalla
-
-## Historial de Versiones
-
-- **V1**: Versión inicial con logo "sint" y cursor animado
+- No sensitive environment variables currently used
+- WhatsApp number is hardcoded in components
+- No user authentication or data storage
+- No API keys or secrets in the codebase

@@ -16,6 +16,7 @@ const config: Config = {
         "accent-cyan-ray": "#06B6D4",
         "text-off-white": "#E5E6EB",
         "text-cool-grey": "#8A8F98",
+        "ds-amber": "#F59E0B",
       },
     },
   },
