@@ -2,7 +2,9 @@
 
 ## Project Overview
 
-SINT (Software Intelligence) is a modern digital agency landing page built with Next.js 14 and React. The website showcases the agency's services, workflow pipeline, and target industries with a sophisticated dark-themed UI featuring smooth animations and a terminal-inspired aesthetic.
+SINT (Software Intelligence) is a modern digital agency landing page built with Next.js 14 and React. The website showcases the agency's unique approach: transforming organizational diagnostics into custom software solutions. The site features a sophisticated dark-themed UI with smooth animations, terminal-inspired aesthetics, and a strong focus on converting visitors through a diagnostic funnel.
+
+The core value proposition is captured in the tagline: "Primero entendemos tu negocio. Después escribimos el código" (First we understand your business. Then we write the code).
 
 ### Key Features
 
@@ -10,8 +12,8 @@ SINT (Software Intelligence) is a modern digital agency landing page built with 
 - **Terminal Aesthetic**: JetBrains Mono font for logo and code-like elements
 - **Smooth Animations**: Framer Motion for scroll-triggered and entrance animations
 - **Responsive Design**: Mobile-first approach with Tailwind CSS
-- **WhatsApp Integration**: Direct contact via floating button and CTA buttons
-- **Single Page Layout**: Sections include Navbar, Hero, Pipeline, Services, Targets, and Footer
+- **Diagnostic Funnel**: Primary CTA drives users to `/diagnostico` route
+- **Single Page Layout**: Sections include Navbar, Hero, Pipeline, Manifesto, Services, Targets, Diferenciacion, Equipo, and Footer
 
 ## Technology Stack
 
@@ -22,13 +24,14 @@ SINT (Software Intelligence) is a modern digital agency landing page built with 
 | TypeScript | 5.x | Type safety |
 | Tailwind CSS | 3.4.1 | Utility-first styling |
 | Framer Motion | 12.33.0 | Animation library |
+| Lucide React | 0.577.0 | Icon library |
 | ESLint | 8.x | Code linting |
 
 ### Fonts
 
 - **Inter**: Primary font for body text and headings (loaded via `next/font/google`)
 - **JetBrains Mono**: Monospace font for logo and terminal-style elements (loaded via `next/font/google`)
-- **Geist**: Local font files available in `app/fonts/` (VF.woff variants)
+- **Geist**: Local font files available in `app/fonts/` (VF.woff variants - not currently used)
 
 ## Project Structure
 
@@ -37,20 +40,23 @@ SINT/
 ├── app/
 │   ├── components/          # Reusable UI components
 │   │   ├── Logo.tsx         # Animated logo with blinking cursor
-│   │   └── WhatsAppFloat.tsx # Floating WhatsApp contact button
+│   │   └── WhatsAppFloat.tsx # Floating WhatsApp button (currently disabled)
 │   ├── sections/            # Page section components
-│   │   ├── Navbar.tsx       # Sticky navigation bar
-│   │   ├── Hero.tsx         # Hero section with CTA
-│   │   ├── Pipeline.tsx     # 3-step workflow (Decode/Architect/Deploy)
-│   │   ├── Services.tsx     # Service offerings with pricing
-│   │   ├── Targets.tsx      # Target industries grid
-│   │   └── Footer.tsx       # Footer with contact and copyright
+│   │   ├── Navbar.tsx       # Sticky navigation with mobile menu
+│   │   ├── Hero.tsx         # Hero section with CTAs and value proposition
+│   │   ├── Pipeline.tsx     # 3-step workflow (Diagnóstico/Estrategia/Implementación)
+│   │   ├── Manifesto.tsx    # Company philosophy and mission statement
+│   │   ├── Services.tsx     # Service offerings with pricing cards
+│   │   ├── Targets.tsx      # Target industries and pain points
+│   │   ├── Diferenciacion.tsx # Competitive differentiation section
+│   │   ├── Equipo.tsx       # Team member profiles with photos
+│   │   └── Footer.tsx       # Footer with navigation and copyright
 │   ├── fonts/               # Local font files (GeistVF.woff, GeistMonoVF.woff)
 │   ├── globals.css          # Global styles and Tailwind imports
 │   ├── layout.tsx           # Root layout with metadata and font configuration
 │   └── page.tsx             # Main page composing all sections
 ├── public/                  # Static assets
-│   ├── Carlos Martínez Sint.jpeg
+│   ├── Carlos Martínez Sint.png
 │   └── José Latorre Sint.png
 ├── .eslintrc.json          # ESLint configuration (extends Next.js presets)
 ├── next.config.js          # Next.js configuration (strict mode enabled)
@@ -88,11 +94,12 @@ npm run lint
 |-------|-----|-------|
 | `deep-zinc` | `#09090B` | Background |
 | `text-off-white` | `#E5E6EB` | Primary text |
-| `text-cool-grey` | `#8A8F98` | Secondary text |
-| `brand-flux-orange` | `#FF6B4A` | Primary accent, CTAs, cursor |
-| `accent-terminal-green` | `#2EB886` | Success states, Service 1 |
-| `accent-synth-purple` | `#A371F7` | Purple accent, Service 2 |
-| `accent-cyan-ray` | `#06B6D4` | Cyan accent, Service 3 |
+| `text-cool-grey` | `#8A8F98` | Secondary text, eyebrows |
+| `brand-flux-orange` | `#FF6B4A` | Primary accent, CTAs, cursor, highlights |
+| `accent-terminal-green` | `#2EB886` | Success states, Service 1, Diagnóstico step |
+| `accent-synth-purple` | `#A371F7` | Purple accent, Service 2, Estrategia step |
+| `accent-cyan-ray` | `#06B6D4` | Cyan accent (defined but minimally used) |
+| `ds-amber` | `#F59E0B` | Amber accent (defined but minimally used) |
 
 ### Animation Specifications
 
@@ -119,7 +126,7 @@ npm run lint
 1. **"use client" directive**: Required for components using Framer Motion or browser APIs
 2. **TypeScript interfaces**: Define props with explicit types
 3. **Return type**: Use `JSX.Element` for function components
-4. **SVG icons**: Inline as functional components with consistent viewBox
+4. **SVG icons**: Inline as functional components or from Lucide React
 
 Example pattern:
 ```tsx
@@ -142,8 +149,9 @@ export default function ComponentName({ prop }: Props): JSX.Element {
 
 - **Files**: PascalCase for components (e.g., `Navbar.tsx`)
 - **Components**: PascalCase function names
-- **Props interfaces**: PascalCase with `Props` suffix
+- **Props interfaces**: PascalCase with `Props` suffix or descriptive names
 - **CSS classes**: Tailwind utility classes, kebab-case for custom colors
+- **Spanish language**: UI text and content is in Spanish
 
 ### Styling Patterns
 
@@ -151,56 +159,88 @@ export default function ComponentName({ prop }: Props): JSX.Element {
 - Custom colors defined in `tailwind.config.ts`
 - Responsive breakpoints: `md:` for tablet/desktop
 - Glassmorphism: `bg-white/5`, `backdrop-blur-md`, `border-white/10`
-- Hover transitions: `hover:border-brand-flux-orange`, `transition-all duration-300`
+- Hover transitions: `hover:scale-105`, `transition-all duration-300`
+- Grain texture overlay used in Hero section
 
 ## Section Details
 
 ### Navbar (`app/sections/Navbar.tsx`)
-- Sticky positioning with blur backdrop
-- Logo (animated) on left
-- Navigation links: Pipeline, Servicios, Targets
-- CTA button: "Iniciar Sprint"
+- Fixed positioning with blur backdrop on scroll
+- Logo (animated) on left with click-to-scroll-to-top
+- Navigation links: Pipeline, Servicios, Equipo, Diagnóstico
+- CTA button: "Iniciar Diagnóstico →"
+- Mobile hamburger menu with full-screen overlay
 
 ### Hero (`app/sections/Hero.tsx`)
-- Badge: "sint — Software Intelligence"
-- H1: "Inteligencia Operativa"
-- Subtitle describing value proposition
-- WhatsApp CTA button
+- Badge: "sint · Software Intelligence"
+- H1: "Primero entendemos tu negocio. Después escribimos el código"
+- Value proposition with pain point quote
+- Two CTAs: Primary (Diagnóstico) and Secondary (Ver cómo funciona)
+- Grain texture background overlay
 
 ### Pipeline (`app/sections/Pipeline.tsx`)
 - 3-step horizontal workflow visualization
-- Steps: Decode → Architect → Deploy
-- Gradient connectors between steps
-- Cards with icons, titles, and descriptions
+- Steps: Diagnóstico → Estrategia → Implementación
+- Gradient connectors between steps (green→purple→orange)
+- Cards with icons, titles, descriptions, and badges
+- First badge links to `/diagnostico`
+
+### Manifesto (`app/sections/Manifesto.tsx`)
+- Company philosophy section
+- Explains the problem of "fricción operativa" (operational friction)
+- Highlighted closing statement with left border accent
 
 ### Services (`app/sections/Services.tsx`)
 - 3-column grid of service cards
-- Services: Operational Software, Research & Insights, Knowledge Assets
-- Each card: icon, title, description, badge, price
-- Top border accent color per service
+- Services: Diagnóstico Sint, Diagnóstico Sint Full, Implementación Sint
+- Each card: icon, title, description, badge, price, CTA
+- Top border accent color per service (green/purple/orange)
 
 ### Targets (`app/sections/Targets.tsx`)
-- 4-column grid (responsive to 2, then 1)
-- Target industries: PropTech, Minería & Industria, Agencias, VC & Family Offices
-- Cards show: icon, industry, role, pain point
+- Target industries with pain points
+- Industries: Servicios Profesionales, Manufactura, Finanzas, Tecnología, Salud
+- List format with industry label, role, and pain point quote
+- CTA block at bottom
+
+### Diferenciacion (`app/sections/Diferenciacion.tsx`)
+- Competitive comparison section
+- Contrasts "La fábrica de software", "La consultora", "El status quo"
+- Sint value proposition with CTA
+
+### Equipo (`app/sections/Equipo.tsx`)
+- Team member profiles
+- Photos, names, roles, bios, LinkedIn links
+- Circular image containers with fallback initials
 
 ### Footer (`app/sections/Footer.tsx`)
-- Logo, WhatsApp CTA, copyright
-- Horizontal layout with flexbox
+- Three-column layout: Logo+tagline, Navigation, CTA
+- Smooth scroll navigation to sections
+- Copyright and privacy notice
 
-## WhatsApp Integration
+## Component Library
 
-Contact number: `+56 9 8779 1156`
+### Logo (`app/components/Logo.tsx`)
+- Props: `className?: string`, `animated?: boolean` (default: true)
+- Displays "sint_" with blinking cursor in brand orange
+- Uses JetBrains Mono font
 
-Used in:
-- Hero section CTA button
-- Footer CTA button
-- Floating WhatsApp button (fixed position, bottom-right)
+### WhatsAppFloat (`app/components/WhatsAppFloat.tsx`)
+- Currently disabled in page.tsx
+- Fixed position floating button
+- Links to WhatsApp with pre-filled message
 
-URL format:
-```
-https://wa.me/56987791156?text=Hola%20sint,%20quiero%20iniciar%20un%20sprint
-```
+## Navigation Structure
+
+| Route | Description |
+|-------|-------------|
+| `/` | Main landing page |
+| `/diagnostico` | External diagnostic tool (referenced but not implemented in this codebase) |
+
+**Anchor Links:**
+- `#inicio` - Hero section
+- `#pipeline` - Pipeline section
+- `#servicios` - Services section
+- `#equipo` - Team section
 
 ## Deployment
 
@@ -235,10 +275,11 @@ To add testing, consider:
 ## Development Notes
 
 - **No API routes** - this is a purely static marketing site
-- **No state management** - components are stateless
-- **No backend** - contact is via WhatsApp link only
-- **Image optimization**: Uses Next.js Image component where needed
+- **No state management** - components use local state only
+- **No backend** - the `/diagnostico` route is external (not implemented in this codebase)
+- **Image optimization**: Uses Next.js Image component for team photos
 - **SEO**: Basic metadata configured in `layout.tsx`
+- **WhatsApp integration**: Currently disabled (component exists but is commented out)
 
 ## Browser Support
 
@@ -247,20 +288,9 @@ To add testing, consider:
 - Safari (latest)
 - Mobile browsers (iOS Safari, Chrome Mobile)
 
-## Future Considerations
-
-If extending this project:
-1. Add contact form with API route for non-WhatsApp inquiries
-2. Implement blog/content sections
-3. Add case studies/portfolio showcase
-4. Internationalization (i18n) for English version
-5. Analytics integration (Google Analytics, Plausible)
-6. E2E testing with Playwright or Cypress
-7. Add unit tests for components
-
 ## Security Considerations
 
 - No sensitive environment variables currently used
-- WhatsApp number is hardcoded in components
 - No user authentication or data storage
 - No API keys or secrets in the codebase
+- External link to `/diagnostico` assumes separate secure implementation
