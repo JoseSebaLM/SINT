@@ -4,7 +4,11 @@ from pydantic import BaseModel, EmailStr
 from typing import Literal
 import os
 from dotenv import load_dotenv
+
 from scoring import calcular_scoring
+from report_generator import generar_reporte_html
+from email_sender import enviar_email
+from sheets_logger import registrar_en_sheets
 
 load_dotenv()
 
@@ -18,6 +22,7 @@ app.add_middleware(
 )
 
 RespuestaDS = Literal["A", "B", "C"]
+
 
 class DiagnosticoPayload(BaseModel):
     email: EmailStr
@@ -36,31 +41,40 @@ class DiagnosticoPayload(BaseModel):
 
 @app.post("/diagnostico")
 async def recibir_diagnostico(payload: DiagnosticoPayload):
-    respuestas = {
+    respuestas_raw = {
         "D1": payload.D1, "D2": payload.D2, "D3": payload.D3,
         "D4": payload.D4, "D5": payload.D5, "D6": payload.D6,
         "D7": payload.D7, "D8": payload.D8,
     }
+    payload_dict = {
+        "P1": payload.P1, "P2": payload.P2, "P3": payload.P3,
+    }
 
-    resultado = calcular_scoring(respuestas)
+    # 1. Scoring
+    resultado = calcular_scoring(respuestas_raw)
 
-    # Por ahora devuelve el scoring completo para verificación
+    # 2. Generar reporte con Claude
+    try:
+        reporte_html = generar_reporte_html(payload_dict, resultado)
+    except Exception as e:
+        print(f"[main] Error en Claude API: {e}")
+        raise HTTPException(status_code=502, detail="Error al generar el reporte")
+
+    # 3. Enviar email (no bloquea si falla)
+    email_ok = enviar_email(payload.email, reporte_html, resultado)
+    if not email_ok:
+        print(f"[main] Email no enviado a {payload.email}")
+
+    # 4. Log a Google Sheets (no bloquea si falla)
+    sheets_ok = registrar_en_sheets(payload.email, payload_dict, resultado, respuestas_raw)
+    if not sheets_ok:
+        print(f"[main] Log a Sheets fallido para {payload.email}")
+
     return {
         "status": "ok",
-        "email": payload.email,
-        "perfil": {"P1": payload.P1, "P2": payload.P2, "P3": payload.P3},
-        "scoring": {
-            "sfs": resultado.sfs,
-            "nivel": resultado.nivel,
-            "nivel_etiqueta": resultado.nivel_etiqueta,
-            "arquetipo_id": resultado.arquetipo_id,
-            "arquetipo_nombre": resultado.arquetipo_nombre,
-            "foco_1": {"id": resultado.foco_1_id, "nombre": resultado.foco_1_nombre, "score": resultado.foco_1_score},
-            "foco_2": {"id": resultado.foco_2_id, "nombre": resultado.foco_2_nombre, "score": resultado.foco_2_score},
-            "alerta_activa": resultado.alerta_activa,
-            "dimension_alerta": resultado.dimension_alerta,
-            "scores_ponderados": resultado.scores_ponderados,
-        }
+        "nivel": resultado.nivel,
+        "email_enviado": email_ok,
+        "sheets_ok": sheets_ok,
     }
 
 
