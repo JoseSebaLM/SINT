@@ -2,20 +2,39 @@
 
 ## Project Overview
 
-SINT (Software Intelligence) is a modern digital agency landing page built with Next.js 14 and React. The website showcases the agency's unique approach: transforming organizational diagnostics into custom software solutions. The site features a sophisticated dark-themed UI with smooth animations, terminal-inspired aesthetics, and a strong focus on converting visitors through a diagnostic funnel.
+SINT (Software Intelligence) is a modern digital agency landing page with an integrated diagnostic tool. The project consists of a Next.js 14 frontend with a Python/FastAPI backend for processing diagnostic assessments.
 
 The core value proposition is captured in the tagline: "Primero entendemos tu negocio. Después escribimos el código" (First we understand your business. Then we write the code).
 
-### Key Features
+### Architecture Overview
 
-- **Dark Theme UI**: Deep zinc background (`#09090B`) with off-white text and vibrant accent colors
-- **Terminal Aesthetic**: JetBrains Mono font for logo and code-like elements
-- **Smooth Animations**: Framer Motion for scroll-triggered and entrance animations
-- **Responsive Design**: Mobile-first approach with Tailwind CSS
-- **Diagnostic Funnel**: Primary CTA drives users to `/diagnostico` route
-- **Single Page Layout**: Sections include Navbar, Hero, Pipeline, Manifesto, Services, Targets, Diferenciacion, Equipo, and Footer
+```
+┌─────────────────────────────────────────────────────────────────┐
+│                         FRONTEND                                │
+│                     Next.js 14 (React)                          │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────────────┐  │
+│  │   Landing    │  │  Diagnóstico │  │  Resultado (static)  │  │
+│  │    Page      │  │   (wizard)   │  │      (success)       │  │
+│  └──────────────┘  └──────────────┘  └──────────────────────┘  │
+└─────────────────────────────────────────────────────────────────┘
+                              │
+                              ▼ POST /diagnostico
+┌─────────────────────────────────────────────────────────────────┐
+│                         BACKEND                                 │
+│                     Python/FastAPI                              │
+│  ┌─────────────────────────────────────────────────────────┐   │
+│  │  • Scoring algorithm (SFS - Sint Friction Score)        │   │
+│  │  • Archetype classification (6 types)                   │   │
+│  │  • Priority focus identification                        │   │
+│  │  • Email reporting (Resend)                             │   │
+│  │  • Google Sheets integration                            │   │
+│  └─────────────────────────────────────────────────────────┘   │
+└─────────────────────────────────────────────────────────────────┘
+```
 
 ## Technology Stack
+
+### Frontend
 
 | Technology | Version | Purpose |
 |------------|---------|---------|
@@ -25,49 +44,77 @@ The core value proposition is captured in the tagline: "Primero entendemos tu ne
 | Tailwind CSS | 3.4.1 | Utility-first styling |
 | Framer Motion | 12.33.0 | Animation library |
 | Lucide React | 0.577.0 | Icon library |
-| ESLint | 8.x | Code linting |
+
+### Backend
+
+| Technology | Version | Purpose |
+|------------|---------|---------|
+| Python | 3.11+ | Runtime |
+| FastAPI | 0.111.0 | Web framework |
+| Uvicorn | 0.29.0 | ASGI server |
+| Pydantic | 2.7.1 | Data validation |
+| python-dotenv | 1.0.1 | Environment variables |
+
+### Optional Backend Integrations
+
+| Service | Library | Purpose |
+|---------|---------|---------|
+| Anthropic Claude | anthropic==0.28.0 | AI-generated diagnostic reports |
+| Resend | resend==2.0.0 | Email delivery |
+| Google Sheets | gspread==6.1.2 | Data storage |
+| Google Auth | google-auth==2.29.0 | Sheets authentication |
 
 ### Fonts
 
 - **Inter**: Primary font for body text and headings (loaded via `next/font/google`)
 - **JetBrains Mono**: Monospace font for logo and terminal-style elements (loaded via `next/font/google`)
-- **Geist**: Local font files available in `app/fonts/` (VF.woff variants - not currently used)
+- **Geist**: Local font files available in `app/fonts/` (not currently used)
 
 ## Project Structure
 
 ```
 SINT/
-├── app/
-│   ├── components/          # Reusable UI components
-│   │   ├── Logo.tsx         # Animated logo with blinking cursor
-│   │   └── WhatsAppFloat.tsx # Floating WhatsApp button (currently disabled)
-│   ├── sections/            # Page section components
-│   │   ├── Navbar.tsx       # Sticky navigation with mobile menu
-│   │   ├── Hero.tsx         # Hero section with CTAs and value proposition
-│   │   ├── Pipeline.tsx     # 3-step workflow (Diagnóstico/Estrategia/Implementación)
-│   │   ├── Manifesto.tsx    # Company philosophy and mission statement
-│   │   ├── Services.tsx     # Service offerings with pricing cards
-│   │   ├── Targets.tsx      # Target industries and pain points
-│   │   ├── Diferenciacion.tsx # Competitive differentiation section
-│   │   ├── Equipo.tsx       # Team member profiles with photos
-│   │   └── Footer.tsx       # Footer with navigation and copyright
-│   ├── fonts/               # Local font files (GeistVF.woff, GeistMonoVF.woff)
-│   ├── globals.css          # Global styles and Tailwind imports
-│   ├── layout.tsx           # Root layout with metadata and font configuration
-│   └── page.tsx             # Main page composing all sections
-├── public/                  # Static assets
+├── app/                           # Next.js App Router
+│   ├── components/                # Reusable UI components
+│   │   ├── Logo.tsx               # Animated logo with blinking cursor
+│   │   └── WhatsAppFloat.tsx      # Floating WhatsApp button (disabled)
+│   ├── sections/                  # Page section components
+│   │   ├── Navbar.tsx             # Sticky navigation with mobile menu
+│   │   ├── Hero.tsx               # Hero section with CTAs
+│   │   ├── Pipeline.tsx           # 3-step workflow visualization
+│   │   ├── Manifesto.tsx          # Company philosophy
+│   │   ├── Services.tsx           # Service offerings with pricing
+│   │   ├── Targets.tsx            # Target industries
+│   │   ├── Diferenciacion.tsx     # Competitive differentiation
+│   │   ├── Equipo.tsx             # Team member profiles
+│   │   └── Footer.tsx             # Footer with navigation
+│   ├── diagnostico/               # Diagnostic tool routes
+│   │   ├── page.tsx               # Multi-step diagnostic wizard
+│   │   └── resultado/
+│   │       └── page.tsx           # Success/confirmation page
+│   ├── fonts/                     # Local font files
+│   ├── globals.css                # Global styles and Tailwind imports
+│   ├── layout.tsx                 # Root layout with metadata
+│   └── page.tsx                   # Main landing page
+├── backend/                       # Python FastAPI backend
+│   ├── main.py                    # FastAPI application entry point
+│   ├── scoring.py                 # SFS scoring algorithm
+│   ├── requirements.txt           # Python dependencies
+│   └── .env.example               # Environment variable template
+├── public/                        # Static assets
 │   ├── Carlos Martínez Sint.png
 │   └── José Latorre Sint.png
-├── .eslintrc.json          # ESLint configuration (extends Next.js presets)
-├── next.config.js          # Next.js configuration (strict mode enabled)
-├── tailwind.config.ts      # Tailwind CSS with custom colors
-├── tsconfig.json           # TypeScript configuration (strict mode)
-├── postcss.config.mjs      # PostCSS configuration for Tailwind
-├── package.json            # Dependencies and scripts
-└── AGENTS.md               # This file
+├── .eslintrc.json                # ESLint configuration
+├── next.config.js                # Next.js configuration
+├── tailwind.config.ts            # Tailwind CSS with custom colors
+├── tsconfig.json                 # TypeScript configuration
+├── postcss.config.mjs            # PostCSS configuration
+└── package.json                  # Node.js dependencies
 ```
 
 ## Build and Development Commands
+
+### Frontend
 
 ```bash
 # Install dependencies
@@ -86,6 +133,31 @@ npm start
 npm run lint
 ```
 
+### Backend
+
+```bash
+# Navigate to backend directory
+cd backend
+
+# Create virtual environment (recommended)
+python -m venv venv
+
+# Activate virtual environment
+# Windows:
+venv\Scripts\activate
+# macOS/Linux:
+source venv/bin/activate
+
+# Install dependencies
+pip install -r requirements.txt
+
+# Run development server (http://localhost:8000)
+uvicorn main:app --reload
+
+# Run production server
+uvicorn main:app --host 0.0.0.0 --port 8000
+```
+
 ## Design System
 
 ### Color Palette
@@ -98,8 +170,8 @@ npm run lint
 | `brand-flux-orange` | `#FF6B4A` | Primary accent, CTAs, cursor, highlights |
 | `accent-terminal-green` | `#2EB886` | Success states, Service 1, Diagnóstico step |
 | `accent-synth-purple` | `#A371F7` | Purple accent, Service 2, Estrategia step |
-| `accent-cyan-ray` | `#06B6D4` | Cyan accent (defined but minimally used) |
-| `ds-amber` | `#F59E0B` | Amber accent (defined but minimally used) |
+| `accent-cyan-ray` | `#06B6D4` | Cyan accent (defined, minimal use) |
+| `ds-amber` | `#F59E0B` | Amber accent (defined, minimal use) |
 
 ### Animation Specifications
 
@@ -116,7 +188,7 @@ npm run lint
 - Entrance animations: `initial={{ opacity: 0, y: 20/30 }}` → `animate={{ opacity: 1, y: 0 }}`
 - Scroll-triggered: `whileInView` with `viewport={{ once: true }}`
 - Stagger delays: `delay: index * 0.1/0.15/0.2`
-- Duration: 0.5s - 0.6s for most transitions
+- Duration: 0.4s - 0.6s for most transitions
 - Hover effects: `whileHover={{ scale: 1.05/1.1 }}`
 
 ## Code Style Guidelines
@@ -162,79 +234,54 @@ export default function ComponentName({ prop }: Props): JSX.Element {
 - Hover transitions: `hover:scale-105`, `transition-all duration-300`
 - Grain texture overlay used in Hero section
 
-## Section Details
+## Diagnostic Tool (SFS - Sint Friction Score)
 
-### Navbar (`app/sections/Navbar.tsx`)
-- Fixed positioning with blur backdrop on scroll
-- Logo (animated) on left with click-to-scroll-to-top
-- Navigation links: Pipeline, Servicios, Equipo, Diagnóstico
-- CTA button: "Iniciar Diagnóstico →"
-- Mobile hamburger menu with full-screen overlay
+### Assessment Structure
 
-### Hero (`app/sections/Hero.tsx`)
-- Badge: "sint · Software Intelligence"
-- H1: "Primero entendemos tu negocio. Después escribimos el código"
-- Value proposition with pain point quote
-- Two CTAs: Primary (Diagnóstico) and Secondary (Ver cómo funciona)
-- Grain texture background overlay
+The diagnostic tool collects:
+- **Profile questions (P1-P3)**: Role, company size, industry
+- **Email capture**: For delivering results
+- **Diagnostic questions (D1-D8)**: 8 dimensions of operational friction
 
-### Pipeline (`app/sections/Pipeline.tsx`)
-- 3-step horizontal workflow visualization
-- Steps: Diagnóstico → Estrategia → Implementación
-- Gradient connectors between steps (green→purple→orange)
-- Cards with icons, titles, descriptions, and badges
-- First badge links to `/diagnostico`
+### Scoring Algorithm
 
-### Manifesto (`app/sections/Manifesto.tsx`)
-- Company philosophy section
-- Explains the problem of "fricción operativa" (operational friction)
-- Highlighted closing statement with left border accent
+**Response Values:**
+- A = 0 points (optimal)
+- B = 1 point (moderate friction)
+- C = 3 points (critical friction)
 
-### Services (`app/sections/Services.tsx`)
-- 3-column grid of service cards
-- Services: Diagnóstico Sint, Diagnóstico Sint Full, Implementación Sint
-- Each card: icon, title, description, badge, price, CTA
-- Top border accent color per service (green/purple/orange)
+**Dimension Weights:**
+| Dimension | Weight | Description |
+|-----------|--------|-------------|
+| D1 | 1.2 | Resiliencia de infraestructura |
+| D2 | 1.2 | Experiencia operativa del equipo |
+| D3 | 1.0 | Autonomía operativa |
+| D4 | 1.4 | Gobernanza tecnológica |
+| D5 | 0.8 | Cultura de mejora continua |
+| D6 | 1.6 | Alineación sistema-proceso |
+| D7 | 1.6 | Dependencia de soluciones alternativas |
+| D8 | 1.6 | Visibilidad operativa de gerencia |
 
-### Targets (`app/sections/Targets.tsx`)
-- Target industries with pain points
-- Industries: Servicios Profesionales, Manufactura, Finanzas, Tecnología, Salud
-- List format with industry label, role, and pain point quote
-- CTA block at bottom
+**SFS Levels:**
+- **Verde** (< 10): Operación con fricciones residuales
+- **Ámbar** (10-19): Desalineación operativa activa
+- **Rojo** (≥ 20): Fricción sistémica con impacto en resultados
 
-### Diferenciacion (`app/sections/Diferenciacion.tsx`)
-- Competitive comparison section
-- Contrasts "La fábrica de software", "La consultora", "El status quo"
-- Sint value proposition with CTA
-
-### Equipo (`app/sections/Equipo.tsx`)
-- Team member profiles
-- Photos, names, roles, bios, LinkedIn links
-- Circular image containers with fallback initials
-
-### Footer (`app/sections/Footer.tsx`)
-- Three-column layout: Logo+tagline, Navigation, CTA
-- Smooth scroll navigation to sections
-- Copyright and privacy notice
-
-## Component Library
-
-### Logo (`app/components/Logo.tsx`)
-- Props: `className?: string`, `animated?: boolean` (default: true)
-- Displays "sint_" with blinking cursor in brand orange
-- Uses JetBrains Mono font
-
-### WhatsAppFloat (`app/components/WhatsAppFloat.tsx`)
-- Currently disabled in page.tsx
-- Fixed position floating button
-- Links to WhatsApp with pre-filled message
+**Archetypes (6 types):**
+- ARQ-0: Fricción distribuida
+- ARQ-1: Operación en modo manual
+- ARQ-2: Decisiones con información parcial
+- ARQ-3: Infraestructura con exposición operativa
+- ARQ-4: Sistema con resistencia de adopción
+- ARQ-5: Gobernanza tecnológica difusa
 
 ## Navigation Structure
 
 | Route | Description |
 |-------|-------------|
 | `/` | Main landing page |
-| `/diagnostico` | External diagnostic tool (referenced but not implemented in this codebase) |
+| `/diagnostico` | Diagnostic wizard (11 steps) |
+| `/diagnostico/resultado` | Success confirmation page |
 
 **Anchor Links:**
 - `#inicio` - Hero section
@@ -242,9 +289,39 @@ export default function ComponentName({ prop }: Props): JSX.Element {
 - `#servicios` - Services section
 - `#equipo` - Team section
 
+## Environment Configuration
+
+### Backend (.env)
+
+```bash
+# Required
+FRONTEND_URL=http://localhost:3000
+
+# Optional - for enhanced functionality
+ANTHROPIC_API_KEY=sk-ant-...
+RESEND_API_KEY=re_...
+GOOGLE_SHEETS_ID=...
+GOOGLE_CREDENTIALS_JSON={"type":"service_account",...}
+```
+
+## Testing
+
+**No testing framework** is currently configured. The project relies on:
+- TypeScript strict mode for type checking
+- ESLint for code quality
+- Pydantic for runtime data validation (backend)
+- Manual testing during development
+
+To add testing, consider:
+- **Jest** with React Testing Library for frontend unit tests
+- **Playwright** or **Cypress** for E2E tests
+- **pytest** for backend tests
+
 ## Deployment
 
-This is a static Next.js site optimized for deployment on Vercel:
+### Frontend
+
+Optimized for deployment on Vercel:
 
 ```bash
 # Build command
@@ -253,33 +330,31 @@ npm run build
 # Output: .next/ directory
 ```
 
-The project can also be exported as static HTML by modifying `next.config.js`:
+Static export (optional):
 ```js
+// next.config.js
 const nextConfig = {
   output: 'export',
   distDir: 'dist',
 }
 ```
 
-## Testing
+### Backend
 
-**No testing framework** is currently configured. The project relies on:
-- TypeScript strict mode for type checking
-- ESLint for code quality
-- Manual testing during development
+Deploy to any ASGI-compatible platform:
 
-To add testing, consider:
-- **Jest** with React Testing Library for unit tests
-- **Playwright** or **Cypress** for E2E tests
+```bash
+# Example: Railway, Render, or VPS
+uvicorn main:app --host 0.0.0.0 --port $PORT
+```
 
-## Development Notes
+## Security Considerations
 
-- **No API routes** - this is a purely static marketing site
-- **No state management** - components use local state only
-- **No backend** - the `/diagnostico` route is external (not implemented in this codebase)
-- **Image optimization**: Uses Next.js Image component for team photos
-- **SEO**: Basic metadata configured in `layout.tsx`
-- **WhatsApp integration**: Currently disabled (component exists but is commented out)
+- **CORS**: Backend configured to accept requests only from `FRONTEND_URL`
+- **Input validation**: Pydantic models validate all incoming data
+- **Email validation**: Uses EmailStr for proper email format validation
+- **No secrets in frontend**: All API keys and sensitive config are backend-only
+- **Environment variables**: Never commit `.env` files (see `.env.example` for templates)
 
 ## Browser Support
 
@@ -288,9 +363,9 @@ To add testing, consider:
 - Safari (latest)
 - Mobile browsers (iOS Safari, Chrome Mobile)
 
-## Security Considerations
+## Development Notes
 
-- No sensitive environment variables currently used
-- No user authentication or data storage
-- No API keys or secrets in the codebase
-- External link to `/diagnostico` assumes separate secure implementation
+- **WhatsApp integration**: Currently disabled (component exists but is commented out in page.tsx)
+- **Backend integrations**: Email (Resend), AI (Anthropic), and Sheets (Google) are optional
+- **Diagnostic payload**: Currently logged to console in frontend; should connect to backend API
+- **No database**: Backend is stateless; data persistence through Google Sheets or external storage
