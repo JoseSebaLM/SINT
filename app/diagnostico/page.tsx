@@ -206,6 +206,7 @@ export default function DiagnosticoPage(): JSX.Element {
   const [formData, setFormData] = useState<Partial<FormData>>({});
   const [emailInput, setEmailInput] = useState("");
   const [emailError, setEmailError] = useState("");
+  const [submitError, setSubmitError] = useState(false);
 
   const step = STEPS[currentStep];
   const totalSteps = STEPS.length;
@@ -226,6 +227,7 @@ export default function DiagnosticoPage(): JSX.Element {
     };
     
     setFormData(newFormData);
+    setSubmitError(false);
 
     if (isLastStep) {
       // Last step - submit
@@ -245,20 +247,38 @@ export default function DiagnosticoPage(): JSX.Element {
     }
     
     setEmailError("");
+    setSubmitError(false);
     setFormData((prev) => ({ ...prev, email: emailInput }));
     setCurrentStep((prev) => prev + 1);
   };
 
   const handleSubmit = async (data: FormData) => {
     setIsSubmitting(true);
-    
-    // Simulate processing
-    console.log("Diagnóstico payload:", data);
-    
-    // Small delay for UX
-    await new Promise((resolve) => setTimeout(resolve, 1500));
-    
-    router.push("/diagnostico/resultado");
+
+    try {
+      const backendUrl = process.env.NEXT_PUBLIC_BACKEND_URL || "http://localhost:8000";
+
+      const response = await fetch(`${backendUrl}/diagnostico`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data),
+      });
+
+      if (!response.ok) {
+        const errorData = await response.json().catch(() => ({}));
+        console.error("[DS] Backend error:", response.status, errorData);
+        setSubmitError(true);
+        setIsSubmitting(false);
+        return;
+      }
+
+      // Éxito: redirigir a confirmación
+      router.push("/diagnostico/resultado");
+    } catch (err) {
+      console.error("[DS] Network error:", err);
+      setSubmitError(true);
+      setIsSubmitting(false);
+    }
   };
 
   const slideVariants = {
@@ -359,6 +379,12 @@ export default function DiagnosticoPage(): JSX.Element {
                     Continuar →
                   </button>
 
+                  {submitError && (
+                    <p className="text-sm mt-3" style={{ color: "#FF6B4A" }}>
+                      Hubo un problema al procesar tu diagnóstico. Intenta nuevamente.
+                    </p>
+                  )}
+
                   <p className="text-text-cool-grey text-sm pt-4">
                     Sint utiliza tus respuestas exclusivamente para generar tu diagnóstico. No compartimos tu información con terceros.
                   </p>
@@ -380,6 +406,11 @@ export default function DiagnosticoPage(): JSX.Element {
                       </span>
                     </motion.button>
                   ))}
+                  {submitError && (
+                    <p className="text-sm mt-3" style={{ color: "#FF6B4A" }}>
+                      Hubo un problema al procesar tu diagnóstico. Intenta nuevamente.
+                    </p>
+                  )}
                 </div>
               )}
             </motion.div>
