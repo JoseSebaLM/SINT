@@ -124,7 +124,7 @@ crítico (como adjetivo de situación). Reemplázalas con descripciones factuale
 del impacto operativo."""
 
     message = client.messages.create(
-        model="claude-3-sonnet-20240229",
+        model="claude-sonnet-4-6",
         max_tokens=1000,
         temperature=0.4,
         system=system_prompt,
