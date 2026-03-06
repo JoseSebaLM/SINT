@@ -55,7 +55,7 @@ The core value proposition is captured in the tagline: "Primero entendemos tu ne
 | Pydantic | 2.7.1 | Data validation |
 | python-dotenv | 1.0.1 | Environment variables |
 
-### Optional Backend Integrations
+### Backend Integrations
 
 | Service | Library | Purpose |
 |---------|---------|---------|
@@ -63,6 +63,7 @@ The core value proposition is captured in the tagline: "Primero entendemos tu ne
 | Resend | resend==2.0.0 | Email delivery |
 | Google Sheets | gspread==6.1.2 | Data storage |
 | Google Auth | google-auth==2.29.0 | Sheets authentication |
+| HTTP Client | httpx==0.27.0 | Async HTTP requests |
 
 ### Fonts
 
@@ -89,22 +90,32 @@ SINT/
 │   │   ├── Equipo.tsx             # Team member profiles
 │   │   └── Footer.tsx             # Footer with navigation
 │   ├── diagnostico/               # Diagnostic tool routes
-│   │   ├── page.tsx               # Multi-step diagnostic wizard
+│   │   ├── page.tsx               # Multi-step diagnostic wizard (11 steps)
 │   │   └── resultado/
 │   │       └── page.tsx           # Success/confirmation page
 │   ├── fonts/                     # Local font files
+│   │   ├── GeistMonoVF.woff
+│   │   └── GeistVF.woff
 │   ├── globals.css                # Global styles and Tailwind imports
 │   ├── layout.tsx                 # Root layout with metadata
 │   └── page.tsx                   # Main landing page
 ├── backend/                       # Python FastAPI backend
 │   ├── main.py                    # FastAPI application entry point
 │   ├── scoring.py                 # SFS scoring algorithm
+│   ├── report_generator.py        # Claude AI report generation
+│   ├── email_sender.py            # Resend email delivery
+│   ├── sheets_logger.py           # Google Sheets integration
+│   ├── qa_test.py                 # End-to-end QA test script
+│   ├── test_scoring.py            # Unit tests for scoring algorithm
+│   ├── QA_CHECKLIST.md            # Pre-deployment QA checklist
 │   ├── requirements.txt           # Python dependencies
+│   ├── .env                       # Backend environment variables
 │   └── .env.example               # Environment variable template
 ├── public/                        # Static assets
 │   ├── Carlos Martínez Sint.png
 │   └── José Latorre Sint.png
 ├── .eslintrc.json                # ESLint configuration
+├── .env.local                    # Frontend environment variables
 ├── next.config.js                # Next.js configuration
 ├── tailwind.config.ts            # Tailwind CSS with custom colors
 ├── tsconfig.json                 # TypeScript configuration
@@ -156,6 +167,12 @@ uvicorn main:app --reload
 
 # Run production server
 uvicorn main:app --host 0.0.0.0 --port 8000
+
+# Run scoring unit tests
+python test_scoring.py
+
+# Run end-to-end QA tests (requires backend running)
+python qa_test.py
 ```
 
 ## Design System
@@ -291,7 +308,13 @@ The diagnostic tool collects:
 
 ## Environment Configuration
 
-### Backend (.env)
+### Frontend (.env.local)
+
+```bash
+NEXT_PUBLIC_BACKEND_URL=http://localhost:8000
+```
+
+### Backend (backend/.env)
 
 ```bash
 # Required
@@ -302,11 +325,43 @@ ANTHROPIC_API_KEY=sk-ant-...
 RESEND_API_KEY=re_...
 GOOGLE_SHEETS_ID=...
 GOOGLE_CREDENTIALS_JSON={"type":"service_account",...}
+CAL_LINK=https://cal.com/sint
 ```
 
-## Testing
+## Testing Strategy
 
-**No testing framework** is currently configured. The project relies on:
+### Backend Tests
+
+**Unit Tests (test_scoring.py):**
+```bash
+cd backend
+python test_scoring.py
+```
+Tests the scoring algorithm with three predefined profiles (Verde, Ámbar, Rojo).
+
+**End-to-End QA (qa_test.py):**
+```bash
+cd backend
+# Ensure backend is running on localhost:8000
+python qa_test.py
+```
+Tests the complete flow including:
+- Health check endpoint
+- Scoring calculation for all three levels
+- Email delivery via Resend
+- Google Sheets logging
+
+Expected result: `3/3 perfiles OK`
+
+### Manual QA Checklist
+
+See `backend/QA_CHECKLIST.md` for pre-deployment verification:
+- API keys configured
+- Email templates verified
+- Google Sheets headers correct
+- Full browser flow tested
+
+**No frontend testing framework** is currently configured. The project relies on:
 - TypeScript strict mode for type checking
 - ESLint for code quality
 - Pydantic for runtime data validation (backend)
@@ -366,6 +421,7 @@ uvicorn main:app --host 0.0.0.0 --port $PORT
 ## Development Notes
 
 - **WhatsApp integration**: Currently disabled (component exists but is commented out in page.tsx)
-- **Backend integrations**: Email (Resend), AI (Anthropic), and Sheets (Google) are optional
-- **Diagnostic payload**: Currently logged to console in frontend; should connect to backend API
+- **Backend integrations**: Email (Resend), AI (Anthropic), and Sheets (Google) are optional - the backend will log errors but continue functioning if these are not configured
+- **Diagnostic payload**: Sent to backend at `/diagnostico` endpoint
 - **No database**: Backend is stateless; data persistence through Google Sheets or external storage
+- **AI Report Generation**: Uses Claude Sonnet 4.6 model via Anthropic API to generate personalized HTML reports

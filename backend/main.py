@@ -1,16 +1,18 @@
+import os
+from dotenv import load_dotenv
+
+# Cargar variables de entorno ANTES de importar módulos que las usan
+load_dotenv()
+
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel, EmailStr
 from typing import Literal
-import os
-from dotenv import load_dotenv
 
 from scoring import calcular_scoring
 from report_generator import generar_reporte_html
 from email_sender import enviar_email
 from sheets_logger import registrar_en_sheets
-
-load_dotenv()
 
 app = FastAPI(title="Sint DS Backend")
 
