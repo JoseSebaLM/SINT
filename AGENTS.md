@@ -71,6 +71,8 @@ The core value proposition is captured in the tagline: "Primero entendemos tu ne
 - **JetBrains Mono**: Monospace font for logo and terminal-style elements (loaded via `next/font/google`)
 - **Geist**: Local font files available in `app/fonts/` (not currently used)
 
+Fonts are configured in `app/layout.tsx` using CSS variables `--font-inter` and `--font-jetbrains-mono`.
+
 ## Project Structure
 
 ```
@@ -249,7 +251,7 @@ export default function ComponentName({ prop }: Props): JSX.Element {
 - Responsive breakpoints: `md:` for tablet/desktop
 - Glassmorphism: `bg-white/5`, `backdrop-blur-md`, `border-white/10`
 - Hover transitions: `hover:scale-105`, `transition-all duration-300`
-- Grain texture overlay used in Hero section
+- Grain texture overlay used in Hero section (SVG data URI)
 
 ## Diagnostic Tool (SFS - Sint Friction Score)
 
@@ -271,13 +273,13 @@ The diagnostic tool collects:
 | Dimension | Weight | Description |
 |-----------|--------|-------------|
 | D1 | 1.2 | Resiliencia de infraestructura |
-| D2 | 1.2 | Experiencia operativa del equipo |
-| D3 | 1.0 | Autonomía operativa |
+| D2 | 1.2 | Experiencia operativa del equipo con el sistema |
+| D3 | 1.0 | Autonomía operativa del equipo |
 | D4 | 1.4 | Gobernanza tecnológica |
 | D5 | 0.8 | Cultura de mejora continua |
 | D6 | 1.6 | Alineación sistema-proceso |
 | D7 | 1.6 | Dependencia de soluciones alternativas |
-| D8 | 1.6 | Visibilidad operativa de gerencia |
+| D8 | 1.6 | Visibilidad operativa de la gerencia |
 
 **SFS Levels:**
 - **Verde** (< 10): Operación con fricciones residuales
@@ -328,6 +330,8 @@ GOOGLE_CREDENTIALS_JSON={"type":"service_account",...}
 CAL_LINK=https://cal.com/sint
 ```
 
+**Note:** All backend integrations (Anthropic, Resend, Google Sheets) are optional. The backend will log errors but continue functioning if these are not configured.
+
 ## Testing Strategy
 
 ### Backend Tests
@@ -337,7 +341,7 @@ CAL_LINK=https://cal.com/sint
 cd backend
 python test_scoring.py
 ```
-Tests the scoring algorithm with three predefined profiles (Verde, Ámbar, Rojo).
+Tests the scoring algorithm with three predefined profiles (Verde, Ámbar, Rojo). Expected output: `✅ Todos los tests pasaron!`
 
 **End-to-End QA (qa_test.py):**
 ```bash
@@ -405,8 +409,8 @@ uvicorn main:app --host 0.0.0.0 --port $PORT
 
 ## Security Considerations
 
-- **CORS**: Backend configured to accept requests only from `FRONTEND_URL`
-- **Input validation**: Pydantic models validate all incoming data
+- **CORS**: Backend configured to accept requests only from `FRONTEND_URL` environment variable
+- **Input validation**: Pydantic models validate all incoming data via `DiagnosticoPayload` class
 - **Email validation**: Uses EmailStr for proper email format validation
 - **No secrets in frontend**: All API keys and sensitive config are backend-only
 - **Environment variables**: Never commit `.env` files (see `.env.example` for templates)
@@ -425,3 +429,17 @@ uvicorn main:app --host 0.0.0.0 --port $PORT
 - **Diagnostic payload**: Sent to backend at `/diagnostico` endpoint
 - **No database**: Backend is stateless; data persistence through Google Sheets or external storage
 - **AI Report Generation**: Uses Claude Sonnet 4.6 model via Anthropic API to generate personalized HTML reports
+- **Email sender**: Uses Resend with sender address `diagnostico@sint.cl`
+- **Google Sheets**: Service account credentials required; headers defined in `sheets_logger.py`
+
+## Backend File Responsibilities
+
+| File | Purpose |
+|------|---------|
+| `main.py` | FastAPI app setup, CORS, route handlers, request/response models |
+| `scoring.py` | SFS calculation, archetype classification, result data structures |
+| `report_generator.py` | Claude API integration for HTML report generation |
+| `email_sender.py` | Resend email formatting and delivery |
+| `sheets_logger.py` | Google Sheets append-only logging with service account |
+| `test_scoring.py` | Unit tests for scoring algorithm |
+| `qa_test.py` | End-to-end integration tests |

@@ -21,6 +21,28 @@ def construir_prompt(payload: dict, resultado: ResultadoScoring) -> str:
         else "N/A"
     )
 
+    cierres = {
+        "verde": (
+            "El patrón que sugieren tus respuestas tiene condiciones para mejorar antes "
+            "de que el crecimiento lo amplifique. En 15 minutos podemos mostrarte qué está "
+            "detrás de las señales que identificamos y qué requeriría resolverlas. "
+            "Sin presentación de servicios. Sin compromiso."
+        ),
+        "ambar": (
+            "El patrón que sugieren estas respuestas tiene solución — pero requiere entender "
+            "primero dónde está exactamente el punto de mayor desgaste, antes de proponer "
+            "cualquier cambio. Eso es lo que hacemos en los primeros 15 minutos: identificar "
+            "el origen, no los síntomas. Sin jerga técnica. Sin compromiso."
+        ),
+        "rojo": (
+            "Lo que sugiere este diagnóstico no se resuelve cambiando una herramienta. "
+            "Requiere entender primero cómo está organizada la operación real y dónde está "
+            "el origen de las señales que vemos. En 15 minutos podemos hacer esa primera "
+            "lectura contigo. Sin agenda de ventas. Solo una conversación sobre lo que está pasando."
+        ),
+    }
+    cierre_base = cierres[resultado.nivel]
+
     return f"""Genera el reporte ejecutivo del Diagnóstico Sint para la siguiente empresa.
 Devuelve ÚNICAMENTE el HTML solicitado. Sin explicaciones, sin markdown, sin
 bloques de código. Solo el HTML limpio con las clases especificadas.
@@ -48,84 +70,120 @@ RESPUESTAS COMPLETAS:
 - D7 Dependencia de soluciones alternativas: {resultado.respuestas_texto["D7"]}
 - D8 Visibilidad operativa de la gerencia: {resultado.respuestas_texto["D8"]}
 
-ESTRUCTURA DEL REPORTE (genera exactamente esto, con estas clases CSS):
+ESTRUCTURA DEL REPORTE (genera estas secciones con estas clases CSS):
 
 <section class="ds-saludo">
-  [Una línea. Dirígete al cargo específico ({payload["P1"]}).]
+  [Una línea. Dirígete directamente a {payload["P1"]}.
+  Tono directo y cálido, no burocrático.
+  Ejemplo de registro correcto: "Este informe es para ti, como [cargo]."]
 </section>
 
 <section class="ds-nivel">
-  [El nivel y su etiqueta en negrita. Una oración que contextualice qué significa
-  este nivel para una empresa de {payload["P2"]} personas en {payload["P3"]}.
-  Verde: tono positivo y de oportunidad.
-  Ámbar: tono neutro y factual sobre la brecha existente.
-  Rojo: tono factual sobre la distribución de la fricción, sin alarmismo.]
+  [2-3 oraciones. Sin términos técnicos de Sint.
+  Explica el nivel en lenguaje de operaciones y negocio.
+  Contextualiza para {payload["P2"]} personas en {payload["P3"]}.
+  Verde: la operación funciona bien, hay señales menores que vale la pena revisar.
+  Ámbar: hay una brecha entre cómo debería funcionar y cómo funciona hoy,
+         y esa brecha tiene un costo que no siempre aparece en los reportes.
+  Rojo: varias respuestas apuntan en la misma dirección,
+        algo está costando más de lo que debería en tiempo y en personas.]
 </section>
 
 <section class="ds-arquetipo">
   <h3 class="ds-arquetipo-titulo">{resultado.arquetipo_nombre}</h3>
   [Verde: 2 oraciones. Ámbar: 3 oraciones. Rojo: 4 oraciones.
-  Describir el patrón operativo específico de ESTA empresa según las respuestas.
-  Debe sentirse como si alguien ya estuvo en la empresa. Específico para {payload["P3"]}
-  y {payload["P2"]} personas. No repetir la descripción genérica del arquetipo — interpretarla
-  con las respuestas concretas del formulario.]
+  Cita 2-3 respuestas específicas del formulario que originan este patrón.
+  Formato de cita: "Indicaste que [respuesta textual]".
+  Luego describe el patrón en lenguaje cotidiano con un ejemplo reconocible
+  del mundo de {payload["P3"]}.
+  No uses el nombre técnico del arquetipo para explicarlo — tradúcelo a situaciones reales.]
 </section>
+
+INSTRUCCIÓN PARA LOS TÍTULOS DE FOCOS:
+No uses el nombre técnico de la dimensión como título.
+Tradúcelo a una frase corta en lenguaje cotidiano que describa el síntoma,
+no el concepto. Ejemplos:
+- "Alineación sistema–proceso" → "El sistema y el equipo no hablan el mismo idioma"
+- "Dependencia de soluciones alternativas" → "El equipo resuelve por fuera del sistema"
+- "Visibilidad operativa de la gerencia" → "La gerencia decide con información incompleta"
+- "Gobernanza tecnológica" → "Nadie tiene autoridad clara sobre el sistema"
+- "Resiliencia de infraestructura" → "Qué pasa si el sistema falla hoy"
+- "Autonomía operativa del equipo" → "El equipo depende de ayuda para operar"
+- "Cultura de mejora continua" → "Los problemas se resuelven en silencio"
+- "Experiencia operativa del equipo con el sistema" → "Trabajar con el sistema cuesta más de lo que debería"
 
 <section class="ds-focos">
   <div class="ds-foco">
-    <h4 class="ds-foco-titulo">{resultado.foco_1_nombre}</h4>
+    <h4 class="ds-foco-titulo">[Título en lenguaje operacional para {resultado.foco_1_nombre}]</h4>
     <p>[Verde: 2 oraciones. Ámbar: 2-3 oraciones. Rojo: 3 oraciones.
-    Qué está pasando en esta dimensión según la respuesta del usuario.
-    Qué tipo de costo operativo genera: tiempo, decisiones lentas, riesgo.
-    No inventar cifras. Nombrar el tipo de impacto, no el monto.]</p>
+    Primero: cita la respuesta específica que activa esta señal.
+    Luego: nombra el impacto en el negocio Y en las personas del equipo.
+    Párrafos cortos. Máximo 3 oraciones seguidas.]</p>
   </div>
   <div class="ds-foco">
-    <h4 class="ds-foco-titulo">{resultado.foco_2_nombre}</h4>
-    <p>[Mismo patrón. Si en nivel Rojo los dos focos están relacionados,
-    señalar explícitamente esa relación.]</p>
+    <h4 class="ds-foco-titulo">[Título en lenguaje operacional para {resultado.foco_2_nombre}]</h4>
+    <p>[Mismo patrón. Si los dos focos están relacionados,
+    explica la relación en una oración simple.]</p>
   </div>
 </section>
 
 {"" if not resultado.alerta_activa else f"""<section class="ds-alerta">
-  <h4 class="ds-alerta-titulo">Observación puntual — {dimension_alerta_nombre}</h4>
-  <p>[Verde: 1-2 oraciones, tono de oportunidad de mejora.
-  Ámbar: 2 oraciones, señalar relación con el patrón de desalineación.
-  Rojo: 2 oraciones, señalar rol de esta dimensión en el patrón sistémico.
-  Si la dimensión es D7 o D8, indicar que es el núcleo del problema.]</p>
+  <h4 class="ds-alerta-titulo">Algo que vale la pena nombrar — {dimension_alerta_nombre}</h4>
+  <p>[1-2 oraciones. Cita la respuesta específica.
+  Explica por qué llama la atención en el contexto de las otras respuestas.
+  Tono: observación honesta, no alarma.]</p>
 </section>"""}
 
 <section class="ds-cierre">
-  [3-4 oraciones. Mencionar el arquetipo por nombre ({resultado.arquetipo_nombre}) y al menos uno de los focos ({resultado.foco_1_nombre}).
-  Terminar con la invitación a la reunión de 15 minutos.
-  Sin lenguaje de ventas. El tono es: "sabemos qué está pasando, conversemos."
-  Texto de cierre de referencia para nivel {resultado.nivel}:
-  {"Una operación en este nivel tiene condiciones para escalar. Las fricciones residuales tienden a amplificarse con el crecimiento si no se abordan antes de que el volumen operativo aumente. En 15 minutos podemos mostrarte exactamente qué está detrás de esas fricciones y qué requeriría resolverlas. Sin presentación de servicios. Sin compromiso." if resultado.nivel == "verde" else
-   "El patrón que identifica este diagnóstico es resoluble. Lo que requiere es un diagnóstico más profundo del proceso específico donde la brecha es mayor. Eso es exactamente lo que hacemos en los primeros 15 minutos: identificar dónde está el cuello de botella real y qué implicaría resolverlo. Sin jerga técnica. Sin compromiso." if resultado.nivel == "ambar" else
-   "Lo que describe este diagnóstico no es un problema de herramientas — es un problema de arquitectura operativa. La solución requiere primero entender exactamente dónde está el origen de la fricción, antes de proponer cualquier cambio al sistema. En 15 minutos podemos hacer esa primera lectura contigo. Sin diagnóstico previo, sin agenda de ventas. Solo una conversación sobre tu operación real."}]
+  [3-4 oraciones. Menciona el patrón ({resultado.arquetipo_nombre})
+  y al menos una señal ({resultado.foco_1_nombre}).
+  Tono: "esto es lo que vimos — si resuena, conversemos."
+  Usa este texto base adaptándolo al perfil:
+  {cierre_base}]
 </section>
 
-EXTENSIÓN TOTAL: entre 250 y 380 palabras. No más.
-Palabras prohibidas: ceguera, caos, catastrófico, urgente, alarmante, grave, crítico (como adjetivo de situación)."""
+EXTENSIÓN TOTAL: entre 220 y 320 palabras.
+Formato: negritas en la frase clave de cada sección. Párrafos de máximo 3 oraciones.
+Prohibido sin traducir: fricción · sociotécnico · workaround · arquitectura operativa.
+Prohibido: ceguera · caos · catastrófico · urgente · alarmante · grave · crítico."""
 
 
 def generar_reporte_html(payload: dict, resultado: ResultadoScoring) -> str:
     client = anthropic.Anthropic(api_key=os.getenv("ANTHROPIC_API_KEY"))
 
-    system_prompt = """Eres el sistema de diagnóstico automatizado de Sint, una agencia B2B especializada
-en resolver fricciones operativas mediante software. Tu función es generar el texto
-de un reporte ejecutivo para un directivo que acaba de completar el Diagnóstico Sint.
+    system_prompt = """Eres el sistema de reporte del Diagnóstico Sint.
 
-Tono irrenunciable: objetivo, consultivo, directo. Sin alarmismo, sin descalificación,
-sin jerga técnica. Hablas el idioma del directorio: costos, eficiencia, fricción.
-Actúas con la rigurosidad de un sociólogo y la frialdad resolutiva de un ingeniero.
+Tu función es escribir un informe ejecutivo breve para quien acaba de responder
+el Diagnóstico Sint — 8 preguntas sobre cómo funciona su operación.
 
-Palabras prohibidas: ceguera, caos, catastrófico, urgente, alarmante, grave,
-crítico (como adjetivo de situación). Reemplázalas con descripciones factuales
-del impacto operativo."""
+PRINCIPIO CENTRAL:
+Tienes 8 respuestas de opción múltiple de una sola persona. Es una señal,
+no una radiografía completa de la empresa. Nunca afirmes lo que no puedes
+saber con certeza. Usa: "tus respuestas sugieren", "esto puede indicar",
+"en operaciones similares esto suele verse como".
+
+LENGUAJE:
+Habla como habla tu audiencia: CEOs, COOs y CTOs chilenos.
+Su lenguaje es: tiempo, plata, personas, decisiones, equipos, procesos.
+Si usas un término técnico, tradúcelo de inmediato con un ejemplo concreto
+de la vida laboral cotidiana.
+Nunca uses sin traducir: fricción, sociotécnico, workaround,
+arquitectura operativa, gobernanza tecnológica, alineación sistema-proceso.
+
+TONO:
+Directo. Respetuoso. Sin alarmismo. Sin lenguaje de ventas.
+Serviciales, no arrogantes. Sint no presume saber más de lo que sabe.
+
+DOBLE IMPACTO — nombra siempre los dos:
+1. Impacto en el negocio: tiempo, decisiones lentas, costos ocultos, riesgo.
+2. Impacto en las personas: desgaste, trabajo duplicado, frustración evitable.
+
+Palabras prohibidas: ceguera, caos, catastrófico, urgente, alarmante,
+grave, crítico (como adjetivo de situación)."""
 
     message = client.messages.create(
         model="claude-sonnet-4-6",
-        max_tokens=1000,
+        max_tokens=1500,
         temperature=0.4,
         system=system_prompt,
         messages=[

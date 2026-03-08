@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diagnóstico Sint</title>
+  <style>
+    .ds-saludo { font-size: 14px; color: #52525B; margin-bottom: 16px; }
+    .ds-nivel { font-size: 15px; line-height: 1.6; margin-bottom: 20px; color: #18181B; }
+    .ds-arquetipo { background: #F9F9FA; border-radius: 6px; padding: 16px 20px; margin-bottom: 20px; }
+    .ds-arquetipo-titulo { font-size: 15px; font-weight: 700; color: #FF6B4A; margin: 0 0 10px 0; }
+    .ds-arquetipo p { font-size: 14px; line-height: 1.7; color: #18181B; margin: 0; }
+    .ds-focos { margin-bottom: 20px; }
+    .ds-foco { border-left: 3px solid #FF6B4A; padding-left: 14px; margin-bottom: 14px; }
+    .ds-foco-titulo { font-size: 11px; font-weight: 700; color: #FF6B4A; margin: 0 0 6px 0; text-transform: uppercase; letter-spacing: 0.5px; }
+    .ds-foco p { font-size: 14px; line-height: 1.7; color: #18181B; margin: 0; }
+    .ds-alerta { background: #FFF7F5; border: 1px solid #FF6B4A30; border-radius: 6px; padding: 14px 18px; margin-bottom: 20px; }
+    .ds-alerta-titulo { font-size: 12px; font-weight: 700; color: #FF6B4A; margin: 0 0 6px 0; }
+    .ds-alerta p { font-size: 14px; line-height: 1.7; color: #18181B; margin: 0; }
+    .ds-cierre { font-size: 14px; line-height: 1.8; color: #18181B; border-top: 1px solid #E4E4E7; padding-top: 16px; margin-bottom: 24px; }
+  </style>
+</head>
+<body style="margin:0; padding:0; background-color:#F4F4F5; font-family:Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#F4F4F5;">
+    <tr>
+      <td align="center" style="padding:32px 16px;">
+        <table width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px; width:100%; background-color:#FFFFFF; border-radius:8px; overflow:hidden;">
+          
+          <!-- HEADER -->
+          <tr>
+            <td style="padding:24px; background-color:#FFFFFF;">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td style="font-size:20px; font-weight:700; color:#FF6B4A; letter-spacing:-0.5px;">Sint</td>
+                </tr>
+                <tr>
+                  <td style="font-size:13px; color:#52525B; padding-top:4px;">Diagnóstico Sint · 8 de marzo de 2026</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          
+          <!-- BANDA DE NIVEL -->
+          <tr>
+            <td style="padding:0 24px;">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#FF6B4A15; border-left:4px solid #FF6B4A; border-radius:0 8px 8px 0;">
+                <tr>
+                  <td style="padding:16px 20px;">
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td style="font-size:15px; font-weight:600; color:#FF6B4A;">🔴 Fricción sistémica con impacto en resultados</td>
+                      </tr>
+                      <tr>
+                        <td style="font-size:12px; color:#52525B; padding-top:4px;">SFS 28.0 / 31.2 · Operación en modo manual</td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          
+          <!-- GAUGE SFS -->
+          <tr>
+            <td style="padding:16px 24px;">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-radius:4px; overflow:hidden; height:8px;">
+                <tr>
+                  <td width="10%" style="background-color:#FF6B4A; height:8px; line-height:8px; font-size:0;">&nbsp;</td><td width="90%" style="background-color:#E4E4E7; height:8px; line-height:8px; font-size:0;">&nbsp;</td>
+                </tr>
+              </table>
+              <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td style="font-size:12px; color:#52525B; padding-top:6px;">10% de salud operativa</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          
+          <!-- CONTENIDO DEL REPORTE -->
+          <tr>
+            <td style="padding:0 24px;">
+              <section class="ds-saludo">
+  Este reporte está dirigido al CTO / Gerente de Tecnología a partir de las respuestas entregadas en el Diagnóstico Sint.
+</section>
+
+<section class="ds-nivel">
+  <strong>Fricción sistémica con impacto en resultados.</strong> Para una empresa de 101 a 200 personas en el sector financiero o de seguros, este nivel indica que la fricción operativa ya no es puntual: está distribuida en múltiples capas del sistema y afecta la capacidad de la organización de operar con consistencia y control.
+</section>
+
+<section class="ds-arquetipo">
+  <h3 class="ds-arquetipo-titulo">Operación en modo manual</h3>
+  <p>En una operación financiera de este tamaño, los equipos no pueden darse el lujo de improvisar — pero eso es exactamente lo que está ocurriendo. El sistema no acompaña los procesos reales: los condiciona, los ralentiza y obliga a los equipos a construir rutas alternativas para cumplir con los plazos y los controles regulatorios. La gobernanza tecnológica está fragmentada, nadie tiene autoridad clara sobre las decisiones de sistema, y los problemas operativos se absorben en silencio en lugar de escalar. El resultado es una organización que funciona, pero a un costo de esfuerzo humano que no aparece en ningún reporte.</p>
+</section>
+
+<section class="ds-focos">
+  <div class="ds-foco">
+    <h4 class="ds-foco-titulo">Alineación sistema–proceso</h4>
+    <p>El sistema actual no refleja cómo trabaja el equipo — lo contradice. Esto genera fatiga operativa, errores evitables y decisiones que se toman con información incompleta o fuera de tiempo. En un entorno regulado como finanzas o seguros, esa desalineación tiene un costo directo en trazabilidad y en la velocidad de respuesta ante auditorías o eventos operativos.</p>
+  </div>
+  <div class="ds-foco">
+    <h4 class="ds-foco-titulo">Dependencia de soluciones alternativas</h4>
+    <p>Este foco es la consecuencia directa del anterior: cuando el sistema no acompaña el proceso, el equipo construye sus propios circuitos. Hojas de cálculo, correos, acuerdos informales. Esos circuitos funcionan hasta que alguien se va, el volumen crece o hay un cambio regulatorio. La dependencia de soluciones alternativas no es un hábito — es una respuesta racional a un sistema que no resuelve lo que debería.</p>
+  </div>
+</section>
+
+<section class="ds-alerta">
+  <h4 class="ds-alerta-titulo">Observación puntual — Alineación sistema–proceso</h4>
+  <p>Esta dimensión es el punto de origen del patrón sistémico identificado: mientras el sistema siga dictando cómo trabajar en lugar de acompañar el flujo real, las soluciones alternativas seguirán proliferando. Intervenir en los síntomas sin atender esta desalineación de fondo produce mejoras parciales que no se sostienen.</p>
+</section>
+
+<section class="ds-cierre">
+  Lo que describe este diagnóstico no es un problema de herramientas — es un problema de arquitectura operativa. El arquetipo <em>Operación en modo manual</em> y la desalineación sistema–proceso que lo sostiene requieren primero entender exactamente dónde está el origen de la fricción, antes de proponer cualquier cambio. En 15 minutos podemos hacer esa primera lectura contigo. Sin diagnóstico previo, sin agenda de ventas. Solo una conversación sobre tu operación real.
+</section>
+            </td>
+          </tr>
+          
+          <!-- CTA -->
+          <tr>
+            <td style="padding:24px;">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td align="center">
+                    <a href="https://cal.com/sint" style="display:inline-block; background-color:#FF6B4A; color:#FFFFFF; font-weight:700; font-size:15px; padding:14px 36px; border-radius:6px; text-decoration:none;">Agendar 15 minutos →</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td align="center" style="font-size:12px; color:#52525B; padding-top:8px;">Sin compromiso · Reunión de 15 minutos por videollamada</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          
+          <!-- FOOTER -->
+          <tr>
+            <td style="padding:20px 24px; border-top:1px solid #E4E4E7;">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td style="font-size:13px; font-weight:600; color:#18181B;">Sint</td>
+                </tr>
+                <tr>
+                  <td style="font-size:12px; color:#52525B; padding-top:2px;">Software basado en diagnóstico organizacional</td>
+                </tr>
+                <tr>
+                  <td style="font-size:11px; color:#A1A1AA; padding-top:8px;">Sint utiliza tus respuestas exclusivamente para generar tu diagnóstico. No compartimos tu información con terceros.</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>

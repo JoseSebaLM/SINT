@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Diagnóstico Sint</title>
+  <style>
+    .ds-saludo { font-size: 14px; color: #52525B; margin-bottom: 16px; }
+    .ds-nivel { font-size: 15px; line-height: 1.6; margin-bottom: 20px; color: #18181B; }
+    .ds-arquetipo { background: #F9F9FA; border-radius: 6px; padding: 16px 20px; margin-bottom: 20px; }
+    .ds-arquetipo-titulo { font-size: 15px; font-weight: 700; color: #FF6B4A; margin: 0 0 10px 0; }
+    .ds-arquetipo p { font-size: 14px; line-height: 1.7; color: #18181B; margin: 0; }
+    .ds-focos { margin-bottom: 20px; }
+    .ds-foco { border-left: 3px solid #F59E0B; padding-left: 14px; margin-bottom: 14px; }
+    .ds-foco-titulo { font-size: 11px; font-weight: 700; color: #F59E0B; margin: 0 0 6px 0; text-transform: uppercase; letter-spacing: 0.5px; }
+    .ds-foco p { font-size: 14px; line-height: 1.7; color: #18181B; margin: 0; }
+    .ds-alerta { background: #FFF7F5; border: 1px solid #FF6B4A30; border-radius: 6px; padding: 14px 18px; margin-bottom: 20px; }
+    .ds-alerta-titulo { font-size: 12px; font-weight: 700; color: #FF6B4A; margin: 0 0 6px 0; }
+    .ds-alerta p { font-size: 14px; line-height: 1.7; color: #18181B; margin: 0; }
+    .ds-cierre { font-size: 14px; line-height: 1.8; color: #18181B; border-top: 1px solid #E4E4E7; padding-top: 16px; margin-bottom: 24px; }
+  </style>
+</head>
+<body style="margin:0; padding:0; background-color:#F4F4F5; font-family:Inter, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;">
+  <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#F4F4F5;">
+    <tr>
+      <td align="center" style="padding:32px 16px;">
+        <table width="600" cellpadding="0" cellspacing="0" border="0" style="max-width:600px; width:100%; background-color:#FFFFFF; border-radius:8px; overflow:hidden;">
+          
+          <!-- HEADER -->
+          <tr>
+            <td style="padding:24px; background-color:#FFFFFF;">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td style="font-size:20px; font-weight:700; color:#FF6B4A; letter-spacing:-0.5px;">Sint</td>
+                </tr>
+                <tr>
+                  <td style="font-size:13px; color:#52525B; padding-top:4px;">Diagnóstico Sint · 8 de marzo de 2026</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          
+          <!-- BANDA DE NIVEL -->
+          <tr>
+            <td style="padding:0 24px;">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0" style="background-color:#F59E0B15; border-left:4px solid #F59E0B; border-radius:0 8px 8px 0;">
+                <tr>
+                  <td style="padding:16px 20px;">
+                    <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                      <tr>
+                        <td style="font-size:15px; font-weight:600; color:#F59E0B;">🟡 Desalineación operativa activa</td>
+                      </tr>
+                      <tr>
+                        <td style="font-size:12px; color:#52525B; padding-top:4px;">SFS 13.6 / 31.2 · Fricción distribuida</td>
+                      </tr>
+                    </table>
+                  </td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          
+          <!-- GAUGE SFS -->
+          <tr>
+            <td style="padding:16px 24px;">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0" style="border-radius:4px; overflow:hidden; height:8px;">
+                <tr>
+                  <td width="56%" style="background-color:#F59E0B; height:8px; line-height:8px; font-size:0;">&nbsp;</td><td width="44%" style="background-color:#E4E4E7; height:8px; line-height:8px; font-size:0;">&nbsp;</td>
+                </tr>
+              </table>
+              <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td style="font-size:12px; color:#52525B; padding-top:6px;">56% de salud operativa</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          
+          <!-- CONTENIDO DEL REPORTE -->
+          <tr>
+            <td style="padding:0 24px;">
+              <section class="ds-saludo">
+  Este informe es para ti, como COO o Gerente de Operaciones — la persona que ve de cerca cómo funciona (o no funciona) la operación día a día.
+</section>
+
+<section class="ds-nivel">
+  Tus respuestas sugieren una brecha entre cómo debería funcionar la operación y cómo funciona hoy, y esa brecha tiene un costo que no siempre aparece en los reportes. En una empresa de 51 a 100 personas en manufactura, construcción o logística, este tipo de desfase suele volverse invisible porque la gente lo absorbe — trabaja más, coordina por fuera del sistema, resuelve en silencio. <strong>El problema no es que la operación esté rota: es que está costando más de lo que debería.</strong>
+</section>
+
+<section class="ds-arquetipo">
+  <h3 class="ds-arquetipo-titulo">Fricción distribuida</h3>
+  Indicaste que el sistema "dicta cómo trabajar y entorpece el flujo", que los problemas "se resuelven en silencio, sin registro" y que la visibilidad de gerencia es "parcial, basada en reportes manuales o parciales". Esto sugiere un patrón donde las dificultades no están concentradas en un solo punto, sino repartidas en varios momentos del día operativo. <strong>Es como una planta donde cada turno tiene su propio modo de hacer las cosas porque el sistema oficial no calza con la realidad del piso</strong> — y nadie lo dice en voz alta porque siempre ha sido así. Con el tiempo, ese desfase acumula horas, errores y desgaste que no aparecen en ningún dashboard.
+</section>
+
+<section class="ds-focos">
+  <div class="ds-foco">
+    <h4 class="ds-foco-titulo">Alineación sistema–proceso</h4>
+    <p>Indicaste que el sistema "dicta cómo trabajar y entorpece el flujo". <strong>Esto puede indicar que tu equipo está adaptando su trabajo al sistema, en lugar de que el sistema apoye el trabajo real</strong> — lo que genera decisiones más lentas, pasos innecesarios y personas que gastan energía navegando herramientas en vez de ejecutar. Para el negocio, eso se traduce en tiempos de ciclo más largos y mayor riesgo de error en la operación diaria.</p>
+  </div>
+  <div class="ds-foco">
+    <h4 class="ds-foco-titulo">Dependencia de soluciones alternativas</h4>
+    <p>Indicaste que ocasionalmente se usan soluciones por fuera del sistema oficial — planillas paralelas, mensajes de WhatsApp, acuerdos informales. Esto suele ser consecuencia directa del punto anterior: <strong>cuando el sistema no calza con el proceso, la gente construye sus propios atajos para seguir funcionando</strong>. El costo no es solo operativo — es que la información queda fragmentada y la gerencia toma decisiones con datos incompletos.</p>
+  </div>
+</section>
+
+<section class="ds-alerta">
+  <h4 class="ds-alerta-titulo">Algo que vale la pena nombrar — Alineación sistema–proceso</h4>
+  <p>Indicaste que el sistema "entorpece el flujo", y al mismo tiempo que los problemas "se resuelven en silencio, sin registro". <strong>Esa combinación llama la atención</strong> porque sugiere que el equipo ya encontró formas de convivir con el problema — lo que hace más difícil dimensionar su costo real.</p>
+</section>
+
+<section class="ds-cierre">
+  El patrón que sugieren estas respuestas — fricciones distribuidas con foco en cómo el sistema se relaciona con el trabajo real — tiene solución, pero requiere entender primero dónde está exactamente el punto de mayor desgaste antes de proponer cualquier cambio. <strong>Eso es lo que hacemos en los primeros 15 minutos: identificar el origen, no los síntomas.</strong> Sin jerga técnica. Sin compromiso. Si esto resuena con lo que ves en tu operación, conversemos.
+</section>
+            </td>
+          </tr>
+          
+          <!-- CTA -->
+          <tr>
+            <td style="padding:24px;">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td align="center">
+                    <a href="https://cal.com/sint" style="display:inline-block; background-color:#FF6B4A; color:#FFFFFF; font-weight:700; font-size:15px; padding:14px 36px; border-radius:6px; text-decoration:none;">Agendar 15 minutos →</a>
+                  </td>
+                </tr>
+                <tr>
+                  <td align="center" style="font-size:12px; color:#52525B; padding-top:8px;">Sin compromiso · Reunión de 15 minutos por videollamada</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          
+          <!-- FOOTER -->
+          <tr>
+            <td style="padding:20px 24px; border-top:1px solid #E4E4E7;">
+              <table width="100%" cellpadding="0" cellspacing="0" border="0">
+                <tr>
+                  <td style="font-size:13px; font-weight:600; color:#18181B;">Sint</td>
+                </tr>
+                <tr>
+                  <td style="font-size:12px; color:#52525B; padding-top:2px;">Software basado en diagnóstico organizacional</td>
+                </tr>
+                <tr>
+                  <td style="font-size:11px; color:#A1A1AA; padding-top:8px;">Sint utiliza tus respuestas exclusivamente para generar tu diagnóstico. No compartimos tu información con terceros.</td>
+                </tr>
+              </table>
+            </td>
+          </tr>
+          
+        </table>
+      </td>
+    </tr>
+  </table>
+</body>
+</html>
