@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { useRouter } from "next/navigation";
 
 // --- Types ---
 type StepType = "profile" | "email" | "diagnostic";
@@ -200,7 +199,7 @@ function Logo() {
 // --- Main Component ---
 
 export default function DiagnosticoPage(): JSX.Element {
-  const router = useRouter();
+  // useRouter removido — incompatible con output: 'export'
   const [currentStep, setCurrentStep] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState<Partial<FormData>>({});
@@ -273,7 +272,7 @@ export default function DiagnosticoPage(): JSX.Element {
       }
 
       // Éxito: redirigir a confirmación
-      router.push("/diagnostico/resultado");
+      window.location.href = "/diagnostico/resultado";
     } catch (err) {
       console.error("[DS] Network error:", err);
       setSubmitError(true);
