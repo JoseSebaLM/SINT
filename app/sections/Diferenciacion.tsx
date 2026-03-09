@@ -31,7 +31,7 @@ const tableData: TableRow[] = [
   },
   {
     label: "Diagnóstico",
-    otros: "✗ Raramente",
+    otros: "Poco frecuente",
     fabrica: "✗",
     consultora: "Parcial",
     statusQuo: "✗",
