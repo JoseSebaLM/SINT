@@ -188,7 +188,7 @@ Palabras prohibidas: ceguera, caos, catastrófico, urgente, alarmante,
 grave, crítico (como adjetivo de situación)."""
 
     message = client.messages.create(
-        model="claude-sonnet-4-5-20250929",
+        model="claude-sonnet-4-6",
         max_tokens=1500,
         temperature=0.4,
         system=system_prompt,
