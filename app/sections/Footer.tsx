@@ -62,7 +62,7 @@ export default function Footer(): JSX.Element {
           <div className="md:text-right flex flex-col gap-4">
             <Link
               href="/diagnostico"
-              className="bg-[#FF6B4A] text-black font-bold px-4 py-2 rounded hover:scale-105 transition-transform inline-block text-sm"
+              className="bg-[#FF6B4A] text-black font-bold px-4 py-2 rounded hover:scale-105 transition-transform text-sm"
             >
               Iniciar Diagnóstico →
             </Link>
