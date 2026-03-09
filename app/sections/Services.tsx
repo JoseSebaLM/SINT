@@ -97,7 +97,7 @@ export default function Services(): JSX.Element {
       badgeColorClass: "bg-[#A371F7]/10 text-[#A371F7]",
       price: "Oferta a medida",
       ctaText: "Agendar reunión →",
-      ctaHref: "#",
+      ctaHref: "https://cal.com/jose-latorre/15min",
       ctaBgColor: "bg-[#A371F7]",
     },
     {
@@ -110,7 +110,7 @@ export default function Services(): JSX.Element {
       badgeColorClass: "bg-[#FF6B4A]/10 text-[#FF6B4A]",
       price: "Por proyecto",
       ctaText: "Conversar →",
-      ctaHref: "#",
+      ctaHref: "https://cal.com/jose-latorre/15min",
       ctaBgColor: "bg-[#FF6B4A]",
     },
   ];
