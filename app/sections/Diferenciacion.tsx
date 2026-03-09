@@ -54,7 +54,7 @@ const tableData: TableRow[] = [
     sint: "✓ Auditoría de IA",
   },
   {
-    label: "Independencia",
+    label: "Autonomía",
     otros: "✗",
     fabrica: "✗",
     consultora: "✗",
@@ -116,23 +116,23 @@ export default function Diferenciacion(): JSX.Element {
           Seis razones. Una decisión.
         </motion.h2>
 
-        {/* Tabla comparativa - Mobile: 2 columnas, Desktop: 5 columnas */}
+        {/* Tabla comparativa */}
         <motion.div
-          className="overflow-x-auto -mx-6 px-6 md:mx-0 md:px-0"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          {/* Versión Mobile: 2 columnas */}
+          {/* Versión Mobile: 3 columnas (etiqueta | otros | sint) */}
           <div className="md:hidden">
             {/* Header de la tabla mobile */}
-            <div className="grid grid-cols-2 gap-0">
-              <div className="p-4 border-b border-white/10 text-center">
-                <span className="text-[#8A8F98] text-sm font-medium">Los demás</span>
+            <div className="grid grid-cols-[80px_1fr_1fr] gap-0">
+              <div className="p-3 border-b border-white/10" />
+              <div className="p-3 border-b border-white/10 text-center">
+                <span className="text-[#8A8F98] text-xs font-medium">Los demás</span>
               </div>
-              <div className="p-4 border-b-2 border-[#FF6B4A] bg-[#FF6B4A]/5 text-center">
-                <span className="text-[#FF6B4A] text-sm font-bold">Sint</span>
+              <div className="p-3 border-b-2 border-[#FF6B4A] bg-[#FF6B4A]/5 text-center">
+                <span className="text-[#FF6B4A] text-xs font-bold">Sint</span>
               </div>
             </div>
 
@@ -140,22 +140,22 @@ export default function Diferenciacion(): JSX.Element {
             {tableData.map((row, index) => (
               <motion.div
                 key={row.label}
-                className="grid grid-cols-2 gap-0"
+                className="grid grid-cols-[80px_1fr_1fr] gap-0"
                 initial={{ opacity: 0, y: 10 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
-                transition={{ duration: 0.4, delay: 0.1 * index }}
+                transition={{ duration: 0.4, delay: 0.05 * index }}
               >
-                {/* Label de fila - full width en mobile */}
-                <div className="col-span-2 p-3 border-b border-white/5 text-[#8A8F98] text-xs uppercase tracking-wider">
+                {/* Etiqueta de fila - columna fija */}
+                <div className="p-3 border-b border-white/5 text-[#8A8F98] text-xs uppercase tracking-wider flex items-center">
                   {row.label}
                 </div>
                 {/* Los demás */}
-                <div className="p-4 border-b border-white/5 text-[#8A8F98] text-sm text-center">
+                <div className="p-3 border-b border-white/5 text-[#8A8F98] text-sm text-center flex items-center justify-center">
                   {renderCell(row.otros)}
                 </div>
                 {/* Sint - destacado */}
-                <div className="p-4 border-b border-white/5 bg-[#FF6B4A]/[0.02] text-[#E5E6EB] text-sm text-center font-medium">
+                <div className="p-3 border-b border-white/5 bg-[#FF6B4A]/[0.02] text-[#E5E6EB] text-sm text-center font-medium flex items-center justify-center">
                   {renderCell(row.sint)}
                 </div>
               </motion.div>
