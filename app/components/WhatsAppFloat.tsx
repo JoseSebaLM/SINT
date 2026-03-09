@@ -14,7 +14,7 @@ export default function WhatsAppFloat(): JSX.Element {
       href="https://wa.me/56956303337"
       target="_blank"
       rel="noopener noreferrer"
-      className="fixed bottom-6 right-6 z-50 bg-brand-flux-orange text-white rounded-full p-4 shadow-xl"
+      className="fixed top-1/2 -translate-y-1/2 right-6 z-50 bg-brand-flux-orange text-white rounded-full p-4 shadow-xl"
       aria-label="Contactar por WhatsApp"
       whileHover={{ scale: 1.1 }}
       whileTap={{ scale: 0.9 }}
