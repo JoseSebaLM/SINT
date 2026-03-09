@@ -1,7 +1,7 @@
 # SINT — Agencia Digital + Diagnóstico Operativo
 **Stack:** Next.js 14 + FastAPI + Claude AI + Resend + Google Sheets
 **URL producción:** https://sint.cl
-**Última actualización:** 9 de marzo de 2026
+**Última actualización:** 9 de marzo de 2026 — AGENTS.md sincronizado, producción estable
 
 ---
 
