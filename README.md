@@ -1,36 +1,114 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# SINT — Agencia Digital + Diagnóstico Operativo
 
-## Getting Started
+**Stack:** Next.js 14 + FastAPI + Claude AI + Resend + Google Sheets
+**URL:** https://sint.cl
 
-First, run the development server:
+## Arquitectura de Producción
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+```
+┌─────────────────────────────────────┐
+│  Frontend: Cloudflare Pages         │
+│  URL: https://sint.cl               │
+│  Build: Static export (out/)        │
+└──────────────┬──────────────────────┘
+               │ POST /diagnostico
+               ▼
+┌─────────────────────────────────────┐
+│  Backend: Fly.io                    │
+│  URL: https://sint-backend.fly.dev  │
+│  Región: gru (São Paulo)            │
+│  Runtime: Docker + Python 3.11      │
+└─────────────────────────────────────┘
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Desarrollo Local
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+### Frontend
+```bash
+npm install
+npm run dev          # http://localhost:3000
+```
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+### Backend
+```bash
+cd backend
+python3 -m venv venv && source venv/bin/activate
+pip install -r requirements.txt
+uvicorn main:app --reload   # http://localhost:8000
+```
 
-## Learn More
+### Variables de Entorno
 
-To learn more about Next.js, take a look at the following resources:
+**Frontend** — archivo `.env` en la raíz:
+```bash
+NEXT_PUBLIC_BACKEND_URL=http://localhost:8000   # producción: https://sint-backend.fly.dev
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+**Backend** — archivo `backend/.env` (ver `.env.example`):
+```bash
+FRONTEND_URL=http://localhost:3000
+ANTHROPIC_API_KEY=sk-ant-...
+RESEND_API_KEY=re_...
+GOOGLE_SHEETS_ID=...
+GOOGLE_CREDENTIALS_JSON={...}
+CAL_LINK=https://cal.com/...
+INTERNAL_EMAIL=hola@sint.cl
+```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Deploy a Producción
 
-## Deploy on Vercel
+### Frontend (Cloudflare Pages)
+```bash
+NEXT_PUBLIC_BACKEND_URL=https://sint-backend.fly.dev npm run build
+CLOUDFLARE_API_TOKEN="<token>" npx wrangler pages deploy out/ --project-name sint --branch main
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+### Backend (Fly.io)
+```bash
+cd backend
+fly deploy                    # Desplegar
+fly logs                      # Ver logs
+fly secrets set KEY=value     # Configurar secrets
+curl https://sint-backend.fly.dev/health   # Verificar
+```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+**Secrets en Fly.io:** `ANTHROPIC_API_KEY`, `RESEND_API_KEY`, `GOOGLE_SHEETS_ID`, `GOOGLE_CREDENTIALS_JSON`, `CAL_LINK`, `INTERNAL_EMAIL`, `FRONTEND_URL`
+
+## Flujo del Diagnóstico
+
+1. Usuario completa wizard de 11 pasos (3 perfil + 1 email + 8 diagnóstico)
+2. Backend calcula SFS (Sint Friction Score) con pesos por dimensión
+3. Claude AI genera reporte HTML ejecutivo personalizado
+4. Reporte se envía por email (Resend) y se registra en Google Sheets
+5. Usuario ve página de confirmación
+
+## Testing
+
+```bash
+cd backend
+python3 test_scoring.py    # Unit tests del scoring
+python3 qa_test.py         # Tests E2E (requiere backend corriendo)
+```
+
+## Estructura del Proyecto
+
+```
+├── app/                        # Frontend Next.js (App Router)
+│   ├── components/             # Logo, WhatsAppFloat
+│   ├── sections/               # Navbar, Hero, Pipeline, Services, Equipo, etc.
+│   ├── diagnostico/            # Wizard + página resultado
+│   ├── layout.tsx              # Layout raíz
+│   └── page.tsx                # Landing page
+├── backend/                    # API Python/FastAPI
+│   ├── main.py                 # App + endpoints + CORS
+│   ├── scoring.py              # Algoritmo SFS + arquetipos
+│   ├── report_generator.py     # Integración Claude AI
+│   ├── email_sender.py         # Envío con Resend
+│   ├── sheets_logger.py        # Log en Google Sheets
+│   ├── Dockerfile              # Imagen de producción
+│   ├── fly.toml                # Config Fly.io
+│   └── requirements.txt        # Dependencias Python
+├── next.config.js              # Config Next.js (static export)
+├── tailwind.config.ts          # Colores custom
+└── .gitignore                  # Protege .env y archivos sensibles
+```

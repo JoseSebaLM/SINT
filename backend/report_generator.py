@@ -43,6 +43,17 @@ def construir_prompt(payload: dict, resultado: ResultadoScoring) -> str:
     }
     cierre_base = cierres[resultado.nivel]
 
+    seccion_alerta = ""
+    if resultado.alerta_activa:
+        seccion_alerta = (
+            '<section class="ds-alerta">\n'
+            f'  <h4 class="ds-alerta-titulo">Algo que vale la pena nombrar — {dimension_alerta_nombre}</h4>\n'
+            '  <p>[1-2 oraciones. Cita la respuesta específica.\n'
+            '  Explica por qué llama la atención en el contexto de las otras respuestas.\n'
+            '  Tono: observación honesta, no alarma.]</p>\n'
+            '</section>'
+        )
+
     return f"""Genera el reporte ejecutivo del Diagnóstico Sint para la siguiente empresa.
 Devuelve ÚNICAMENTE el HTML solicitado. Sin explicaciones, sin markdown, sin
 bloques de código. Solo el HTML limpio con las clases especificadas.
@@ -127,12 +138,7 @@ no el concepto. Ejemplos:
   </div>
 </section>
 
-{"" if not resultado.alerta_activa else f"""<section class="ds-alerta">
-  <h4 class="ds-alerta-titulo">Algo que vale la pena nombrar — {dimension_alerta_nombre}</h4>
-  <p>[1-2 oraciones. Cita la respuesta específica.
-  Explica por qué llama la atención en el contexto de las otras respuestas.
-  Tono: observación honesta, no alarma.]</p>
-</section>"""}
+{seccion_alerta}
 
 <section class="ds-cierre">
   [3-4 oraciones. Menciona el patrón ({resultado.arquetipo_nombre})
@@ -182,7 +188,7 @@ Palabras prohibidas: ceguera, caos, catastrófico, urgente, alarmante,
 grave, crítico (como adjetivo de situación)."""
 
     message = client.messages.create(
-        model="claude-sonnet-4-6",
+        model="claude-sonnet-4-5-20250929",
         max_tokens=1500,
         temperature=0.4,
         system=system_prompt,

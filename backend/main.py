@@ -18,7 +18,11 @@ app = FastAPI(title="Sint DS Backend")
 
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=[os.getenv("FRONTEND_URL", "http://localhost:3000")],
+    allow_origins=[
+        os.getenv("FRONTEND_URL", "http://localhost:3000"),
+        "https://sint.cl",
+        "https://www.sint.cl",
+    ],
     allow_methods=["POST"],
     allow_headers=["*"],
 )

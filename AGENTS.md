@@ -428,7 +428,7 @@ uvicorn main:app --host 0.0.0.0 --port $PORT
 - **Backend integrations**: Email (Resend), AI (Anthropic), and Sheets (Google) are optional - the backend will log errors but continue functioning if these are not configured
 - **Diagnostic payload**: Sent to backend at `/diagnostico` endpoint
 - **No database**: Backend is stateless; data persistence through Google Sheets or external storage
-- **AI Report Generation**: Uses Claude Sonnet 4.6 model via Anthropic API to generate personalized HTML reports
+- **AI Report Generation**: Uses Claude Sonnet 4.5 (`claude-sonnet-4-5-20250929`) via Anthropic API to generate personalized HTML reports
 - **Email sender**: Uses Resend with sender address `diagnostico@sint.cl`
 - **Google Sheets**: Service account credentials required; headers defined in `sheets_logger.py`
 
@@ -443,3 +443,75 @@ uvicorn main:app --host 0.0.0.0 --port $PORT
 | `sheets_logger.py` | Google Sheets append-only logging with service account |
 | `test_scoring.py` | Unit tests for scoring algorithm |
 | `qa_test.py` | End-to-end integration tests |
+| `Dockerfile` | Docker image for Fly.io deployment (Python 3.11 slim, port 8080) |
+| `.dockerignore` | Excludes tests, previews, .env from Docker build |
+| `fly.toml` | Fly.io app config (region: gru, 512MB, auto-stop) |
+
+## Changelog — Sesión de Deploy a Producción (2026-03-09)
+
+Cambios realizados por **Claude Code (Opus 4.6)** para llevar el proyecto a producción.
+
+### Bugs Críticos Corregidos
+
+1. **Modelo Claude inválido** — `report_generator.py:185`
+   - Antes: `model="claude-sonnet-4-6"` (no existe en la API)
+   - Después: `model="claude-sonnet-4-5-20250929"` (modelo válido)
+   - Sin esto, todo el endpoint `/diagnostico` fallaba con error 400
+
+2. **f-string anidado incompatible con Python 3.11** — `report_generator.py:130`
+   - Antes: f-string con `"""` dentro de otro f-string con `"""` (SyntaxError en Python 3.11)
+   - Después: Sección de alerta extraída a variable `seccion_alerta` antes del f-string
+   - Sin esto, el backend no arrancaba
+
+3. **`useRouter` incompatible con static export** — `diagnostico/page.tsx`
+   - Antes: `import { useRouter } from "next/navigation"` + `router.push("/diagnostico/resultado")`
+   - Después: Import eliminado, reemplazado por `window.location.href = "/diagnostico/resultado"`
+   - `useRouter` no funciona con `output: 'export'` porque no hay servidor
+
+4. **`next/image` sin `unoptimized` en static export** — `next.config.js`
+   - Antes: Sin config de images
+   - Después: `images: { unoptimized: true }`
+   - Las imágenes con `fill` en `Equipo.tsx` fallarían sin esta config
+
+### Configuración de Producción
+
+5. **Static export habilitado** — `next.config.js`
+   - Agregado: `output: 'export'`
+   - Genera directorio `out/` con HTML estático para Cloudflare Pages
+
+6. **CORS actualizado para producción** — `main.py`
+   - Antes: Solo aceptaba `FRONTEND_URL` (una sola URL)
+   - Después: Acepta `FRONTEND_URL` + `https://sint.cl` + `https://www.sint.cl`
+
+7. **`.gitignore` reescrito** — `.gitignore`
+   - La sección backend estaba corrupta (codificada en UTF-16 con bytes nulos)
+   - Se reescribió completo. Se agregó `.env` a la raíz (antes solo `.env*.local`)
+
+### Archivos Nuevos (Deploy)
+
+8. **`backend/Dockerfile`** — Imagen de producción
+   - Python 3.11 slim, uvicorn en puerto 8080
+   - Optimizado con `--no-cache-dir`
+
+9. **`backend/.dockerignore`** — Exclusiones del build
+   - Excluye: `.env`, tests, previews, QA docs
+
+10. **`backend/fly.toml`** — Configuración Fly.io
+    - App: `sint-backend`, región: `gru` (São Paulo)
+    - 512MB RAM, shared CPU, auto-stop habilitado
+
+### Infraestructura Desplegada
+
+| Servicio | Plataforma | URL |
+|---|---|---|
+| Frontend | Cloudflare Pages | https://sint.cl |
+| Backend | Fly.io | https://sint-backend.fly.dev |
+
+### Notas para Futuros Cambios
+
+- **Para redesplegar frontend:** `NEXT_PUBLIC_BACKEND_URL=https://sint-backend.fly.dev npm run build` y luego `wrangler pages deploy out/`
+- **Para redesplegar backend:** `cd backend && fly deploy`
+- **NEXT_PUBLIC_BACKEND_URL** se inyecta en **build time**, no en runtime. Si cambia la URL del backend, hay que rebuilder el frontend
+- **Secrets del backend** están en Fly.io (`fly secrets list`), no en archivos
+- **El backend se auto-apaga** cuando no hay tráfico (`min_machines_running = 0`). El primer request puede tardar ~30s en cold start
+- **CORS** tiene hardcodeados `sint.cl` y `www.sint.cl`. Si el dominio cambia, actualizar `main.py`
