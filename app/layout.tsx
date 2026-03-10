@@ -34,6 +34,9 @@ export const metadata: Metadata = {
       "Resolvemos fricciones operativas mediante software. Diagnóstico gratuito en 3 minutos.",
   },
   metadataBase: new URL("https://sint.cl"),
+  icons: {
+    icon: '/icon.svg',
+  },
 };
 
 export default function RootLayout({
