@@ -54,9 +54,6 @@ export default function Hero(): JSX.Element {
           <p className="text-lg text-[#8A8F98]">
             Sint transforma el diagnóstico organizacional en software a medida.
           </p>
-          <p className="text-lg text-[#8A8F98]">
-            Invierte en la solución, no en horas de desarrollo.
-          </p>
         </motion.div>
 
         {/* CTAs */}
@@ -80,22 +77,7 @@ export default function Hero(): JSX.Element {
           </button>
         </motion.div>
 
-        {/* Cita */}
-        <motion.blockquote
-          className="border-l-2 border-[#FF6B4A] pl-4 mt-10 max-w-xl"
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 0.48 }}
-        >
-          <p className="text-[#8A8F98] italic">
-            &quot;Estoy cansado de pagar por procesos largos de desarrollo, para
-            recibir un software caro que mi equipo no usa porque los
-            programadores nunca entendieron mi negocio.&quot;
-          </p>
-          <cite className="text-[#8A8F98] text-sm mt-2 block not-italic">
-            — El problema que Sint resuelve.
-          </cite>
-        </motion.blockquote>
+
       </div>
     </section>
   );
