@@ -23,7 +23,7 @@ export default function Targets(): JSX.Element {
     {
       industria: "Finanzas y Seguros",
       cargo: "CTO / CEO",
-      dolor: "Cada cambio en las reglas de negocio requiere semanas de desarrollo.",
+      dolor: "Mis reglas de negocio cambian, pero el sistema tarda meses en reflejarlas.",
     },
     {
       industria: "Tecnología y Agencias Digitales",
@@ -75,11 +75,8 @@ export default function Targets(): JSX.Element {
 
         {/* CTA al pie */}
         <div className="mt-16 pt-8 border-t border-white/[0.08] text-center">
-          <h3 className="text-3xl md:text-4xl font-bold text-[#E5E6EB] mb-4">
-            Si la operación falla, el software optimiza.
-          </h3>
-          <p className="text-[#8A8F98] text-lg md:text-xl mb-8">
-            Descubre en 3 minutos las principales fricciones operativas de tu empresa.
+          <p className="text-[#E5E6EB] text-xl md:text-2xl font-bold mb-8">
+            El diagnóstico tarda 3 minutos. La fricción, años.
           </p>
           <Link
             href="/diagnostico"
