@@ -32,8 +32,8 @@ export default function Manifesto(): JSX.Element {
         </motion.h2>
 
         {/* Cita */}
-        <motion.blockquote
-          className="border-l-2 border-[#FF6B4A] pl-5 mb-8 max-w-2xl"
+        <motion.div
+          className="mt-10 mb-8 bg-white/[0.04] rounded-lg px-6 py-5 max-w-2xl"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
@@ -44,10 +44,10 @@ export default function Manifesto(): JSX.Element {
             recibir un software caro que mi equipo no usa porque los
             programadores nunca entendieron mi negocio.&quot;
           </p>
-          <cite className="text-[#8A8F98] text-sm mt-2 block not-italic">
+          <cite className="text-[#8A8F98]/60 text-sm mt-3 block not-italic">
             — El problema que Sint resuelve.
           </cite>
-        </motion.blockquote>
+        </motion.div>
 
         {/* Párrafo 2 */}
         <motion.p
@@ -63,7 +63,7 @@ export default function Manifesto(): JSX.Element {
 
         {/* Línea de cierre */}
         <motion.p
-          className="mt-10 border-l-4 border-[#FF6B4A] pl-6 text-lg md:text-xl font-bold text-[#E5E6EB]"
+          className="mt-12 border-l-4 border-[#FF6B4A] pl-6 text-lg md:text-xl font-bold text-[#E5E6EB]"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
