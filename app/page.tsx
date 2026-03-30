@@ -7,7 +7,7 @@ import Targets         from "./sections/Targets";
 import Diferenciacion  from "./sections/Diferenciacion";
 import Equipo          from "./sections/Equipo";
 import Footer          from "./sections/Footer";
-// import WhatsAppFloat from "./components/WhatsAppFloat"; // DESACTIVADO
+import WhatsAppFloat from "./components/WhatsAppFloat";
 
 export default function Home() {
   return (
@@ -21,6 +21,7 @@ export default function Home() {
       <Diferenciacion />
       <Equipo />
       <Footer />
+      <WhatsAppFloat />
     </main>
   );
 }

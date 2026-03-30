@@ -15,10 +15,24 @@ export default function Hero(): JSX.Element {
     <section id="inicio" className="relative min-h-screen flex flex-col justify-center px-6 md:px-12 pt-24 pb-16 overflow-hidden">
       {/* Grain texture background */}
       <div
-        className="absolute inset-0 pointer-events-none z-0 opacity-[0.04]"
+        className="absolute inset-0 pointer-events-none z-[1] opacity-[0.04]"
         style={{
           backgroundImage: `url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)'/%3E%3C/svg%3E")`,
         }}
+      />
+      {/* Hero background image */}
+      <div
+        className="absolute inset-0 z-0"
+        style={{
+          backgroundImage: "url('/vlcsnap-00002.png')",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+        }}
+      />
+      {/* Overlay oscuro */}
+      <div
+        className="absolute inset-0 z-0"
+        style={{ backgroundColor: "rgba(9, 9, 11, 0.65)" }}
       />
 
       <div className="relative z-10 max-w-5xl mx-auto w-full">
@@ -54,9 +68,6 @@ export default function Hero(): JSX.Element {
           <p className="text-lg text-[#8A8F98]">
             Sint transforma el diagnóstico organizacional en software a medida.
           </p>
-          <p className="text-lg text-[#8A8F98]">
-            Invierte en la solución, no en horas de desarrollo.
-          </p>
         </motion.div>
 
         {/* CTAs */}
@@ -80,22 +91,7 @@ export default function Hero(): JSX.Element {
           </button>
         </motion.div>
 
-        {/* Cita */}
-        <motion.blockquote
-          className="border-l-2 border-[#FF6B4A] pl-4 mt-10 max-w-xl"
-          initial={{ opacity: 0, y: 16 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.4, delay: 0.48 }}
-        >
-          <p className="text-[#8A8F98] italic">
-            &quot;Estoy cansado de pagar por procesos largos de desarrollo, para
-            recibir un software caro que mi equipo no usa porque los
-            programadores nunca entendieron mi negocio.&quot;
-          </p>
-          <cite className="text-[#8A8F98] text-sm mt-2 block not-italic">
-            — El problema que Sint resuelve.
-          </cite>
-        </motion.blockquote>
+
       </div>
     </section>
   );

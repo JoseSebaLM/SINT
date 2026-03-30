@@ -31,20 +31,23 @@ export default function Manifesto(): JSX.Element {
           El mercado corporativo exige certeza. No horas de programación.
         </motion.h2>
 
-        {/* Párrafo 1 */}
-        <motion.p
-          className="text-[#8A8F98] text-base md:text-lg leading-relaxed mb-6"
+        {/* Cita */}
+        <motion.div
+          className="mt-10 mb-8 bg-white/[0.04] rounded-lg px-6 py-5 max-w-2xl"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5, delay: 0.2 }}
         >
-          El software que nadie usa porque los programadores nunca entendieron
-          el negocio. El ERP que te dicta cómo trabajar en vez de adaptarse a
-          ti. Las hojas de cálculo que tapan lo que debería resolver el
-          sistema. Eso es fricción operativa. Y tiene un costo real que no
-          aparece en ningún estado financiero.
-        </motion.p>
+          <p className="text-[#8A8F98] italic text-base md:text-lg leading-relaxed">
+            &quot;Estoy cansado de pagar por procesos largos de desarrollo, para
+            recibir un software caro que mi equipo no usa porque los
+            programadores nunca entendieron mi negocio.&quot;
+          </p>
+          <cite className="text-[#8A8F98]/60 text-sm mt-3 block not-italic">
+            — El problema que Sint resuelve.
+          </cite>
+        </motion.div>
 
         {/* Párrafo 2 */}
         <motion.p
@@ -60,7 +63,7 @@ export default function Manifesto(): JSX.Element {
 
         {/* Línea de cierre */}
         <motion.p
-          className="mt-10 border-l-4 border-[#FF6B4A] pl-6 text-lg md:text-xl font-bold text-[#E5E6EB]"
+          className="mt-12 border-l-4 border-[#FF6B4A] pl-6 text-lg md:text-xl font-bold text-[#E5E6EB]"
           initial={{ opacity: 0, y: 20 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true }}

@@ -15,8 +15,28 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "SINT - Digital Agency",
-  description: "Premium digital agency specialized in web development and design",
+  title: "Sint · Software Intelligence",
+  description:
+    "Resolvemos fricciones operativas mediante software. Diagnóstico gratuito en 3 minutos. Sin horas facturadas — cobramos por la fricción resuelta.",
+  openGraph: {
+    title: "Sint — Software basado en diagnóstico organizacional",
+    description:
+      "Resolvemos fricciones operativas mediante software. Diagnóstico gratuito en 3 minutos. Sin horas facturadas — cobramos por la fricción resuelta.",
+    url: "https://sint.cl",
+    siteName: "Sint",
+    locale: "es_CL",
+    type: "website",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Sint — Software basado en diagnóstico organizacional",
+    description:
+      "Resolvemos fricciones operativas mediante software. Diagnóstico gratuito en 3 minutos.",
+  },
+  metadataBase: new URL("https://sint.cl"),
+  icons: {
+    icon: '/icon.svg',
+  },
 };
 
 export default function RootLayout({

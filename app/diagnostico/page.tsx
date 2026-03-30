@@ -200,6 +200,7 @@ function Logo() {
 
 export default function DiagnosticoPage(): JSX.Element {
   // useRouter removido — incompatible con output: 'export'
+  const [showIntro, setShowIntro] = useState(true);
   const [currentStep, setCurrentStep] = useState(0);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [formData, setFormData] = useState<Partial<FormData>>({});
@@ -294,6 +295,45 @@ export default function DiagnosticoPage(): JSX.Element {
       opacity: 0,
     }),
   };
+
+  if (showIntro) {
+    return (
+      <main className="min-h-screen bg-deep-zinc flex flex-col">
+        <Logo />
+        <div className="flex-1 flex items-center justify-center px-6 py-20">
+          <motion.div
+            className="w-full max-w-2xl"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, ease: "easeOut" }}
+          >
+            <h1 className="text-text-off-white text-3xl md:text-4xl font-bold mb-6">
+              Diagnóstico Sint
+            </h1>
+            <div className="space-y-4 mb-10">
+              <p className="text-text-cool-grey text-lg leading-relaxed">
+                Este diagnóstico evalúa el nivel de fricción operativa en tu empresa. Son 8 preguntas sobre cómo funciona tu operación hoy — toma menos de 5 minutos.
+              </p>
+              <p className="text-text-cool-grey text-lg leading-relaxed">
+                Al terminar, recibirás un reporte ejecutivo en tu correo con las principales señales que identificamos y lo que suelen indicar en empresas como la tuya.
+              </p>
+              <p className="text-text-cool-grey text-lg leading-relaxed">
+                Sin registro. Sin compromiso.
+              </p>
+            </div>
+            <motion.button
+              onClick={() => setShowIntro(false)}
+              className="bg-brand-flux-orange text-white font-bold px-8 py-4 rounded-lg hover:scale-105 transition-transform duration-300"
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.98 }}
+            >
+              Comenzar diagnóstico →
+            </motion.button>
+          </motion.div>
+        </div>
+      </main>
+    );
+  }
 
   if (isSubmitting) {
     return (
