@@ -7,10 +7,67 @@
   --foreground: #E5E6EB;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   color: var(--foreground);
   background-color: #09090B;
   font-family: var(--font-inter), system-ui, sans-serif;
+}
+
+/* Las secciones quedan visibles bajo el encabezado fijo al navegar con anclas */
+section[id] {
+  scroll-margin-top: 4.5rem;
+}
+
+:focus-visible {
+  outline: 2px solid #FF6B4A;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+/* Cursor del logo sint_ */
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.2; }
+}
+
+.logo-cursor {
+  animation: blink 1.2s infinite;
+}
+
+/* Entrada suave de la portada; se desactiva con prefers-reduced-motion */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(12px); }
+  to { opacity: 1; transform: none; }
+}
+
+.rise {
+  animation: rise 0.6s ease-out both;
+}
+
+/* Preguntas frecuentes: el ícono + gira al abrir */
+details[open] > summary .faq-icon {
+  transform: rotate(45deg);
+}
+
+summary::-webkit-details-marker {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  *,
+  *::before,
+  *::after {
+    animation: none !important;
+    transition: none !important;
+  }
 }
 
 @layer utilities {

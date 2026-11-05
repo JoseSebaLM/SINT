@@ -3,6 +3,7 @@ interface Props {
   animated?: boolean;
 }
 
+// Sin styled-jsx para poder usarlo en componentes de servidor; la animación vive en globals.css
 export default function Logo({ className = "", animated = true }: Props) {
   return (
     <span
@@ -13,25 +14,9 @@ export default function Logo({ className = "", animated = true }: Props) {
       }}
     >
       sint
-      <span
-        style={{
-          color: "#FF6B4A",
-          animation: animated ? "blink 1.2s infinite" : undefined,
-          opacity: animated ? undefined : 1,
-        }}
-      >
+      <span className={animated ? "logo-cursor" : undefined} style={{ color: "#FF6B4A" }}>
         _
       </span>
-      <style jsx>{`
-        @keyframes blink {
-          0%, 100% {
-            opacity: 1;
-          }
-          50% {
-            opacity: 0.2;
-          }
-        }
-      `}</style>
     </span>
   );
 }
