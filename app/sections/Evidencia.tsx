@@ -30,10 +30,10 @@ export default function Evidencia() {
             href={source.href}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-1 underline decoration-white/20 underline-offset-4 hover:text-[#E5E6EB]"
+            className="underline decoration-white/20 underline-offset-4 hover:text-[#E5E6EB]"
           >
             {source.label}
-            <ArrowUpRight size={12} aria-hidden="true" />
+            <ArrowUpRight size={12} className="ml-0.5 inline align-baseline" aria-hidden="true" />
           </a>
         </p>
       </div>

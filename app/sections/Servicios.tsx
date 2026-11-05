@@ -26,10 +26,12 @@ function LineaServicio({ linea, index }: { linea: Linea; index: number }) {
       <div className={`mt-8 grid gap-10 ${example ? "lg:grid-cols-[1.2fr_1fr] lg:gap-14" : ""}`}>
         <ul className={`grid gap-4 sm:grid-cols-2 ${example ? "" : "lg:grid-cols-3"}`}>
           {linea.services.map(({ icon: Icon, title, text }) => (
-            <li key={title} className="rounded-lg border border-white/[0.08] bg-white/[0.02] p-5">
-              <Icon size={20} className="text-[#FF6B4A]" aria-hidden="true" />
-              <h4 className="mt-4 font-semibold text-[#E5E6EB]">{title}</h4>
-              <p className="mt-2 text-sm leading-relaxed text-[#8A8F98]">{text}</p>
+            <li key={title} className="flex gap-4 rounded-lg border border-white/[0.08] bg-white/[0.02] p-5 sm:block">
+              <Icon size={20} className="mt-0.5 shrink-0 text-[#FF6B4A] sm:mt-0" aria-hidden="true" />
+              <div>
+                <h4 className="font-semibold text-[#E5E6EB] sm:mt-4">{title}</h4>
+                <p className="mt-2 text-sm leading-relaxed text-[#8A8F98]">{text}</p>
+              </div>
             </li>
           ))}
         </ul>
