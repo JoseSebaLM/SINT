@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Navbar from "./sections/Navbar";
 import Hero from "./sections/Hero";
 import Evidencia from "./sections/Evidencia";
@@ -9,6 +10,12 @@ import Faq from "./sections/Faq";
 import Cierre from "./sections/Cierre";
 import Footer from "./sections/Footer";
 import WhatsAppFloat from "./components/WhatsAppFloat";
+import { jsonLd } from "./content/schema";
+
+// Solo la página principal declara su URL canónica; /diagnostico hereda el resto del layout.
+export const metadata: Metadata = {
+  alternates: { canonical: "/" },
+};
 
 export default function Home() {
   return (
@@ -32,6 +39,7 @@ export default function Home() {
       </main>
       <Footer />
       <WhatsAppFloat />
+      <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
     </>
   );
 }
