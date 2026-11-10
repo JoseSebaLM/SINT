@@ -3,6 +3,7 @@ import Navbar from "./sections/Navbar";
 import Footer from "./sections/Footer";
 import Hero from "./sections/Hero";
 import Evidencia from "./sections/Evidencia";
+import Servicios from "./sections/Servicios";
 import { jsonLd } from "./content/schema";
 
 // La página principal declara su URL canónica.
@@ -23,6 +24,7 @@ export default function Home() {
       <main id="contenido">
         <Hero />
         <Evidencia />
+        <Servicios />
       </main>
       <Footer />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
