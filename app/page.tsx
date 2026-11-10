@@ -12,7 +12,7 @@ import Footer from "./sections/Footer";
 import WhatsAppFloat from "./components/WhatsAppFloat";
 import { jsonLd } from "./content/schema";
 
-// Solo la página principal declara su URL canónica; /diagnostico hereda el resto del layout.
+// La página principal declara su URL canónica.
 export const metadata: Metadata = {
   alternates: { canonical: "/" },
 };
