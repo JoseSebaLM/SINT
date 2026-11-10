@@ -2,76 +2,91 @@
 @tailwind components;
 @tailwind utilities;
 
-:root {
-  --background: #09090B;
-  --foreground: #E5E6EB;
+@layer base {
+  :root {
+    /* Papel y tinta */
+    --paper: 250 249 246;      /* #FAF9F6 fondo de la página */
+    --paper-2: 243 241 236;    /* #F3F1EC fondo de los ejemplos y bandas suaves */
+    --surface: 255 255 255;    /* #FFFFFF tarjetas e interfaces */
+    --ink: 22 20 15;           /* #16140F texto principal, botón principal, bandas oscuras */
+    --ink-2: 85 81 74;         /* #55514A texto secundario (7,5:1 sobre papel) */
+    --ink-3: 107 102 93;       /* #6B665D texto terciario y etiquetas (5,4:1 sobre papel) */
+    --line: 230 226 218;       /* #E6E2DA líneas finas */
+    --line-2: 213 208 198;     /* #D5D0C6 bordes de controles */
+
+    /* Marca */
+    --accent: 255 107 74;      /* #FF6B4A naranja Sint: rellenos y gráficos, nunca texto sobre claro */
+    --accent-ink: 184 55 26;   /* #B8371A naranja para texto sobre claro (5,2:1) */
+    --accent-soft: 255 233 226;/* #FFE9E2 fondo suave de acento */
+    --ok: 27 122 75;           /* #1B7A4B solo para estados: "en línea", indicadores sobre 90 */
+
+    /* Sobre bandas oscuras (fondo ink) */
+    --on-night: 245 243 238;   /* #F5F3EE texto */
+    --on-night-2: 168 163 154; /* #A8A39A texto secundario (7,3:1) */
+    --line-night: 52 49 43;    /* #34312B líneas */
+  }
+
+  html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+  body { @apply bg-paper font-sans text-ink antialiased; }
+  section[id], article[id] { scroll-margin-top: 5rem; }
+
+  :focus-visible { outline: 2px solid rgb(var(--ink)); outline-offset: 3px; border-radius: 6px; }
+  .night :focus-visible { outline-color: rgb(var(--accent)); }
+
+  summary::-webkit-details-marker { display: none; }
 }
 
-html {
-  scroll-behavior: smooth;
+@layer components {
+  .container-page { @apply mx-auto w-full max-w-[75rem] px-5 sm:px-8; }
+
+  /* Tipografía */
+  .h-display { @apply text-balance text-[2.375rem] font-semibold leading-[1.05] tracking-[-0.035em] sm:text-[3.5rem] lg:text-[4.5rem] lg:leading-[1.02]; }
+  .h-section { @apply text-balance text-[1.875rem] font-semibold leading-[1.1] tracking-[-0.03em] md:text-[2.75rem] md:leading-[1.08]; }
+  .h-line { @apply text-[1.75rem] font-semibold leading-[1.1] tracking-[-0.025em] md:text-[2.25rem]; }
+  .lead { @apply text-[1.0625rem] leading-relaxed text-ink-2 md:text-xl md:leading-relaxed; }
+  .eyebrow { @apply text-sm font-medium text-accent-ink; }
+  .index { @apply font-mono text-[0.8125rem] text-ink-3; }
+
+  /* Botones: siempre píldora, 48 px de alto (40 en el encabezado) */
+  .btn { @apply inline-flex h-12 items-center justify-center gap-2 whitespace-nowrap rounded-full px-6 text-[0.9375rem] font-medium transition-colors duration-200; }
+  .btn-primary { @apply bg-ink text-white hover:bg-[#33302A]; }
+  .btn-secondary { @apply border border-line-2 bg-surface text-ink hover:border-ink; }
+  .btn-accent { @apply bg-accent text-ink hover:bg-[#FF8566]; }
+  .btn-night { @apply border border-line-night text-on-night hover:border-on-night; }
+  .btn-sm { @apply h-10 px-5 text-sm; }
+
+  .link-arrow { @apply inline-flex items-center gap-1.5 text-[0.9375rem] font-medium text-ink underline decoration-line-2 underline-offset-[6px] transition-colors hover:decoration-ink; }
+
+  /* Marco de los ejemplos visuales */
+  .stage { @apply rounded-3xl bg-paper-2 p-4 sm:p-8 lg:p-10; }
+  .stage-label { @apply mb-4 flex items-center gap-2 text-[0.8125rem] text-ink-3 sm:mb-6; }
+  .tag-ejemplo { @apply rounded-full border border-line-2 bg-surface px-2.5 py-0.5 text-xs font-medium text-ink-2; }
+  .mock { @apply mx-auto w-full max-w-[30rem] rounded-2xl border border-line bg-surface shadow-float; }
 }
 
-body {
-  color: var(--foreground);
-  background-color: #09090B;
-  font-family: var(--font-inter), system-ui, sans-serif;
-}
+/* Logo: el cursor parpadea tres veces al cargar y descansa */
+@keyframes blink { 50% { opacity: 0.15; } }
+.logo-cursor { animation: blink 1.1s 3; }
 
-/* Las secciones quedan visibles bajo el encabezado fijo al navegar con anclas */
-section[id] {
-  scroll-margin-top: 4.5rem;
-}
+/* Secuencias de los ejemplos. Por defecto todo está en su estado final (sin JS se ve completo).
+   El componente <Secuencia> pone data-seq="wait" al montar y "run" cuando entra en pantalla. */
+@keyframes seq-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+@keyframes seq-bar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+@keyframes seq-ring { from { stroke-dashoffset: 100; } }
+[data-seq="wait"] .seq { opacity: 0; }
+[data-seq="wait"] .seq-bar { transform: scaleX(0); }
+[data-seq="wait"] .seq-ring { stroke-dashoffset: 100; }
+[data-seq="run"] .seq { animation: seq-in 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: calc(var(--i, 0) * var(--step, 0.5s)); }
+[data-seq="run"] .seq-bar { animation: seq-bar 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: calc(var(--i, 0) * 0.12s); }
+[data-seq="run"] .seq-ring { animation: seq-ring 1s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: calc(var(--i, 0) * 0.15s); }
+.seq-bar { transform-origin: left; }
 
-:focus-visible {
-  outline: 2px solid #FF6B4A;
-  outline-offset: 3px;
-  border-radius: 4px;
-}
-
-/* Cursor del logo sint_ */
-@keyframes blink {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0.2; }
-}
-
-.logo-cursor {
-  animation: blink 1.2s infinite;
-}
-
-/* Entrada suave de la portada; se desactiva con prefers-reduced-motion */
-@keyframes rise {
-  from { opacity: 0; transform: translateY(12px); }
-  to { opacity: 1; transform: none; }
-}
-
-.rise {
-  animation: rise 0.6s ease-out both;
-}
-
-/* Preguntas frecuentes: el ícono + gira al abrir */
-details[open] > summary .faq-icon {
-  transform: rotate(45deg);
-}
-
-summary::-webkit-details-marker {
-  display: none;
-}
+details[open] > summary .faq-icon { transform: rotate(45deg); }
 
 @media (prefers-reduced-motion: reduce) {
-  html {
-    scroll-behavior: auto;
-  }
-
-  *,
-  *::before,
-  *::after {
-    animation: none !important;
-    transition: none !important;
-  }
-}
-
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+  html { scroll-behavior: auto; }
+  *, *::before, *::after { animation: none !important; transition: none !important; }
+  [data-seq] .seq { opacity: 1 !important; }
+  [data-seq] .seq-bar { transform: none !important; }
+  [data-seq] .seq-ring { stroke-dashoffset: var(--off) !important; }
 }

@@ -3,17 +3,8 @@ import { Inter, JetBrains_Mono } from "next/font/google";
 import { site } from "./content/home";
 import "./globals.css";
 
-const inter = Inter({
-  subsets: ["latin"],
-  variable: "--font-inter",
-  display: "swap",
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  subsets: ["latin"],
-  variable: "--font-jetbrains-mono",
-  display: "swap",
-});
+const sans = Inter({ subsets: ["latin"], axes: ["opsz"], variable: "--font-sans", display: "swap" });
+const mono = JetBrains_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-mono", display: "swap" });
 
 // Imagen para redes: PNG estático (con extensión, para que Cloudflare Pages lo sirva como image/png).
 const ogImage = {
@@ -60,7 +51,7 @@ export const metadata: Metadata = {
 };
 
 export const viewport: Viewport = {
-  themeColor: "#09090B",
+  themeColor: "#FAF9F6",
 };
 
 export default function RootLayout({
@@ -69,10 +60,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="es-CL" className={`${inter.variable} ${jetbrainsMono.variable}`}>
-      <body className="antialiased">
-        {children}
-      </body>
+    <html lang="es-CL" className={`${sans.variable} ${mono.variable}`}>
+      <body>{children}</body>
     </html>
   );
 }
