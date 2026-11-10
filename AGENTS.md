@@ -1,7 +1,12 @@
 # SINT — Agencia Digital + Diagnóstico Operativo
 **Stack:** Next.js 14 + FastAPI + Claude AI + Resend + Google Sheets
 **URL producción:** https://sint.cl
-**Última actualización:** 9 de marzo de 2026 — AGENTS.md sincronizado, producción estable
+**Última actualización:** 10 de noviembre de 2026. La página principal v4 está en desarrollo en el branch `sint_v4`.
+
+> **Trabajo en curso: sint.cl v4.** Antes de tocar la página principal, lee `specs/sint-v4/README.md`.
+> Ahí están la oferta vigente, las decisiones de José y los límites técnicos. Donde este archivo
+> contradiga a `specs/sint-v4/`, para la página principal manda `specs/sint-v4/`.
+> Las secciones sobre backend y `/diagnostico` siguen vigentes.
 
 ---
 
@@ -85,15 +90,15 @@ Secrets configurados en Fly.io:
 
 ## Protocolo Git (obligatorio)
 
-PowerShell no acepta `&&`. Usar `;` entre comandos.
+El equipo de José usa Linux (bash) desde noviembre de 2026; `git` y `gh` están autenticados.
 
-Secuencia estándar para cada cambio:
-```bash
-cd "c:\Users\josel\OneDrive\Desktop\SINT"; git pull origin master; git add [archivos]; git commit -m "[tipo]: [descripción]"; git push origin master
-```
+- **`master` es producción:** cada push publica sint.cl. Nunca trabajar ni hacer push directo a `master`.
+- Trabajar en un branch (hoy, `sint_v4`), con commits pequeños: `tipo(ámbito): descripción`, en español.
+- Cada push a un branch publica una vista previa en Cloudflare Pages: `https://<branch con guiones>.sint-web.pages.dev` (por ejemplo, `sint-v4.sint-web.pages.dev`).
+- El paso a `master` es un pull request que José aprueba sobre la vista previa.
+- Siempre `git pull` antes de hacer push, y revisar `git diff HEAD` después de cada pull para detectar cambios no autorizados.
 
-**Regla crítica:** Siempre `git pull` antes de cualquier push.
-Después de cada pull, verificar `git diff HEAD` para auditar cambios no autorizados antes de continuar.
+Carpetas en el equipo de José: `~/Escritorio/SINT/SINT-v4` (worktree del branch `sint_v4`). `~/Escritorio/SINT` es una copia antigua de `master` con finales de línea de Windows: no usarla para trabajar.
 
 ---
 
@@ -120,7 +125,10 @@ Después de cada pull, verificar `git diff HEAD` para auditar cambios no autoriz
 
 ---
 
-## Sistema de Diseño (invariable)
+## Sistema de Diseño (v2, en revisión)
+
+> Para la página principal v4, el sistema visual lo define `specs/sint-v4/design.md`, aprobado por José.
+> Esta tabla sigue aplicando a `/diagnostico`.
 
 | Token | Hex | Uso |
 |-------|-----|-----|
@@ -137,6 +145,9 @@ Fuentes: Inter (cuerpo) · JetBrains Mono (logo, código)
 ---
 
 ## Estructura del Proyecto
+
+> Desactualizada para la página principal: las secciones de abajo (Pipeline, Manifesto, etc.) se
+> reemplazaron en `sint_v3-prototipo`. La estructura actual está en `specs/sint-v4/plan.md` §1.
 
 ```
 SINT/
