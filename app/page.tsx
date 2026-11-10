@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Navbar from "./sections/Navbar";
 import Footer from "./sections/Footer";
-import { hero } from "./content/home";
+import Hero from "./sections/Hero";
 import { jsonLd } from "./content/schema";
 
 // La página principal declara su URL canónica.
@@ -20,7 +20,7 @@ export default function Home() {
       </a>
       <Navbar />
       <main id="contenido">
-        <h1 className="h-display container-page py-20">{hero.title}</h1>
+        <Hero />
       </main>
       <Footer />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
