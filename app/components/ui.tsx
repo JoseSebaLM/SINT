@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { cta, ejemplos, links } from "../content/home";
+import Secuencia from "./Secuencia";
 
 const external = { target: "_blank", rel: "noopener noreferrer" } as const;
 
@@ -57,15 +58,15 @@ export function SectionHeader({ eyebrow, title, intro }: { eyebrow: string; titl
   );
 }
 
-/** Marco de los ejemplos visuales: siempre con la etiqueta "Ejemplo". */
+/** Marco de los ejemplos visuales: siempre con la etiqueta "Ejemplo". Se anima una vez al entrar en pantalla. */
 export function Stage({ label, children, className = "" }: { label: string; children: ReactNode; className?: string }) {
   return (
-    <figure className={`stage ${className}`.trim()}>
+    <Secuencia className={`stage ${className}`.trim()}>
       <figcaption className="stage-label">
         <span className="tag-ejemplo">{ejemplos.tag}</span>
         {label}
       </figcaption>
       {children}
-    </figure>
+    </Secuencia>
   );
 }
