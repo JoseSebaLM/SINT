@@ -2,13 +2,17 @@ import type { ReactNode } from "react";
 import { ArrowRight } from "lucide-react";
 import { SectionHeader, Stage } from "../components/ui";
 import Informe from "../components/ejemplos/Informe";
+import Programa from "../components/ejemplos/Programa";
 import Conversacion from "../components/ejemplos/Conversacion";
+import Buscador from "../components/ejemplos/Buscador";
 import { ejemplos, links, servicios, type LineaId } from "../content/home";
 
 // Un ejemplo por línea. Si una línea no tiene, su texto ocupa todo el ancho.
 const examples: Partial<Record<LineaId, { label: string; node: ReactNode }>> = {
   diagnostico: { label: ejemplos.informe.label, node: <Informe /> },
+  formacion: { label: ejemplos.programa.label, node: <Programa /> },
   agentes: { label: ejemplos.conversacion.label, node: <Conversacion /> },
+  plataformas: { label: ejemplos.buscador.label, node: <Buscador /> },
 };
 
 export default function Servicios() {
