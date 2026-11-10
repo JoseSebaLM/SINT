@@ -2,6 +2,8 @@ import type { Metadata, Viewport } from "next";
 import { Inter, JetBrains_Mono } from "next/font/google";
 import { site } from "./content/home";
 import "./globals.css";
+import "./paletas.css";
+import PaletaSwitch from "./components/PaletaSwitch";
 
 const sans = Inter({ subsets: ["latin"], axes: ["opsz"], variable: "--font-sans", display: "swap" });
 const mono = JetBrains_Mono({ subsets: ["latin"], weight: ["400", "500"], variable: "--font-mono", display: "swap" });
@@ -49,7 +51,10 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="es-CL" className={`${sans.variable} ${mono.variable}`}>
-      <body>{children}</body>
+      <body>
+        {children}
+        <PaletaSwitch />
+      </body>
     </html>
   );
 }

@@ -1,0 +1,82 @@
+/* Comparación de paletas (solo para revisar, no va a producción).
+   El selector pone data-palette en <html>. Sin atributo = paleta actual. */
+
+/* A. Zinc original: oscuro, naranja solo en CTA y cifras, verde para estados */
+html[data-palette="a"] {
+  --paper: 9 9 11;          /* #09090B */
+  --paper-2: 20 20 23;      /* #141417 */
+  --surface: 24 24 27;      /* #18181B */
+  --ink: 229 230 235;       /* #E5E6EB */
+  --ink-2: 161 165 173;     /* #A1A5AD */
+  --ink-3: 138 143 152;     /* #8A8F98 */
+  --line: 39 39 42;         /* #27272A */
+  --line-2: 63 63 70;       /* #3F3F46 */
+  --accent: 255 107 74;     /* #FF6B4A */
+  --accent-ink: 255 138 110;/* #FF8A6E texto naranja sobre oscuro */
+  --accent-soft: 58 29 22;  /* #3A1D16 */
+  --ok: 46 184 134;         /* #2EB886 */
+  --on-night: 229 230 235;
+  --on-night-2: 161 165 173;
+  --line-night: 63 63 70;
+  color-scheme: dark;
+}
+html[data-palette="a"] .text-white,
+html[data-palette="a"] .btn-primary { color: #09090B; }
+html[data-palette="a"] .btn-primary:hover { background-color: #FFFFFF; }
+html[data-palette="a"] .night > div { background-color: #111114; box-shadow: inset 0 0 0 1px #27272A; }
+html[data-palette="a"] .shadow-float,
+html[data-palette="a"] .shadow-card { box-shadow: 0 0 0 1px rgb(255 255 255 / 0.03), 0 24px 48px -12px rgb(0 0 0 / 0.6); }
+
+/* B. Niebla costera: claro y frío, tinta azul petróleo, CTA rojo anaranjado */
+html[data-palette="b"] {
+  --paper: 244 246 247;     /* #F4F6F7 */
+  --paper-2: 233 238 241;   /* #E9EEF1 */
+  --surface: 255 255 255;
+  --ink: 14 27 36;          /* #0E1B24 */
+  --ink-2: 74 90 102;       /* #4A5A66 */
+  --ink-3: 94 110 122;      /* #5E6E7A */
+  --line: 220 227 232;      /* #DCE3E8 */
+  --line-2: 197 207 214;    /* #C5CFD6 */
+  --accent: 255 90 54;      /* #FF5A36 */
+  --accent-ink: 31 111 139; /* #1F6F8B petróleo para texto */
+  --accent-soft: 222 238 244;
+  --ok: 21 128 94;
+  --on-night: 238 243 246;
+  --on-night-2: 156 173 186;/* #9CADBA */
+  --line-night: 38 56 69;   /* #263845 */
+}
+html[data-palette="b"] .btn-primary:hover { background-color: #1C3442; }
+html[data-palette="b"] .btn-accent:hover { background-color: #FF7556; }
+html[data-palette="b"] .shadow-float { box-shadow: 0 2px 4px rgb(14 27 36 / 0.04), 0 24px 48px -12px rgb(14 27 36 / 0.16); }
+html[data-palette="b"] .shadow-card { box-shadow: 0 1px 2px rgb(14 27 36 / 0.04), 0 8px 24px -6px rgb(14 27 36 / 0.08); }
+
+/* C. Blanco y verde: tinta neutra, acento verde histórico, naranja solo en el logo */
+html[data-palette="c"] {
+  --paper: 255 255 255;
+  --paper-2: 244 245 246;   /* #F4F5F6 */
+  --surface: 255 255 255;
+  --ink: 17 18 20;          /* #111214 */
+  --ink-2: 74 77 84;        /* #4A4D54 */
+  --ink-3: 99 103 110;      /* #63676E */
+  --line: 231 232 235;      /* #E7E8EB */
+  --line-2: 209 211 216;    /* #D1D3D8 */
+  --accent: 46 184 134;     /* #2EB886 */
+  --accent-ink: 21 122 86;  /* #157A56 */
+  --accent-soft: 223 245 236;
+  --ok: 21 122 86;
+  --on-night: 240 241 243;
+  --on-night-2: 156 160 168;
+  --line-night: 42 44 48;
+}
+html[data-palette="c"] .btn-primary:hover { background-color: #2A2C30; }
+html[data-palette="c"] .btn-accent:hover { background-color: #45C798; }
+html[data-palette="c"] .logo-cursor,
+html[data-palette="c"] .font-mono > .text-accent { color: #FF6B4A; }
+html[data-palette="c"] .shadow-float { box-shadow: 0 2px 4px rgb(17 18 20 / 0.04), 0 24px 48px -12px rgb(17 18 20 / 0.14); }
+html[data-palette="c"] .shadow-card { box-shadow: 0 1px 2px rgb(17 18 20 / 0.04), 0 8px 24px -6px rgb(17 18 20 / 0.08); }
+
+/* Selector */
+.paleta-switch { position: fixed; z-index: 100; left: 16px; bottom: 16px; display: flex; gap: 4px; padding: 4px;
+  border-radius: 999px; background: #111214; box-shadow: 0 8px 24px rgb(0 0 0 / 0.3); font: 500 13px/1 var(--font-sans), system-ui, sans-serif; }
+.paleta-switch button { height: 36px; padding: 0 14px; border-radius: 999px; color: #C9CBD0; background: transparent; cursor: pointer; }
+.paleta-switch button[aria-pressed="true"] { background: #FFFFFF; color: #111214; }
