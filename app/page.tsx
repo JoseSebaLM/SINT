@@ -4,6 +4,9 @@ import Footer from "./sections/Footer";
 import Hero from "./sections/Hero";
 import Evidencia from "./sections/Evidencia";
 import Servicios from "./sections/Servicios";
+import PorQue from "./sections/PorQue";
+import Metodo from "./sections/Metodo";
+import Equipo from "./sections/Equipo";
 import { jsonLd } from "./content/schema";
 
 // La página principal declara su URL canónica.
@@ -25,6 +28,9 @@ export default function Home() {
         <Hero />
         <Evidencia />
         <Servicios />
+        <PorQue />
+        <Metodo />
+        <Equipo />
       </main>
       <Footer />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
