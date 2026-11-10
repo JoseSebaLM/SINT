@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import Navbar from "./sections/Navbar";
+import Footer from "./sections/Footer";
 import { hero } from "./content/home";
 import { jsonLd } from "./content/schema";
 
@@ -16,9 +18,11 @@ export default function Home() {
       >
         Saltar al contenido
       </a>
+      <Navbar />
       <main id="contenido">
         <h1 className="h-display container-page py-20">{hero.title}</h1>
       </main>
+      <Footer />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
     </>
   );
