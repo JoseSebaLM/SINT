@@ -20,16 +20,7 @@ export const metadata: Metadata = {
   title: site.title,
   description: site.description,
   applicationName: site.fullName,
-  keywords: [
-    "capacitación en IA para empresas",
-    "franquicia tributaria SENCE",
-    "agentes de IA",
-    "asistente de WhatsApp",
-    "desarrollo de software a medida",
-    "integración de sistemas",
-    "diagnóstico organizacional",
-    "Santiago, Chile",
-  ],
+  keywords: site.keywords,
   openGraph: {
     title: site.fullName,
     description: site.tagline,

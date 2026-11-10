@@ -1,5 +1,7 @@
 import type { ReactNode } from "react";
-import { links, cta } from "../content/home";
+import { cta, ejemplos, links } from "../content/home";
+
+const external = { target: "_blank", rel: "noopener noreferrer" } as const;
 
 export const WhatsAppIcon = ({ size = 20 }: { size?: number }) => (
   <svg width={size} height={size} viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
@@ -7,34 +9,32 @@ export const WhatsAppIcon = ({ size = 20 }: { size?: number }) => (
   </svg>
 );
 
-const base =
-  "inline-flex items-center justify-center gap-2 rounded px-6 py-3 font-semibold transition-colors text-center";
+type ButtonProps = { label?: string; className?: string; onClick?: () => void };
 
-/** Botón principal: siempre lleva a la agenda. */
-export function AgendaButton({ label = cta.agenda, className = "" }: { label?: string; className?: string }) {
+/** Botón que lleva a la agenda. "primary" en la página; "accent" solo en el cierre. */
+export function AgendaButton({
+  label = cta.agenda,
+  variant = "primary",
+  className = "",
+  onClick,
+}: ButtonProps & { variant?: "primary" | "accent" }) {
   return (
-    <a
-      href={links.agenda}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={`${base} bg-[#FF6B4A] text-black hover:bg-[#ff8466] ${className}`}
-    >
+    <a href={links.agenda} {...external} onClick={onClick} className={`btn btn-${variant} ${className}`.trim()}>
       {label}
     </a>
   );
 }
 
-/** Botón secundario: WhatsApp. */
-export function WhatsAppButton({ className = "" }: { className?: string }) {
+/** Botón de WhatsApp. "secondary" en la página; "night" solo en el cierre. */
+export function WhatsAppButton({
+  label = cta.whatsapp,
+  variant = "secondary",
+  className = "",
+}: ButtonProps & { variant?: "secondary" | "night" }) {
   return (
-    <a
-      href={links.whatsapp}
-      target="_blank"
-      rel="noopener noreferrer"
-      className={`${base} border border-white/20 text-[#E5E6EB] hover:bg-white/5 ${className}`}
-    >
+    <a href={links.whatsapp} {...external} className={`btn btn-${variant} ${className}`.trim()}>
       <WhatsAppIcon size={18} />
-      {cta.whatsapp}
+      {label}
     </a>
   );
 }
@@ -42,24 +42,20 @@ export function WhatsAppButton({ className = "" }: { className?: string }) {
 export function SectionHeader({ eyebrow, title, intro }: { eyebrow: string; title: string; intro?: string }) {
   return (
     <header className="max-w-3xl">
-      <p className="font-mono text-xs uppercase tracking-widest text-[#FF6B4A]">{eyebrow}</p>
-      <h2 className="mt-3 text-3xl md:text-4xl font-bold leading-tight text-[#E5E6EB] text-balance">{title}</h2>
-      {intro && <p className="mt-4 text-lg text-[#8A8F98]">{intro}</p>}
+      <p className="eyebrow">{eyebrow}</p>
+      <h2 className="h-section mt-3">{title}</h2>
+      {intro && <p className="lead mt-5 max-w-2xl">{intro}</p>}
     </header>
   );
 }
 
-/** Marco común de los ejemplos visuales: deja claro que son ejemplos. */
-export function ExampleFrame({ title, children, className = "" }: { title: string; children: ReactNode; className?: string }) {
+/** Marco de los ejemplos visuales: siempre con la etiqueta "Ejemplo". */
+export function Stage({ label, children, className = "" }: { label: string; children: ReactNode; className?: string }) {
   return (
-    <figure
-      className={`rounded-xl border border-white/[0.10] bg-gradient-to-b from-white/[0.05] to-white/[0.02] p-5 md:p-6 shadow-2xl shadow-black/40 ${className}`}
-    >
-      <figcaption className="flex items-center justify-between gap-3 mb-5">
-        <span className="text-sm font-semibold text-[#E5E6EB]">{title}</span>
-        <span className="rounded-full border border-[#A371F7]/40 bg-[#A371F7]/10 px-2.5 py-0.5 font-mono text-[11px] uppercase tracking-wider text-[#A371F7]">
-          Ejemplo
-        </span>
+    <figure className={`stage ${className}`.trim()}>
+      <figcaption className="stage-label">
+        <span className="tag-ejemplo">{ejemplos.tag}</span>
+        {label}
       </figcaption>
       {children}
     </figure>

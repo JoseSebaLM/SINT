@@ -1,6 +1,6 @@
 // Datos estructurados (JSON-LD) de la página principal: Organization/ProfessionalService + FAQPage.
-// Fuente: specs/sint-v3/content.md [SCHEMA]
-import { diagnostico, equipo, faq, links, servicios, site } from "./home";
+// Fuente: specs/sint-v4/content.md [SCHEMA]
+import { equipo, faq, links, servicios, site } from "./home";
 
 const orgId = `${site.url}/#organizacion`;
 
@@ -37,31 +37,26 @@ export const jsonLd = {
         sameAs: [links.linkedinJose],
       },
       employee: equipo.members.map((m) => ({ "@type": "Person", name: m.name, jobTitle: m.role })),
-      // Pendiente: agregar sameAs con la URL de la página de Sint en LinkedIn.
+      sameAs: [links.linkedinSint],
       knowsAbout: [
         "Diagnóstico organizacional",
+        "Investigación social",
         "Gestión del cambio",
         "Capacitación en IA",
-        "Integración de sistemas",
-        "Desarrollo de software a medida",
+        "Franquicia SENCE",
         "Agentes de IA",
+        "Desarrollo web",
+        "SEO y AEO",
       ],
       hasOfferCatalog: {
         "@type": "OfferCatalog",
         name: "Servicios de Sint",
-        itemListElement: [
-          {
-            "@type": "OfferCatalog",
-            name: diagnostico.title,
-            itemListElement: [service(diagnostico.title, diagnostico.intro)],
-          },
-          ...servicios.lineas.map((linea) => ({
-            "@type": "OfferCatalog",
-            name: linea.name,
-            description: linea.phrase,
-            itemListElement: linea.services.map((s) => service(s.title, s.text)),
-          })),
-        ],
+        itemListElement: servicios.lineas.map((linea) => ({
+          "@type": "OfferCatalog",
+          name: linea.name,
+          description: linea.phrase,
+          itemListElement: linea.services.map((s) => service(s.title, s.text)),
+        })),
       },
     },
     {

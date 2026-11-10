@@ -1,30 +1,25 @@
-// Textos de la página principal. Se editan aquí, sin tocar los componentes.
-// Fuente: specs/sint-v3/content.md
+// Textos de la página principal v4. Se editan aquí, sin tocar los componentes.
+// Fuente: specs/sint-v4/content.md. La oferta (líneas y servicios) solo cambia con el visto bueno de José.
 import {
-  Activity,
   BookOpen,
   ChartColumn,
   CodeXml,
   Compass,
   FileCheck,
   FileText,
+  Globe,
   GraduationCap,
   Hammer,
   KeyRound,
   LayoutDashboard,
   LifeBuoy,
-  Link2,
-  ListOrdered,
   Lock,
   MessageCircle,
-  RefreshCw,
-  Route,
   Search,
-  ShieldCheck,
-  Target,
+  Sparkles,
   UserCheck,
   Users,
-  Workflow,
+  Zap,
   type LucideIcon,
 } from "lucide-react";
 
@@ -37,19 +32,33 @@ export const links = {
   phone: "+56 9 5630 3337",
   phoneHref: "tel:+56956303337",
   linkedinJose: "https://www.linkedin.com/in/joselatorrem",
+  linkedinCarlos: "https://www.linkedin.com/in/chuchurexm/",
+  linkedinSint: "https://www.linkedin.com/company/sint-cl/",
 };
 
 export const site = {
   url: "https://sint.cl",
   name: "Sint",
   fullName: "Sint. Sistemas Inteligentes",
+  // Frase canónica: igual en el pie, el JSON-LD, la primera pregunta frecuente y LinkedIn.
   canon:
-    "Sint (Sistemas Inteligentes) es una empresa chilena que ayuda a las organizaciones a que personas y tecnología trabajen mejor juntas, con diagnóstico, formación, sistemas y agentes de IA a medida.",
-  title: "Sint. Sistemas Inteligentes · Diagnóstico, formación y agentes de IA",
+    "Sint (Sistemas Inteligentes) es una empresa chilena que ayuda a las organizaciones a que personas y tecnología trabajen mejor juntas, con diagnóstico, formación, agentes de IA y plataformas a medida.",
+  title: "Sint. Sistemas Inteligentes · Diagnóstico, formación, agentes IA y plataformas",
   description:
-    "Personas y tecnología, trabajando mejor juntas. Diagnóstico organizacional, formación, sistemas y agentes de IA para empresas en Chile.",
+    "Personas y tecnología, trabajando mejor juntas. Diagnóstico organizacional, formación en IA con franquicia SENCE, agentes de IA y plataformas web para organizaciones en Chile.",
   tagline: "Personas y tecnología, trabajando mejor juntas.",
   city: "Santiago, Chile",
+  keywords: [
+    "diagnóstico organizacional",
+    "capacitación en IA para empresas",
+    "franquicia tributaria SENCE",
+    "agentes de IA",
+    "asistente de WhatsApp para empresas",
+    "sitios web institucionales",
+    "SEO y AEO",
+    "plataformas a medida",
+    "Santiago, Chile",
+  ],
 };
 
 export const cta = {
@@ -59,19 +68,21 @@ export const cta = {
 };
 
 export const nav = [
-  { label: "Diagnóstico", href: "#diagnostico" },
   { label: "Servicios", href: "#servicios" },
   { label: "Cómo trabajamos", href: "#como-trabajamos" },
   { label: "Equipo", href: "#equipo" },
+  { label: "Preguntas", href: "#preguntas" },
 ];
 
 export const hero = {
+  eyebrow: "Sint · Sistemas Inteligentes",
   title: "Personas y tecnología, trabajando mejor juntas.",
-  lead: "Diagnóstico, formación, sistemas y agentes de IA, a la medida de tu organización.",
-  capabilities: ["Diagnóstico", "Formación", "Sistemas", "Agentes de IA"],
+  lead: "Diagnóstico, formación, agentes IA y plataformas, a la medida de tu organización.",
+  lineasLabel: "Líneas de servicio",
 };
 
 export const evidencia = {
+  eyebrow: "La IA en las empresas chilenas",
   context: "91% de las empresas en Chile está explorando la IA o la tiene en piloto.",
   main: { value: "Solo 9%", text: "llegó a escala." },
   support: [
@@ -85,106 +96,218 @@ export const evidencia = {
   },
 };
 
-export const diagnostico = {
-  eyebrow: "Por dónde partimos",
-  title: "Diagnóstico Sint",
-  intro: "Medimos cómo usa tu organización su tecnología y dónde la IA puede aportar más.",
-  stagesTitle: "Etapas",
-  stages: [
-    { icon: Search, title: "Investigamos", text: "Entrevistas a líderes y mapa del trabajo que se repite en cada área." },
-    { icon: ChartColumn, title: "Medimos", text: "Encuesta a los equipos sobre uso, confianza y necesidades, y revisión de sus herramientas y datos." },
-    { icon: ListOrdered, title: "Priorizamos", text: "Presentación a la gerencia: qué hacer primero, con qué reglas y cómo medirlo." },
-  ] satisfies Item[],
-  deliverablesTitle: "Qué recibes",
-  deliverables: [
-    { icon: FileText, title: "Informe de punto de partida", text: "Uso real de la tecnología y brechas de gobierno, datos y formación." },
-    { icon: Target, title: "Oportunidades priorizadas", text: "Ordenadas por impacto y facilidad." },
-    { icon: ShieldCheck, title: "Reglas de uso", text: "Qué hace la IA sola, qué revisa una persona y qué no se hace." },
-    { icon: Route, title: "Plan de acción", text: "Responsables, metas e indicadores para pasar del piloto a la operación." },
-  ] satisfies Item[],
-  example: {
-    title: "Informe de punto de partida",
-    dimensions: [
-      { name: "Gobierno", level: "Inicial" },
-      { name: "Datos", level: "En desarrollo" },
-      { name: "Medición", level: "Inicial" },
-      { name: "Formación", level: "En desarrollo" },
-    ],
-    opportunities: [
-      "Respuestas a clientes por WhatsApp",
-      "Cotizaciones preparadas con los datos del ERP",
-      "Formación práctica para el equipo comercial",
-    ],
-  },
-};
+export type LineaId = "diagnostico" | "formacion" | "agentes" | "plataformas";
 
 export type Linea = {
-  id: string;
+  id: LineaId;
   name: string;
+  /** Frase bajo el nombre, en la sección Servicios. */
   phrase: string;
+  /** Versión corta de la frase, para la tarjeta de la portada. */
+  short: string;
   services: Item[];
+  /** Nota bajo la lista de servicios. */
+  note?: string;
+  /** Enlace al final de la línea; lleva a la agenda. */
+  cta: string;
 };
 
 export const servicios = {
   eyebrow: "Servicios",
-  title: "Formamos equipos y construimos la tecnología que necesitan.",
+  title: "Cuatro formas de que tu gente y tu tecnología trabajen mejor juntas.",
+  intro: "Puedes partir por cualquiera. Recomendamos empezar por un diagnóstico, del tamaño que necesites.",
   lineas: [
+    {
+      id: "diagnostico",
+      name: "Diagnóstico",
+      phrase: "Entender antes de proponer.",
+      short: "Entender antes de proponer.",
+      services: [
+        {
+          icon: Search,
+          title: "Diagnóstico Sint",
+          text: "Entrevistas a líderes, encuestas a los equipos y revisión de herramientas y datos. Entrega un informe de punto de partida, oportunidades priorizadas, reglas de uso de la IA y un plan de acción. Su profundidad se ajusta a lo que necesitas.",
+        },
+        {
+          icon: ChartColumn,
+          title: "Estudios con encuestas y entrevistas",
+          text: "Investigación cualitativa y cuantitativa con tus equipos o tus clientes, para decidir con datos.",
+        },
+      ],
+      cta: "Conversemos sobre un diagnóstico",
+    },
     {
       id: "formacion",
       name: "Formación",
-      phrase: "Equipos que saben usar la tecnología que tienen.",
+      phrase: "Equipos que saben usar la IA en su trabajo diario.",
+      short: "Equipos que usan la IA en su trabajo diario.",
       services: [
-        { icon: GraduationCap, title: "Academias internas", text: "Programas, rutas por cargo e inducción para la academia o universidad corporativa de tu empresa." },
-        { icon: Users, title: "Capacitación", text: "Cursos y talleres con tus propios casos, presenciales o en línea. Acceso a franquicia tributaria SENCE mediante OTEC asociado." },
-        { icon: Compass, title: "Gestión del cambio", text: "Liderazgo, comunicación y seguimiento para que lo aprendido se use en el trabajo diario." },
+        {
+          icon: Users,
+          title: "Talleres y cursos de IA",
+          text: "Cursos prácticos con los casos de tu empresa, presenciales o en línea, con franquicia tributaria SENCE mediante OTEC asociado.",
+        },
+        {
+          icon: GraduationCap,
+          title: "Academias internas",
+          text: "Programas, rutas por cargo e inducción para la academia o universidad corporativa de tu organización.",
+        },
+        {
+          icon: Compass,
+          title: "Adopción y gestión del cambio",
+          text: "Liderazgo, comunicación y seguimiento para que lo aprendido se use en el trabajo diario.",
+        },
       ],
-    },
-    {
-      id: "sistemas",
-      name: "Sistemas",
-      phrase: "Procesos y datos en orden.",
-      services: [
-        { icon: Link2, title: "Integración", text: "Conectamos tu ERP, CRM, planillas y plataformas para que cada dato se ingrese una sola vez." },
-        { icon: LayoutDashboard, title: "Datos y tableros", text: "Reunimos tu información en un solo lugar y la convertimos en tableros para decidir." },
-        { icon: CodeXml, title: "Desarrollo a medida", text: "Plataformas internas y portales para clientes, construidos sobre una especificación que apruebas." },
-        { icon: RefreshCw, title: "Modernización", text: "Renovamos software antiguo sin detener la operación." },
-      ],
+      cta: "Conversemos sobre formación",
     },
     {
       id: "agentes",
-      name: "Agentes de IA",
-      phrase: "IA conectada a tus sistemas, al servicio de tu equipo.",
+      name: "Agentes IA",
+      phrase: "IA conectada a tus herramientas, al servicio de tu equipo.",
+      short: "IA conectada a tus herramientas.",
       services: [
-        { icon: MessageCircle, title: "Atención a clientes", text: "Asistentes que responden, califican y derivan consultas por WhatsApp y web, a toda hora." },
-        { icon: Workflow, title: "Automatización de procesos", text: "Agentes que preparan cotizaciones, documentos y reportes con los datos de tus sistemas." },
-        { icon: BookOpen, title: "Conocimiento interno", text: "Asistentes que responden con tus manuales, contratos y políticas vigentes." },
-        { icon: Activity, title: "Operación continua", text: "Monitoreo, control de costos y mejoras mensuales de cada agente." },
+        {
+          icon: MessageCircle,
+          title: "Atención a clientes",
+          text: "Asistentes que responden, califican y derivan consultas por WhatsApp y web, a toda hora, y pasan a una persona lo que no deben resolver solos.",
+        },
+        {
+          icon: FileText,
+          title: "Documentos y reportes automáticos",
+          text: "Agentes que preparan cotizaciones, informes y reportes con los datos de tus planillas y sistemas en la nube.",
+        },
+        {
+          icon: BookOpen,
+          title: "Conocimiento interno",
+          text: "Asistentes que responden con tus manuales, contratos y políticas vigentes, y citan la fuente.",
+        },
       ],
+      note: "Cada agente se entrega con un periodo de acompañamiento y, si quieres, sigue con mantención mensual.",
+      cta: "Conversemos sobre un agente",
+    },
+    {
+      id: "plataformas",
+      name: "Plataformas",
+      phrase: "Sitios y herramientas rápidos, accesibles y fáciles de encontrar.",
+      short: "Sitios y herramientas fáciles de encontrar.",
+      services: [
+        {
+          icon: Globe,
+          title: "Sitios web corporativos e institucionales",
+          text: "Diseño, desarrollo y un administrador de contenidos para que tu equipo publique sin depender de nadie.",
+        },
+        {
+          icon: Sparkles,
+          title: "Posicionamiento en Google y buscadores con IA",
+          text: "SEO y AEO: que Google y los asistentes de IA encuentren tu sitio y describan bien a tu organización.",
+        },
+        {
+          icon: CodeXml,
+          title: "Plataformas y portales a medida",
+          text: "Herramientas internas y portales para clientes, construidos sobre una especificación que apruebas.",
+        },
+        {
+          icon: LayoutDashboard,
+          title: "Tableros de datos",
+          text: "Reunimos tu información en un solo lugar y la convertimos en tableros para decidir.",
+        },
+      ],
+      cta: "Conversemos sobre tu sitio o plataforma",
     },
   ] satisfies Linea[],
-  integracion: {
-    sources: ["ERP", "CRM", "Planillas"],
-    hub: "Integración",
-    target: "Tablero de gestión",
+};
+
+// Ejemplos visuales: uno por línea. Todos llevan la etiqueta "Ejemplo" y ninguno muestra clientes ni cifras reales.
+export const ejemplos = {
+  tag: "Ejemplo",
+  informe: {
+    label: "Informe de punto de partida",
+    title: "Informe de punto de partida",
+    subtitle: "Tu organización · Diagnóstico Sint",
+    dimensionsTitle: "Nivel por dimensión",
+    // El nivel se dice en palabras; los tramos (1 de 3, 2 de 3) solo lo refuerzan.
+    dimensions: [
+      { name: "Gobierno", level: "Inicial", steps: 1 },
+      { name: "Datos", level: "En desarrollo", steps: 2 },
+      { name: "Medición", level: "Inicial", steps: 1 },
+      { name: "Formación", level: "En desarrollo", steps: 2 },
+    ],
+    opportunitiesTitle: "Oportunidades priorizadas",
+    opportunities: [
+      "Respuestas a clientes por WhatsApp",
+      "Cotizaciones preparadas con los datos de tus planillas",
+      "Formación práctica para el equipo comercial",
+    ],
+  },
+  programa: {
+    label: "Programa de un taller",
+    kind: "Taller",
+    title: "IA para el equipo comercial",
+    badge: "Franquicia SENCE",
+    modules: [
+      { title: "Fundamentos y uso responsable", text: "Qué puede y qué no debe hacer la IA en tu trabajo", state: "done" },
+      { title: "Casos de tu área", text: "Cotizaciones, seguimiento y respuestas a clientes", state: "done" },
+      { title: "Práctica con tus propios datos", text: "Cada persona resuelve una tarea real de su semana", state: "current" },
+      { title: "Plan de adopción", text: "Acuerdos con las jefaturas para sostener el uso", state: "next" },
+    ] as { title: string; text: string; state: "done" | "current" | "next" }[],
+    tags: ["Presencial o en línea", "Con los casos de tu empresa"],
   },
   conversacion: {
+    label: "Conversación con un agente",
     header: "Asistente de ventas",
+    status: "en línea",
     messages: [
       { from: "cliente", text: "Hola, ¿me pueden cotizar 40 sillas de oficina para el 20 de diciembre?" },
       { from: "asistente", text: "Claro. Revisé el inventario y tenemos 40 unidades disponibles. Te envío la cotización en PDF." },
       { from: "asistente", attachment: "Cotización · Sillas de oficina.pdf" },
       { from: "asistente", text: "¿Quieres que una ejecutiva te llame para coordinar la entrega?" },
     ] as { from: "cliente" | "asistente"; text?: string; attachment?: string }[],
+    placeholder: "Escribe un mensaje",
   },
+  buscador: {
+    label: "Tu sitio, bien descrito por un asistente de IA",
+    organization: "Tu organización",
+    answerTitle: "Respuesta del asistente",
+    // El texto de la respuesta vive en el componente: intercala barras que representan los datos de cada organización.
+    source: "tusitio.cl",
+    scoresTitle: "Indicadores de calidad del sitio",
+    scores: [
+      { label: "Rendimiento", value: 98 },
+      { label: "Accesibilidad", value: 100 },
+      { label: "Buenas prácticas", value: 100 },
+      { label: "SEO", value: 100 },
+    ],
+  },
+};
+
+export const porQue = {
+  title: "Por qué Sint",
+  items: [
+    { icon: UserCheck, title: "Hablas con quienes hacen el trabajo", text: "Un equipo pequeño y senior, sin intermediarios." },
+    {
+      icon: Users,
+      title: "Personas y tecnología en el mismo equipo",
+      text: "Ciencias sociales para entender a tu organización, ingeniería para construir lo que necesita.",
+    },
+    {
+      icon: Zap,
+      title: "Remoto y ágil",
+      text: "Construimos con agentes de IA y especificaciones escritas, y vamos a terreno cuando hace falta.",
+    },
+  ] satisfies Item[],
 };
 
 export const metodo = {
   eyebrow: "Cómo trabajamos",
-  title: "Del diagnóstico a la operación.",
+  title: "De la primera conversación a la operación.",
   steps: [
-    { icon: Search, title: "Diagnosticamos", text: "Entendemos procesos, personas y sistemas antes de proponer." },
+    { icon: Search, title: "Entendemos", text: "Conocemos procesos, personas y herramientas antes de proponer." },
     { icon: FileCheck, title: "Especificamos", text: "Acordamos por escrito el alcance y los criterios de aceptación." },
-    { icon: Hammer, title: "Construimos o formamos", text: "Ejecutamos lo acordado y revisamos cada entrega contra la especificación." },
+    {
+      icon: Hammer,
+      title: "Construimos o formamos",
+      text: "Ejecutamos lo acordado y te mostramos avances con una vista previa en cada entrega.",
+    },
     { icon: LifeBuoy, title: "Acompañamos", text: "Medimos el uso real, damos soporte y ajustamos." },
   ] satisfies Item[],
   guaranteesTitle: "Nuestras garantías",
@@ -203,7 +326,7 @@ export const equipo = {
       name: "José Latorre",
       role: "Fundador",
       education: "Sociólogo · PUC",
-      bio: "Certificado en gestión del cambio (Vanderbilt University). Trabajó en consultoría, research y marketing estratégico. En Sint dirige los diagnósticos y la formación.",
+      bio: "Certificado en gestión del cambio (Vanderbilt University). Ha dirigido proyectos de consultoría, investigación cualitativa y cuantitativa, y marketing estratégico para empresas de distintos tamaños e industrias. Trabaja con IA desde GPT-3. En Sint dirige los diagnósticos y la formación.",
       photo: "/images/equipo/jose-latorre.webp",
       linkedin: links.linkedinJose,
     },
@@ -211,8 +334,9 @@ export const equipo = {
       name: "Carlos Martínez",
       role: "Dirección técnica",
       education: "Sistemas de Información · U. de Chile",
-      bio: "Lleva 27 años construyendo sitios y plataformas web, con foco en accesibilidad y estándares. Hoy diseña cómo trabajan los equipos con agentes de IA. En Sint dirige la parte técnica de cada proyecto.",
+      bio: "Crea sitios web desde 2004. Desde 2009 trabaja en la Universidad de Chile, donde dirige la unidad que desarrolla sus sitios, como tv.uchile.cl. Experto en CMS, rendimiento, SEO y AEO. Hoy diseña cómo trabajan los equipos con agentes de IA. En Sint dirige la parte técnica de cada proyecto.",
       photo: "/images/equipo/carlos-martinez.webp",
+      linkedin: links.linkedinCarlos,
     },
   ] as { name: string; role: string; education: string; bio: string; photo: string; linkedin?: string }[],
 };
@@ -223,29 +347,44 @@ export const faq = {
   items: [
     { q: "¿Qué es Sint?", a: site.canon },
     {
-      q: "¿Qué es el Diagnóstico Sint?",
-      a: "Un estudio de tu organización en tres etapas: investigamos, medimos y priorizamos. Entrega un informe de punto de partida, oportunidades priorizadas, reglas de uso de la IA y un plan de acción.",
+      q: "¿Hay que partir con un diagnóstico?",
+      a: "No. Es el punto de partida que recomendamos, pero también puedes contratar directamente formación, agentes IA o plataformas. Siempre partimos con una conversación.",
     },
     {
-      q: "¿Hay que partir con el diagnóstico?",
-      a: "Es el punto de partida que recomendamos, pero también puedes contratar directamente formación, sistemas o agentes de IA.",
-    },
-    {
-      q: "¿Las capacitaciones pueden usar franquicia tributaria SENCE?",
+      q: "¿Las capacitaciones tienen franquicia SENCE?",
       a: "Sí. Los cursos pueden acceder a franquicia tributaria SENCE mediante nuestro OTEC asociado.",
     },
     {
+      q: "¿Cuánto cuesta?",
+      a: "Depende del alcance. Después de la primera conversación te enviamos una propuesta técnica y económica a medida.",
+    },
+    {
+      q: "¿Trabajan en terreno o en remoto?",
+      a: "Desarrollamos en remoto y vamos a terreno para entrevistas, talleres y presentaciones.",
+    },
+    {
       q: "¿Qué agentes de IA construyen?",
-      a: "Asistentes de atención a clientes por WhatsApp y web, agentes que preparan cotizaciones, documentos y reportes, y asistentes que responden con el conocimiento interno de tu empresa.",
+      a: "Asistentes de atención a clientes por WhatsApp y web, agentes que preparan documentos y reportes, y asistentes que responden con el conocimiento interno de tu organización.",
     },
     {
       q: "¿Con qué herramientas trabajan?",
-      a: "Con las que tu empresa ya usa: su ERP, CRM, Google Workspace o Microsoft 365, y el modelo de IA que prefiera.",
+      a: "Con las que tu organización ya usa: planillas, Google Workspace o Microsoft 365, tu sitio web y el modelo de IA que prefieras.",
     },
   ],
 };
 
 export const cierre = {
   title: "Conversemos sobre tu organización.",
-  text: "Cuéntanos qué está pasando y te decimos por dónde partiríamos.",
+  text: "Cuéntanos qué quieres resolver y te decimos por dónde partiríamos.",
+  contact: {
+    email: `Correo · ${links.email}`,
+    whatsapp: `WhatsApp · ${links.phone}`,
+  },
+};
+
+export const footer = {
+  sectionsTitle: "Secciones",
+  contactTitle: "Contacto",
+  linkedin: "LinkedIn",
+  copyright: "© 2026 Sint.",
 };
