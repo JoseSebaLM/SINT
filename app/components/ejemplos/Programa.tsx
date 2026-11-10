@@ -5,7 +5,7 @@ import { ejemplos } from "../../content/home";
 const v = (vars: Record<string, string | number>) => vars as CSSProperties;
 const tagIcons = [Users, Briefcase];
 
-/** Ejemplo de Formación: programa de un taller. Sin horas, fechas ni precios. */
+/** Ejemplo de Formación: programa de un taller. Sin horas ni fechas. */
 export default function Programa() {
   const { kind, title, badge, modules, tags } = ejemplos.programa;
   return (
