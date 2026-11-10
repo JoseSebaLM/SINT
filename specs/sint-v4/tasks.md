@@ -202,3 +202,9 @@ Comparar siempre contra `referencia/capturas/escritorio-1280.png` y `celular-375
 ## Dudas
 
 *(Opus anota aquí lo que encuentre, con fecha. Fable o José responden.)*
+
+**10 de noviembre de 2026 · Opus 5.5**
+
+1. **Pie, "Preguntas frecuentes".** En el pie la maqueta dice "Preguntas frecuentes" y en el encabezado "Preguntas", pero `home.ts` solo tiene una etiqueta (`nav`). Se dejó el texto largo fijo en `Footer.tsx`. Si se quiere editar desde `home.ts`, falta un campo `footer.faqLabel`.
+2. **Archivos sin uso.** `app/fonts/GeistVF.woff` y `GeistMonoVF.woff` (de la plantilla inicial) no se usan. No se borraron porque ninguna tarea lo pide. ¿Se eliminan?
+3. **`AGENTS.md`, "Arquitectura de Producción".** Sigue nombrando `NEXT_PUBLIC_BACKEND_URL` en Cloudflare Pages. El sitio ya no la usa; se puede quitar de la configuración de Cloudflare cuando José decida sobre el backend.

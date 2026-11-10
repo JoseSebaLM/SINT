@@ -1,13 +1,15 @@
-# SINT — Agencia Digital + Diagnóstico Operativo
-**Stack:** Next.js 14 + FastAPI + Claude AI + Resend + Google Sheets
+# SINT — Sint. Sistemas Inteligentes
+**Stack:** Next.js 14 (exportación estática) + Tailwind 3 + lucide-react, en Cloudflare Pages
 **URL producción:** https://sint.cl
-**Última actualización:** 10 de noviembre de 2026. La página principal v4 está en desarrollo en el branch `sint_v4`.
+**Última actualización:** 10 de noviembre de 2026. La página principal v4 está lista en el branch `sint_v4`, a la espera del visto bueno de José para pasar a `master`.
 
-> **Trabajo en curso: sint.cl v4.** Antes de tocar la página principal, lee `specs/sint-v4/README.md`.
+> **sint.cl v4.** Antes de tocar la página principal, lee `specs/sint-v4/README.md`.
 > Ahí están la oferta vigente, las decisiones de José y las reglas de trabajo. Donde este archivo
 > contradiga a `specs/sint-v4/`, manda `specs/sint-v4/`.
-> En v4 se retira `/diagnostico` del sitio. El backend en Fly.io queda sin uso hasta que José y
-> Carlos decidan qué hacer con él; las secciones de abajo sobre backend son solo referencia.
+> El sitio es una sola página: todos los botones llevan a la agenda o a WhatsApp.
+> **Ya no hay test en línea:** `/diagnostico` redirige a `/` (`public/_redirects`).
+> **El backend no está en uso:** `backend/` y la app de Fly.io quedan sin uso hasta que José y
+> Carlos decidan qué hacer con ellos; las secciones de abajo sobre backend son solo historia.
 
 ---
 
@@ -126,9 +128,11 @@ Carpetas en el equipo de José: `~/Escritorio/SINT/SINT-v4` (worktree del branch
 
 ---
 
-## Sistema de Diseño (v2, en revisión)
+## Sistema de Diseño
 
-> Reemplazado en v4: el sistema visual lo define `specs/sint-v4/design.md`. Esta tabla queda como historia.
+> **El sistema visual vigente es el de `specs/sint-v4/design.md`** (tema claro "papel y tinta"):
+> tokens como variables CSS en `app/globals.css`, expuestos en `tailwind.config.ts`. En los
+> componentes no se escriben colores en hexadecimal. La tabla de abajo es la paleta v2, solo historia.
 
 | Token | Hex | Uso |
 |-------|-----|-----|
@@ -146,52 +150,26 @@ Fuentes: Inter (cuerpo) · JetBrains Mono (logo, código)
 
 ## Estructura del Proyecto
 
-> Desactualizada para la página principal: las secciones de abajo (Pipeline, Manifesto, etc.) se
-> reemplazaron en `sint_v3-prototipo`. La estructura actual está en `specs/sint-v4/plan.md` §1.
-
 ```
-SINT/
-├── app/
-│   ├── components/
-│   │   ├── Logo.tsx                  # Logo animado con cursor parpadeante
-│   │   └── WhatsAppFloat.tsx         # Botón flotante WhatsApp (activo)
-│   ├── sections/                     # Secciones de la landing page
-│   │   ├── Navbar.tsx
-│   │   ├── Hero.tsx                  # Hero con grain texture
-│   │   ├── Pipeline.tsx              # 3 fases: Diagnóstico · Estrategia · Implementación
-│   │   ├── Manifesto.tsx
-│   │   ├── Services.tsx              # 3 líneas de servicio — CTAs apuntan a cal.com
-│   │   ├── Targets.tsx
-│   │   ├── Diferenciacion.tsx        # Tabla comparativa responsive (mobile-first)
-│   │   ├── Equipo.tsx
-│   │   └── Footer.tsx                # Íconos de contacto: tel, WhatsApp, email
-│   ├── diagnostico/
-│   │   ├── page.tsx                  # Pantalla intro + wizard 12 pasos
-│   │   └── resultado/
-│   │       └── page.tsx              # Confirmación post-envío
-│   ├── globals.css
-│   ├── layout.tsx                    # Metadata, SEO, OpenGraph configurados
-│   └── page.tsx                      # Landing page principal
-├── backend/
-│   ├── main.py                       # FastAPI app, CORS, endpoints
-│   ├── scoring.py                    # Motor SFS — 8 dimensiones, 6 arquetipos
-│   ├── report_generator.py           # Integración Claude API
-│   ├── email_sender.py               # Envío vía Resend + template HTML
-│   ├── sheets_logger.py              # Log a Google Sheets
-│   ├── test_scoring.py               # Unit tests del scoring
-│   ├── qa_test.py                    # Tests E2E (requiere backend corriendo)
-│   ├── QA_CHECKLIST.md               # Checklist pre-deploy
-│   ├── Dockerfile                    # Imagen de producción
-│   ├── fly.toml                      # Config Fly.io
-│   └── requirements.txt
-├── public/
-│   ├── Carlos Martínez Sint.png
-│   └── José Latorre Sint.png
-│   └── images/                       # ⏳ Pendiente: hero-bg.jpg (foto hero)
-├── .env.local                        # Frontend env vars (no commitear)
-├── next.config.js                    # output: 'export', unoptimized: true
-├── tailwind.config.ts                # Colores custom del sistema de diseño
-└── package.json
+app/
+├── layout.tsx              fuentes, metadatos, themeColor #FAF9F6
+├── page.tsx                orden de las secciones + JSON-LD
+├── globals.css             tokens y clases de la maqueta
+├── icon.svg · favicon.ico · apple-icon.png
+├── content/home.ts         textos (se editan aquí, sin tocar los componentes)
+├── content/schema.ts       JSON-LD derivado de home.ts
+├── components/
+│   ├── Logo.tsx
+│   ├── ui.tsx              WhatsAppIcon, AgendaButton, WhatsAppButton, SectionHeader, Stage
+│   ├── Secuencia.tsx       cliente: activa las animaciones al entrar en pantalla
+│   └── ejemplos/           Informe · Programa · Conversacion · Buscador
+└── sections/               Navbar · Hero · Evidencia · Servicios · PorQue · Metodo · Equipo · Faq · Cierre · Footer
+public/
+├── _redirects              /diagnostico → /
+├── og-image.png
+└── images/equipo/*.webp
+backend/                    sin uso (ver arriba)
+specs/sint-v4/              misión, oferta, diseño, tareas y maqueta de referencia
 ```
 
 ---
@@ -230,6 +208,10 @@ SINT/
 ---
 
 ## Testing
+
+Página principal: `npm run lint` y `npm run build` limpios antes de cada commit (ver `specs/sint-v4/tasks.md`).
+
+Backend (sin uso, solo historia):
 
 ```bash
 cd backend
