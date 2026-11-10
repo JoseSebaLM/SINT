@@ -74,7 +74,7 @@ Comparar siempre contra `referencia/capturas/escritorio-1280.png` y `celular-375
   2. Borrar `app/sections/*` (todas), `app/components/ejemplos/*`, `app/components/WhatsAppFloat.tsx` y `public/images/hero-*.webp`.
   3. `ui.tsx`: `WhatsAppIcon` (igual), `AgendaButton` y `WhatsAppButton` con una prop `variant` (`"primary" | "secondary"` y, para el cierre, `"accent" | "night"`) que usan las clases `.btn-*`; `SectionHeader` (`eyebrow`, `title`, `intro?`, con `.eyebrow`, `.h-section`, `.lead`); `Stage` (`label`, `children`: el `<figure class="stage …">` con su `<figcaption>` y la etiqueta `ejemplos.tag`). Todos los enlaces externos con `target="_blank" rel="noopener noreferrer"`.
   4. `Logo.tsx`: `font-mono font-medium tracking-tight`, guion en `text-accent`, prop `animated` que agrega `.logo-cursor`. Sin estilos en línea.
-  5. `schema.ts` según `content.md` [SCHEMA]: `knowsAbout` nuevo; `hasOfferCatalog` = las 4 líneas de `servicios.lineas` con sus 12 servicios (se elimina el catálogo aparte del diagnóstico); `FAQPage` desde `faq.items`.
+  5. `schema.ts` según `content.md` [SCHEMA]: `knowsAbout` nuevo; `sameAs: [links.linkedinSint]` en la organización (se quita el comentario "Pendiente"); `hasOfferCatalog` = las 4 líneas de `servicios.lineas` con sus 12 servicios (se elimina el catálogo aparte del diagnóstico); `FAQPage` desde `faq.items`.
   6. `layout.tsx`: `keywords: site.keywords`.
   7. `page.tsx`: enlace "Saltar al contenido" (clases de la maqueta), `<main id="contenido">` con un `<h1 className="h-display container-page py-20">{hero.title}</h1>` provisional, y el `<script type="application/ld+json">`.
 - **Listo cuando:** compila; el JSON-LD de `out/index.html` tiene 4 catálogos y 12 servicios; `grep -rnE "ERP|CRM|Integración|Modernización|Operación continua" app` no devuelve nada.
@@ -89,7 +89,7 @@ Comparar siempre contra `referencia/capturas/escritorio-1280.png` y `celular-375
 - **Pasos:**
   1. `Navbar`: estructura y clases de `[NAV]` en la maqueta. Es `sticky`, siempre con fondo translúcido: **ya no escucha el desplazamiento**. Estado solo para el menú de celular (`open`), que se cierra con Escape y al elegir un enlace.
   2. Menú de celular: panel bajo el encabezado, `border-t border-line bg-paper px-5 pb-8 pt-2`, alto `h-[calc(100svh-4rem)]`; enlaces `block border-b border-line py-4 text-lg`; al final un `AgendaButton` a todo el ancho. El botón alterna los íconos `Menu` y `X` y mantiene `aria-expanded` y `aria-controls`.
-  3. `Footer`: `[PIE]` de la maqueta, con `site`, `nav`, `links` y `footer`.
+  3. `Footer`: `[PIE]` de la maqueta, con `site`, `nav`, `links` y `footer`. La columna "Contacto" termina con el enlace a `links.linkedinSint`.
 - **Listo cuando:** a 375 px se ven logo, "Conversemos" y menú, sin desplazamiento horizontal; el menú abre, cierra y navega; a 1280 px se ven los cuatro enlaces.
 - **Commit:** `feat(home): encabezado y pie con el diseño v4`
 
@@ -135,7 +135,7 @@ Comparar siempre contra `referencia/capturas/escritorio-1280.png` y `celular-375
 #### T9 · Por qué Sint, Cómo trabajamos y Equipo
 
 - **Archivos:** `app/sections/PorQue.tsx`, `Metodo.tsx`, `Equipo.tsx`, `app/page.tsx`.
-- **Pasos:** `[POR]`, `[MET]` y `[EQ]` de la maqueta. En `Equipo`, `next/image` con `width={160} height={160}`, `loading="lazy"` y `alt="Fotografía de …"`; el enlace de LinkedIn solo si la persona lo tiene; al final, `equipo.note`.
+- **Pasos:** `[POR]`, `[MET]` y `[EQ]` de la maqueta. En `Equipo`, `next/image` con `width={160} height={160}`, `loading="lazy"` y `alt="Fotografía de …"`; el enlace de LinkedIn de cada persona (`m.linkedin`). No hay nota bajo el equipo.
 - **Listo cuando:** `#como-trabajamos` y `#equipo` responden a los enlaces del encabezado sin quedar tapados por él.
 - **Commit:** `feat(home): por qué Sint, cómo trabajamos y equipo`
 
@@ -187,8 +187,6 @@ Comparar siempre contra `referencia/capturas/escritorio-1280.png` y `celular-375
 
 | Tarea | Detalle |
 | --- | --- |
-| LinkedIn de Sint | Agregar `sameAs` en `schema.ts` cuando José entregue la URL |
-| LinkedIn de Carlos | Agregar el enlace en `equipo.members` si Carlos quiere |
 | Página 404 | `app/not-found.tsx` con el estilo nuevo y un botón al inicio |
 | `llms.txt` | `public/llms.txt` con la frase canónica, las cuatro líneas y el contacto, para asistentes de IA |
 | Medición | Activar Cloudflare Web Analytics (sin cookies) y contar los clics en agenda y WhatsApp. Requiere acceso a la cuenta de Cloudflare: lo decide José |
@@ -197,7 +195,6 @@ Comparar siempre contra `referencia/capturas/escritorio-1280.png` y `celular-375
 
 ## Pendientes de José y Carlos (no son código)
 
-- Carlos confirma la mención a la U. de Chile y a tv.uchile.cl.
 - José actualiza el "Acerca de" de LinkedIn con la frase canónica.
 - Después de publicar: Google Search Console y Bing Webmaster Tools (sitemap y reindexar `/`).
 - Decidir qué pasa con la app de Fly.io y con `backend/`.

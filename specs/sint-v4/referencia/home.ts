@@ -34,6 +34,8 @@ export const links = {
   phone: "+56 9 5630 3337",
   phoneHref: "tel:+56956303337",
   linkedinJose: "https://www.linkedin.com/in/joselatorrem",
+  linkedinCarlos: "https://www.linkedin.com/in/chuchurexm/",
+  linkedinSint: "https://www.linkedin.com/company/sint-cl/",
 };
 
 export const site = {
@@ -334,12 +336,11 @@ export const equipo = {
       name: "Carlos Martínez",
       role: "Dirección técnica",
       education: "Sistemas de Información · U. de Chile",
-      // La mención a la U. de Chile y a tv.uchile.cl la confirma Carlos (spec.md §8).
       bio: "Crea sitios web desde 2004. Desde 2009 trabaja en la Universidad de Chile, donde dirige la unidad que desarrolla sus sitios, como tv.uchile.cl. Experto en CMS, rendimiento, SEO y AEO. Hoy diseña cómo trabajan los equipos con agentes de IA. En Sint dirige la parte técnica de cada proyecto.",
       photo: "/images/equipo/carlos-martinez.webp",
+      linkedin: links.linkedinCarlos,
     },
   ] as { name: string; role: string; education: string; bio: string; photo: string; linkedin?: string }[],
-  note: "Según el proyecto, sumamos desarrolladores y especialistas que trabajan en remoto con nosotros.",
 };
 
 export const faq = {
@@ -386,5 +387,6 @@ export const cierre = {
 export const footer = {
   sectionsTitle: "Secciones",
   contactTitle: "Contacto",
+  linkedin: "LinkedIn",
   copyright: "© 2026 Sint.",
 };

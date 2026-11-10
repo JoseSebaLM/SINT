@@ -12,6 +12,8 @@ Enlaces:
 - WhatsApp: `https://wa.me/56956303337` · +56 9 5630 3337
 - Correo: `jose@sint.cl`
 - LinkedIn de José: `https://www.linkedin.com/in/joselatorrem`
+- LinkedIn de Carlos: `https://www.linkedin.com/in/chuchurexm/`
+- LinkedIn de Sint: `https://www.linkedin.com/company/sint-cl/`
 
 ---
 
@@ -170,9 +172,9 @@ Bloque breve, sin cifras:
 | José Latorre | Fundador | Sociólogo · PUC | Certificado en gestión del cambio (Vanderbilt University). Ha dirigido proyectos de consultoría, investigación cualitativa y cuantitativa, y marketing estratégico para empresas de distintos tamaños e industrias. Trabaja con IA desde GPT-3. En Sint dirige los diagnósticos y la formación. |
 | Carlos Martínez | Dirección técnica | Sistemas de Información · U. de Chile | Crea sitios web desde 2004. Desde 2009 trabaja en la Universidad de Chile, donde dirige la unidad que desarrolla sus sitios, como tv.uchile.cl. Experto en CMS, rendimiento, SEO y AEO. Hoy diseña cómo trabajan los equipos con agentes de IA. En Sint dirige la parte técnica de cada proyecto. |
 
-- La mención a la U. de Chile y a tv.uchile.cl la confirma Carlos.
+- La descripción de Carlos está confirmada (José, 10 de noviembre de 2026). Ambos llevan enlace a su LinkedIn.
 - Fotos: `public/images/equipo/*.webp` (ya optimizadas).
-- Nota bajo el equipo *(Fable, a partir de `spec.md` §1)*: Según el proyecto, sumamos desarrolladores y especialistas que trabajan en remoto con nosotros.
+- **Sin nota sobre el equipo por proyecto.** José la descartó: la página no explica que se suman personas por encargo o en remoto; debe dar seguridad.
 
 ## [FAQ] Preguntas frecuentes
 
@@ -210,7 +212,7 @@ Con las que tu organización ya usa: planillas, Google Workspace o Microsoft 365
 - Propósito: Personas y tecnología, trabajando mejor juntas.
 - [CANON]
 - Santiago, Chile
-- Enlaces a las secciones y de contacto; "© 2026 Sint."
+- Enlaces a las secciones y de contacto, incluido el LinkedIn de Sint; "© 2026 Sint."
 
 ## [SCHEMA] Datos estructurados
 
@@ -220,4 +222,4 @@ Igual que en v3 (`app/content/schema.ts`), con estos cambios:
 - `knowsAbout`: Diagnóstico organizacional · Investigación social · Gestión del cambio · Capacitación en IA · Franquicia SENCE · Agentes de IA · Desarrollo web · SEO y AEO.
 - `hasOfferCatalog`: las 4 líneas con sus 12 servicios, derivados automáticamente de `home.ts`.
 - `FAQPage`: con las preguntas visibles.
-- `sameAs` de la organización: agregarlo cuando José pase la URL de LinkedIn de Sint.
+- `sameAs` de la organización: `https://www.linkedin.com/company/sint-cl/`.

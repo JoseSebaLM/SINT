@@ -247,7 +247,10 @@ Fable ajustó redacción, no oferta. `content.md` ya está actualizado con esto:
 | Plataformas, ejemplo | Texto de la respuesta con barras en vez de datos inventados | No inventar nada |
 | Servicios | Enlace al final de cada línea ("Conversemos sobre un diagnóstico", etc.) | Cada línea es una puerta de entrada directa |
 | Portada | Frases cortas en las tarjetas de Formación, Agentes IA y Plataformas | Caben en una tarjeta |
-| Equipo | Nota: "Según el proyecto, sumamos desarrolladores y especialistas que trabajan en remoto con nosotros." | Sale de `spec.md` §1; explica cómo un equipo de dos entrega plataformas |
+| Equipo | Enlace al LinkedIn de Carlos, igual que el de José | Confirmado por José el 10 de noviembre |
+| Pie | Enlace al LinkedIn de Sint en "Contacto" | Confirmado por José el 10 de noviembre |
+
+**Criterio de José (10 de noviembre): la página da seguridad.** No se explica cómo se arma el equipo de cada proyecto ni que se suman personas por encargo o en remoto. Se descartó la nota que lo decía bajo el equipo. Ante la duda entre ser más transparente o verse más sólido, se consulta a José.
 
 **Cifras de Evidencia, verificadas el 10 de noviembre de 2026** contra el artículo del Diario Financiero (4 de agosto de 2026): 740 empresas, 85%, 79% y 58% aparecen tal cual. "91%" es la suma de las etapas de pilotaje (66%) y exploración (25%); "9%" es la suma de escalamiento (8%) y liderazgo (1%).
 
@@ -257,4 +260,5 @@ Fable ajustó redacción, no oferta. `content.md` ya está actualizado con esto:
 - No vuelven las etiquetas en mayúsculas monoespaciadas, los degradados, los brillos ni los fondos con textura.
 - No se agregan logos, cifras, testimonios ni casos. Ningún ejemplo pierde su etiqueta "Ejemplo".
 - No se publican precios ni se nombra a la OTEC, a Alumbra.ai ni a clientes.
+- No se dice que el equipo se arma por proyecto ni que se suman personas externas.
 - No se toca `backend/`.

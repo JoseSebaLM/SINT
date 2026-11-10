@@ -102,5 +102,10 @@ Se toman sus **principios**, no sus textos, imágenes ni maquetas:
 
 | Tema | Valor por defecto |
 | --- | --- |
-| Mencionar la U. de Chile y tv.uchile.cl en la biografía de Carlos | Se usa el texto de su LinkedIn; Carlos confirma |
-| URL de la página de Sint en LinkedIn | Fuera del JSON-LD hasta tenerla |
+| Mencionar la U. de Chile y tv.uchile.cl en la biografía de Carlos | **Resuelto (10 nov):** la descripción queda como está. LinkedIn de Carlos: `https://www.linkedin.com/in/chuchurexm/` |
+| URL de la página de Sint en LinkedIn | **Resuelto (10 nov):** `https://www.linkedin.com/company/sint-cl/` |
+
+## 9. Respuestas de José al diseño (10 de noviembre de 2026)
+
+- Aprueba el tema claro, el ejemplo de taller en Formación, el título "De la primera conversación a la operación." y quitar la burbuja de WhatsApp.
+- **La página debe dar seguridad.** No se dice que el equipo se arma por proyecto ni que se suman personas por encargo o en remoto. Los clientes no necesitan saberlo.
