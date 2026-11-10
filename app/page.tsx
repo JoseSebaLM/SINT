@@ -7,6 +7,8 @@ import Servicios from "./sections/Servicios";
 import PorQue from "./sections/PorQue";
 import Metodo from "./sections/Metodo";
 import Equipo from "./sections/Equipo";
+import Faq from "./sections/Faq";
+import Cierre from "./sections/Cierre";
 import { jsonLd } from "./content/schema";
 
 // La página principal declara su URL canónica.
@@ -31,6 +33,8 @@ export default function Home() {
         <PorQue />
         <Metodo />
         <Equipo />
+        <Faq />
+        <Cierre />
       </main>
       <Footer />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
