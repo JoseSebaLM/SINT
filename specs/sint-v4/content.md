@@ -4,6 +4,8 @@ Texto sugerido para cada sección. Fable puede ajustar la redacción, el orden y
 
 Hoy los textos viven en `app/content/home.ts`, con la estructura de v3. Hay que actualizarlos con este documento.
 
+> **Actualizado por Fable el 10 de noviembre de 2026.** Los cambios de redacción están marcados con *(Fable)* y resumidos en `design.md` §12. La versión lista para el código es `referencia/home.ts`.
+
 Enlaces:
 
 - Agenda: `https://cal.com/jose-latorre/15min`
@@ -27,12 +29,12 @@ Se usa igual en el pie, en el JSON-LD, en la primera pregunta frecuente y en el 
 | Descripción | Personas y tecnología, trabajando mejor juntas. Diagnóstico organizacional, formación en IA con franquicia SENCE, agentes de IA y plataformas web para organizaciones en Chile. |
 | Título para redes | Sint. Sistemas Inteligentes |
 | Descripción para redes | Personas y tecnología, trabajando mejor juntas. |
-| Imagen para redes | Rehacer `public/og-image.png` (1200 × 630) con el nuevo estilo visual |
+| Imagen para redes | `public/og-image.png` (1200 × 630), ya rehecha. Su fuente es `referencia/og.html` |
 
 ## [NAV] Encabezado
 
 - Logo `sint_`.
-- Enlaces: Servicios · Cómo trabajamos · Equipo · Preguntas. Fable puede preferir enlazar las cuatro líneas.
+- Enlaces: Servicios · Cómo trabajamos · Equipo · Preguntas. Las cuatro líneas se enlazan desde las tarjetas de la portada. *(Fable)*
 - Botón: **Conversemos** → agenda
 
 ## [HERO] Portada
@@ -43,22 +45,26 @@ Se usa igual en el pie, en el JSON-LD, en la primera pregunta frecuente y en el 
 - Las cuatro líneas, visibles: Diagnóstico · Formación · Agentes IA · Plataformas
 - Botón principal: **Agenda una conversación** → agenda
 - Botón secundario: **Escríbenos por WhatsApp** → WhatsApp
-- Visual: sin foto de banco. Una composición de producto, por ejemplo la conversación con un agente o el informe, con la etiqueta "Ejemplo".
+- Visual: sin foto de banco. Las cuatro líneas son cuatro tarjetas que llevan a su sección, cada una con una viñeta de producto (niveles del informe, módulos de un taller, una conversación, indicadores de un sitio). En celular, solo número y nombre. *(Fable)*
+- Frase corta de cada tarjeta *(Fable)*: Entender antes de proponer. / Equipos que usan la IA en su trabajo diario. / IA conectada a tus herramientas. / Sitios y herramientas fáciles de encontrar.
 
 ## [EVI] Evidencia
 
 Se mantiene de v3, con su fuente:
 
+- Antetítulo: La IA en las empresas chilenas *(Fable)*
 - Antecedente: 91% de las empresas en Chile está explorando la IA o la tiene en piloto.
 - Cifra principal: **Solo 9%** llegó a escala.
 - Cifras de apoyo: **85%** no tiene un comité formal de gobierno de IA · **79%** no mide el retorno de la IA · **58%** declara que sus equipos no han recibido formación básica en IA.
 - Fuente: Índice de Transformación Digital en IA 2026 · CCS, Corfo y PMG Chile · agosto 2026 · 740 empresas — `https://www.df.cl/df-lab/tech-empresas/empresas-en-chile-no-logran-escalar-la-ia-por-falta-de-gobernanza-datos`
+- Verificado el 10 de noviembre de 2026: 85%, 79%, 58% y 740 empresas aparecen tal cual en el artículo. 91% suma pilotaje (66%) y exploración (25%); 9% suma escalamiento (8%) y liderazgo (1%). *(Fable)*
 
 ## [SERV] Servicios
 
 - Etiqueta: Servicios
 - Título: **Cuatro formas de que tu gente y tu tecnología trabajen mejor juntas.**
 - Introducción: Puedes partir por cualquiera. Recomendamos empezar por un diagnóstico, del tamaño que necesites.
+- Cada línea termina con un enlace a la agenda *(Fable)*: Conversemos sobre un diagnóstico / Conversemos sobre formación / Conversemos sobre un agente / Conversemos sobre tu sitio o plataforma.
 
 ### Diagnóstico
 
@@ -83,6 +89,13 @@ Frase: Equipos que saben usar la IA en su trabajo diario.
 | `Users` | Talleres y cursos de IA | Cursos prácticos con los casos de tu empresa, presenciales o en línea, con franquicia tributaria SENCE mediante OTEC asociado. |
 | `GraduationCap` | Academias internas | Programas, rutas por cargo e inducción para la academia o universidad corporativa de tu organización. |
 | `Compass` | Adopción y gestión del cambio | Liderazgo, comunicación y seguimiento para que lo aprendido se use en el trabajo diario. |
+
+Ejemplo visual nuevo *(Fable; José lo confirma sobre la vista previa)*: programa de un taller.
+
+- Taller: IA para el equipo comercial · etiqueta "Franquicia SENCE".
+- Módulos: Fundamentos y uso responsable (Qué puede y qué no debe hacer la IA en tu trabajo) / Casos de tu área (Cotizaciones, seguimiento y respuestas a clientes) / Práctica con tus propios datos (Cada persona resuelve una tarea real de su semana) / Plan de adopción (Acuerdos con las jefaturas para sostener el uso).
+- Al pie: Presencial o en línea · Con los casos de tu empresa.
+- Sin horas, fechas ni precios.
 
 ### Agentes IA
 
@@ -116,7 +129,7 @@ Frase: Sitios y herramientas rápidos, accesibles y fáciles de encontrar.
 
 Ejemplo visual nuevo, que reemplaza al de integración y muestra lo que Carlos sabe hacer:
 
-- Una tarjeta de respuesta de un asistente de IA a la pregunta "¿Qué hace [Tu organización]?", con una respuesta clara que cita "tusitio.cl".
+- Una tarjeta de respuesta de un asistente de IA a la pregunta "¿Qué hace Tu organización?", con una respuesta clara que cita "tusitio.cl". La respuesta usa barras grises donde irían los datos de cada cliente: "Tu organización es una empresa chilena que ofrece ▬▬ a ▬▬ en todo el país. Atiende por ▬▬ y mantiene su información al día." *(Fable)*
 - Junto a ella, cuatro indicadores de calidad: Rendimiento 98 · Accesibilidad 100 · Buenas prácticas 100 · SEO 100.
 - Etiqueta "Ejemplo". No imitar la interfaz de un buscador real como si fuera una captura.
 
@@ -132,7 +145,7 @@ Bloque breve, sin cifras:
 
 ## [MET] Cómo trabajamos
 
-- Título: **Del diagnóstico a la operación.**
+- Título: **De la primera conversación a la operación.** *(Fable: antes "Del diagnóstico a la operación."; el diagnóstico ya no es obligatorio.)*
 
 | Ícono | Paso | Texto |
 | --- | --- | --- |
@@ -159,6 +172,7 @@ Bloque breve, sin cifras:
 
 - La mención a la U. de Chile y a tv.uchile.cl la confirma Carlos.
 - Fotos: `public/images/equipo/*.webp` (ya optimizadas).
+- Nota bajo el equipo *(Fable, a partir de `spec.md` §1)*: Según el proyecto, sumamos desarrolladores y especialistas que trabajan en remoto con nosotros.
 
 ## [FAQ] Preguntas frecuentes
 

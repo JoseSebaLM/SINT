@@ -25,13 +25,24 @@ Solo tres cosas se consultan antes con José (detalle en `plan.md` §2):
 | **Fable 5.2 (esfuerzo alto)** | Lidera: investiga, diagnostica, decide el diseño y planifica. |
 | **Opus 5.5 (esfuerzo medio)** | Escribe el código según lo que Fable deje en `tasks.md`. Fable decide si conviene otra división. |
 
+## Estado al 10 de noviembre de 2026
+
+| Etapa | Estado |
+| --- | --- |
+| Diseño y plan (Fable) | **Listo:** `design.md`, `tasks.md` y la maqueta `referencia/index.html` |
+| Imagen para redes e íconos | **Listos:** `public/og-image.png`, `app/icon.svg`, `app/favicon.ico`, `app/apple-icon.png` |
+| Código (Opus) | Pendiente: tareas P0 de `tasks.md` |
+| Publicación en `master` | Pendiente: la aprueba José sobre la vista previa |
+
 ## Qué leer, en orden
 
 1. `spec.md`: quién hace el trabajo, decisiones de José, oferta v4 y dirección de diseño. **Es la fuente de verdad sobre la oferta.**
-2. `content.md`: textos propuestos.
-3. `plan.md`: punto de partida técnico, reglas, entorno y división del trabajo sugerida.
-4. El código actual en `app/` y la vista previa del prototipo: `https://sint-v3-prototipo.sint-web.pages.dev`.
-5. `specs/sint-v3/`, solo como historia.
+2. `content.md`: textos, con los ajustes de Fable marcados.
+3. `plan.md`: punto de partida técnico, reglas y entorno.
+4. `design.md`: el sistema visual y la composición de cada sección.
+5. `tasks.md`: las tareas, en orden.
+6. `referencia/`: la maqueta completa (`index.html`), sus capturas y el contenido final (`home.ts`). **Es el modelo que se porta.**
+7. `specs/sint-v3/`, solo como historia.
 
 ## Qué cambió desde v3
 
@@ -40,7 +51,7 @@ Solo tres cosas se consultan antes con José (detalle en `plan.md` §2):
 - **SENCE activo**, mediante "OTEC asociado", sin nombrar a la OTEC.
 - **Sin Alumbra.ai** y **sin filtro de clientes**.
 - **Se retira `/diagnostico`:** todo lleva a la agenda o a WhatsApp.
-- **Diseño:** de "bonito pero no profesional" a sobrio y profesional. Tema claro solo si vale la pena; a José no le complica seguir en oscuro.
+- **Diseño:** de "bonito pero no profesional" a sobrio y profesional. Fable eligió **tema claro** ("papel y tinta"), con dos bandas oscuras; el porqué está en `design.md` §1 y §2.
 
 ## Cómo comunicarse con José
 
@@ -50,12 +61,16 @@ Solo tres cosas se consultan antes con José (detalle en `plan.md` §2):
 
 ## Mensaje para iniciar la sesión de Opus 5.5
 
-Fable lo ajusta al terminar:
+Abrir la sesión en la carpeta `~/Escritorio/SINT/SINT-v4` y pegar:
 
 ```
-Lee specs/sint-v4/README.md, spec.md, plan.md, design.md y tasks.md.
-Ejecuta las tareas P0 de tasks.md en orden, en el branch sint_v4, con un
-commit por tarea y npm run lint y npm run build limpios en cada una.
-Haz push al terminar cada bloque y, al final, muéstrame capturas a 375 y
-1280 px y el enlace de la vista previa.
+Lee specs/sint-v4/README.md, spec.md, plan.md, design.md y tasks.md, y abre
+specs/sint-v4/referencia/index.html y sus capturas: esa maqueta es el modelo.
+Ejecuta las tareas P0 de tasks.md en orden (T1 a T13), en el branch sint_v4,
+con un commit por tarea y npm run lint y npm run build limpios en cada una.
+Copia las clases de la maqueta tal cual; no rediseñes ni cambies textos.
+Haz push al terminar cada bloque (A, B, C y D). Nunca hagas push a master ni
+abras el pull request. Al final muéstrame capturas a 375 y 1280 px comparadas
+con las de referencia, los puntajes de Lighthouse, el enlace de la vista
+previa y la lista de dudas.
 ```

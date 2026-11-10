@@ -63,6 +63,8 @@ Fable decide si la usa. La propuesta de José es:
   Puede escribir código cuando le resulte más eficiente que describirlo, por ejemplo los tokens o un componente de referencia.
 - **Opus 5.5 (esfuerzo medio)** ejecuta `tasks.md`: una tarea por commit, lint y build limpios en cada una, push al final de cada bloque y capturas a 375 y 1280 px.
 
+> **Reemplazado el 10 de noviembre de 2026:** las tareas definitivas están en `tasks.md` y el diseño en `design.md`. La lista de abajo queda como historia.
+
 ## 6. Ejemplo de tareas (Fable lo reemplaza)
 
 - **P0:**

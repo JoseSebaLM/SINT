@@ -1,0 +1,858 @@
+<!doctype html>
+<html lang="es-CL">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maqueta de referencia · sint.cl v4</title>
+<meta name="robots" content="noindex">
+<!--
+  MAQUETA DE REFERENCIA DEL DISEÑO v4. No es el sitio: es el modelo que se porta a app/.
+  - Usa Tailwind por CDN con la MISMA configuración que debe quedar en tailwind.config.ts,
+    así las clases se copian tal cual a los componentes.
+  - Los estilos de <style type="text/tailwindcss"> van a app/globals.css.
+  - Los íconos son de lucide (en el sitio: lucide-react, strokeWidth 1.75).
+  - Ver ../design.md para las reglas y ../tasks.md para el orden de trabajo.
+  - Agrega ?estatico a la URL para ver todo sin animaciones (útil para capturas).
+-->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com/3.4.16"></script>
+<script>
+  // === Va a tailwind.config.ts (theme.extend) ===
+  const c = (v) => `rgb(var(--${v}) / <alpha-value>)`;
+  tailwind.config = {
+    theme: {
+      extend: {
+        colors: {
+          paper: c("paper"), "paper-2": c("paper-2"), surface: c("surface"),
+          ink: c("ink"), "ink-2": c("ink-2"), "ink-3": c("ink-3"),
+          line: c("line"), "line-2": c("line-2"),
+          accent: c("accent"), "accent-ink": c("accent-ink"), "accent-soft": c("accent-soft"),
+          ok: c("ok"),
+          "on-night": c("on-night"), "on-night-2": c("on-night-2"), "line-night": c("line-night"),
+        },
+        fontFamily: {
+          sans: ["var(--font-sans)", "system-ui", "sans-serif"],
+          mono: ["var(--font-mono)", "ui-monospace", "monospace"],
+        },
+        boxShadow: {
+          card: "0 1px 2px rgb(22 20 15 / 0.04), 0 8px 24px -6px rgb(22 20 15 / 0.08)",
+          float: "0 2px 4px rgb(22 20 15 / 0.04), 0 24px 48px -12px rgb(22 20 15 / 0.16)",
+        },
+      },
+    },
+  };
+</script>
+<style type="text/tailwindcss">
+  /* === Va a app/globals.css === */
+  @layer base {
+    :root {
+      /* En el sitio, next/font define --font-sans (Inter) y --font-mono (JetBrains Mono) */
+      --font-sans: "Inter";
+      --font-mono: "JetBrains Mono";
+
+      /* Papel y tinta */
+      --paper: 250 249 246;      /* #FAF9F6 fondo de la página */
+      --paper-2: 243 241 236;    /* #F3F1EC fondo de los ejemplos y bandas suaves */
+      --surface: 255 255 255;    /* #FFFFFF tarjetas e interfaces */
+      --ink: 22 20 15;           /* #16140F texto principal, botón principal, bandas oscuras */
+      --ink-2: 85 81 74;         /* #55514A texto secundario (7,5:1 sobre papel) */
+      --ink-3: 107 102 93;       /* #6B665D texto terciario y etiquetas (5,4:1 sobre papel) */
+      --line: 230 226 218;       /* #E6E2DA líneas finas */
+      --line-2: 213 208 198;     /* #D5D0C6 bordes de controles */
+
+      /* Marca */
+      --accent: 255 107 74;      /* #FF6B4A naranja Sint: rellenos y gráficos, nunca texto sobre claro */
+      --accent-ink: 184 55 26;   /* #B8371A naranja para texto sobre claro (5,2:1) */
+      --accent-soft: 255 233 226;/* #FFE9E2 fondo suave de acento */
+      --ok: 27 122 75;           /* #1B7A4B solo para estados: "en línea", indicadores sobre 90 */
+
+      /* Sobre bandas oscuras (fondo ink) */
+      --on-night: 245 243 238;   /* #F5F3EE texto */
+      --on-night-2: 168 163 154; /* #A8A39A texto secundario (7,3:1) */
+      --line-night: 52 49 43;    /* #34312B líneas */
+    }
+
+    html { scroll-behavior: smooth; -webkit-text-size-adjust: 100%; }
+    body { @apply bg-paper font-sans text-ink antialiased; }
+    section[id], article[id] { scroll-margin-top: 5rem; }
+
+    :focus-visible { outline: 2px solid rgb(var(--ink)); outline-offset: 3px; border-radius: 6px; }
+    .night :focus-visible { outline-color: rgb(var(--accent)); }
+
+    summary::-webkit-details-marker { display: none; }
+  }
+
+  @layer components {
+    .container-page { @apply mx-auto w-full max-w-[75rem] px-5 sm:px-8; }
+
+    /* Tipografía */
+    .h-display { @apply text-balance text-[2.375rem] font-semibold leading-[1.05] tracking-[-0.035em] sm:text-[3.5rem] lg:text-[4.5rem] lg:leading-[1.02]; }
+    .h-section { @apply text-balance text-[1.875rem] font-semibold leading-[1.1] tracking-[-0.03em] md:text-[2.75rem] md:leading-[1.08]; }
+    .h-line { @apply text-[1.75rem] font-semibold leading-[1.1] tracking-[-0.025em] md:text-[2.25rem]; }
+    .lead { @apply text-[1.0625rem] leading-relaxed text-ink-2 md:text-xl md:leading-relaxed; }
+    .eyebrow { @apply text-sm font-medium text-accent-ink; }
+    .index { @apply font-mono text-[0.8125rem] text-ink-3; }
+
+    /* Botones: siempre píldora, 48 px de alto (40 en el encabezado) */
+    .btn { @apply inline-flex h-12 items-center justify-center gap-2 whitespace-nowrap rounded-full px-6 text-[0.9375rem] font-medium transition-colors duration-200; }
+    .btn-primary { @apply bg-ink text-white hover:bg-[#33302A]; }
+    .btn-secondary { @apply border border-line-2 bg-surface text-ink hover:border-ink; }
+    .btn-accent { @apply bg-accent text-ink hover:bg-[#FF8566]; }
+    .btn-night { @apply border border-line-night text-on-night hover:border-on-night; }
+    .btn-sm { @apply h-10 px-5 text-sm; }
+
+    .link-arrow { @apply inline-flex items-center gap-1.5 text-[0.9375rem] font-medium text-ink underline decoration-line-2 underline-offset-[6px] transition-colors hover:decoration-ink; }
+
+    /* Marco de los ejemplos visuales */
+    .stage { @apply rounded-3xl bg-paper-2 p-4 sm:p-8 lg:p-10; }
+    .stage-label { @apply mb-4 flex items-center gap-2 text-[0.8125rem] text-ink-3 sm:mb-6; }
+    .tag-ejemplo { @apply rounded-full border border-line-2 bg-surface px-2.5 py-0.5 text-xs font-medium text-ink-2; }
+    .mock { @apply mx-auto w-full max-w-[30rem] rounded-2xl border border-line bg-surface shadow-float; }
+  }
+
+  /* Logo: el cursor parpadea tres veces al cargar y descansa */
+  @keyframes blink { 50% { opacity: 0.15; } }
+  .logo-cursor { animation: blink 1.1s 3; }
+
+  /* Secuencias de los ejemplos. Por defecto todo está en su estado final (sin JS se ve completo).
+     El componente <Secuencia> pone data-seq="wait" al montar y "run" cuando entra en pantalla. */
+  @keyframes seq-in { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+  @keyframes seq-bar { from { transform: scaleX(0); } to { transform: scaleX(1); } }
+  @keyframes seq-ring { from { stroke-dashoffset: 100; } }
+  [data-seq="wait"] .seq { opacity: 0; }
+  [data-seq="wait"] .seq-bar { transform: scaleX(0); }
+  [data-seq="wait"] .seq-ring { stroke-dashoffset: 100; }
+  [data-seq="run"] .seq { animation: seq-in 0.5s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: calc(var(--i, 0) * var(--step, 0.5s)); }
+  [data-seq="run"] .seq-bar { animation: seq-bar 0.7s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: calc(var(--i, 0) * 0.12s); }
+  [data-seq="run"] .seq-ring { animation: seq-ring 1s cubic-bezier(0.2, 0.7, 0.2, 1) both; animation-delay: calc(var(--i, 0) * 0.15s); }
+  .seq-bar { transform-origin: left; }
+
+  details[open] > summary .faq-icon { transform: rotate(45deg); }
+
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    *, *::before, *::after { animation: none !important; transition: none !important; }
+    [data-seq] .seq { opacity: 1 !important; }
+    [data-seq] .seq-bar { transform: none !important; }
+    [data-seq] .seq-ring { stroke-dashoffset: var(--off) !important; }
+  }
+</style>
+</head>
+<body>
+
+<a href="#contenido" class="sr-only focus:not-sr-only focus:fixed focus:left-4 focus:top-4 focus:z-[60] focus:rounded-full focus:bg-ink focus:px-5 focus:py-2.5 focus:text-sm focus:font-medium focus:text-white">Saltar al contenido</a>
+
+<!-- ================= [NAV] Encabezado ================= -->
+<header class="sticky top-0 z-50 border-b border-line/80 bg-paper/85 backdrop-blur-md">
+  <nav aria-label="Principal" class="container-page flex h-16 items-center justify-between gap-4">
+    <a href="#inicio" aria-label="Sint, ir al inicio" class="font-mono text-[1.375rem] font-medium tracking-tight text-ink">sint<span class="logo-cursor text-accent">_</span></a>
+
+    <ul class="hidden items-center gap-8 text-[0.9375rem] text-ink-2 md:flex">
+      <li><a href="#servicios" class="transition-colors hover:text-ink">Servicios</a></li>
+      <li><a href="#como-trabajamos" class="transition-colors hover:text-ink">Cómo trabajamos</a></li>
+      <li><a href="#equipo" class="transition-colors hover:text-ink">Equipo</a></li>
+      <li><a href="#preguntas" class="transition-colors hover:text-ink">Preguntas</a></li>
+    </ul>
+
+    <div class="flex items-center gap-1.5">
+      <a href="https://cal.com/jose-latorre/15min" class="btn btn-primary btn-sm">Conversemos</a>
+      <!-- Solo celular: abre el menú (en el sitio, el mismo panel de Navbar.tsx con el estilo nuevo) -->
+      <button type="button" class="-mr-2 flex h-11 w-11 items-center justify-center rounded-full text-ink md:hidden" aria-label="Abrir menú" aria-expanded="false">
+        <i data-lucide="menu" class="h-6 w-6"></i>
+      </button>
+    </div>
+  </nav>
+</header>
+
+<main id="contenido">
+
+<!-- ================= [HERO] Portada ================= -->
+<section id="inicio" class="container-page pb-14 pt-10 sm:pt-14 lg:pb-20 lg:pt-16">
+  <p class="eyebrow">Sint · Sistemas Inteligentes</p>
+  <h1 class="h-display mt-4 max-w-[20ch] lg:mt-5">Personas y tecnología, trabajando mejor juntas.</h1>
+  <p class="lead mt-5 max-w-[38rem] lg:mt-6">Diagnóstico, formación, agentes IA y plataformas, a la medida de tu organización.</p>
+
+  <div class="mt-7 flex flex-col gap-3 sm:flex-row lg:mt-8">
+    <a href="https://cal.com/jose-latorre/15min" class="btn btn-primary">Agenda una conversación</a>
+    <a href="https://wa.me/56956303337" class="btn btn-secondary">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+      Escríbenos por WhatsApp
+    </a>
+  </div>
+
+  <!-- Las cuatro líneas: índice compacto en celular, tarjetas con viñeta desde 640 px -->
+  <ul aria-label="Líneas de servicio" class="mt-9 grid grid-cols-2 gap-2 sm:mt-12 sm:gap-4 lg:mt-14 lg:grid-cols-4">
+
+    <li>
+      <a href="#diagnostico" class="group flex h-full flex-col rounded-xl border border-line bg-surface p-4 transition-shadow duration-300 hover:shadow-card sm:rounded-2xl sm:p-5">
+        <div class="flex items-start justify-between gap-2">
+          <div>
+            <span class="index">01</span>
+            <p class="mt-0.5 font-medium tracking-[-0.01em] sm:mt-1 sm:text-xl">Diagnóstico</p>
+          </div>
+          <i data-lucide="arrow-down-right" class="mt-0.5 h-4 w-4 shrink-0 text-ink-3 transition-colors group-hover:text-ink"></i>
+        </div>
+        <div aria-hidden="true" class="mt-4 hidden h-32 flex-col justify-center gap-2.5 rounded-xl bg-paper-2 px-4 sm:flex">
+          <div class="flex items-center gap-3"><span class="w-16 text-[11px] text-ink-3">Gobierno</span><span class="h-1.5 flex-1 rounded-full bg-line"><span class="block h-full w-1/3 rounded-full bg-ink"></span></span></div>
+          <div class="flex items-center gap-3"><span class="w-16 text-[11px] text-ink-3">Datos</span><span class="h-1.5 flex-1 rounded-full bg-line"><span class="block h-full w-2/3 rounded-full bg-ink"></span></span></div>
+          <div class="flex items-center gap-3"><span class="w-16 text-[11px] text-ink-3">Medición</span><span class="h-1.5 flex-1 rounded-full bg-line"><span class="block h-full w-1/3 rounded-full bg-accent"></span></span></div>
+          <div class="flex items-center gap-3"><span class="w-16 text-[11px] text-ink-3">Formación</span><span class="h-1.5 flex-1 rounded-full bg-line"><span class="block h-full w-2/3 rounded-full bg-ink"></span></span></div>
+        </div>
+        <p class="mt-4 hidden text-sm leading-snug text-ink-2 sm:block">Entender antes de proponer.</p>
+      </a>
+    </li>
+
+    <li>
+      <a href="#formacion" class="group flex h-full flex-col rounded-xl border border-line bg-surface p-4 transition-shadow duration-300 hover:shadow-card sm:rounded-2xl sm:p-5">
+        <div class="flex items-start justify-between gap-2">
+          <div>
+            <span class="index">02</span>
+            <p class="mt-0.5 font-medium tracking-[-0.01em] sm:mt-1 sm:text-xl">Formación</p>
+          </div>
+          <i data-lucide="arrow-down-right" class="mt-0.5 h-4 w-4 shrink-0 text-ink-3 transition-colors group-hover:text-ink"></i>
+        </div>
+        <div aria-hidden="true" class="mt-4 hidden h-32 flex-col justify-center gap-1.5 rounded-xl bg-paper-2 px-4 sm:flex">
+          <div class="flex items-center gap-2 rounded-lg bg-surface px-2.5 py-1.5 text-[11px] text-ink-2"><i data-lucide="circle-check" class="h-3.5 w-3.5 text-ink"></i>Fundamentos de IA</div>
+          <div class="flex items-center gap-2 rounded-lg bg-surface px-2.5 py-1.5 text-[11px] text-ink-2"><i data-lucide="circle-check" class="h-3.5 w-3.5 text-ink"></i>Casos de tu área</div>
+          <div class="flex items-center gap-2 rounded-lg bg-surface px-2.5 py-1.5 text-[11px] font-medium text-ink ring-1 ring-accent"><i data-lucide="circle-dot" class="h-3.5 w-3.5 text-accent"></i>Práctica con tus datos</div>
+        </div>
+        <p class="mt-4 hidden text-sm leading-snug text-ink-2 sm:block">Equipos que usan la IA en su trabajo diario.</p>
+      </a>
+    </li>
+
+    <li>
+      <a href="#agentes" class="group flex h-full flex-col rounded-xl border border-line bg-surface p-4 transition-shadow duration-300 hover:shadow-card sm:rounded-2xl sm:p-5">
+        <div class="flex items-start justify-between gap-2">
+          <div>
+            <span class="index">03</span>
+            <p class="mt-0.5 font-medium tracking-[-0.01em] sm:mt-1 sm:text-xl">Agentes IA</p>
+          </div>
+          <i data-lucide="arrow-down-right" class="mt-0.5 h-4 w-4 shrink-0 text-ink-3 transition-colors group-hover:text-ink"></i>
+        </div>
+        <div aria-hidden="true" class="mt-4 hidden h-32 flex-col justify-center gap-1.5 rounded-xl bg-paper-2 px-4 sm:flex">
+          <span class="max-w-[85%] self-end rounded-2xl rounded-br-sm bg-ink px-3 py-1.5 text-[11px] leading-snug text-white">¿Me cotizan 40 sillas?</span>
+          <span class="max-w-[85%] self-start rounded-2xl rounded-bl-sm bg-surface px-3 py-1.5 text-[11px] leading-snug text-ink">Claro. Te envío la cotización.</span>
+          <span class="flex items-center gap-1.5 self-start rounded-2xl rounded-bl-sm bg-surface px-3 py-1.5 text-[11px] text-ink-2"><i data-lucide="file-text" class="h-3.5 w-3.5 text-accent-ink"></i>Cotización.pdf</span>
+        </div>
+        <p class="mt-4 hidden text-sm leading-snug text-ink-2 sm:block">IA conectada a tus herramientas.</p>
+      </a>
+    </li>
+
+    <li>
+      <a href="#plataformas" class="group flex h-full flex-col rounded-xl border border-line bg-surface p-4 transition-shadow duration-300 hover:shadow-card sm:rounded-2xl sm:p-5">
+        <div class="flex items-start justify-between gap-2">
+          <div>
+            <span class="index">04</span>
+            <p class="mt-0.5 font-medium tracking-[-0.01em] sm:mt-1 sm:text-xl">Plataformas</p>
+          </div>
+          <i data-lucide="arrow-down-right" class="mt-0.5 h-4 w-4 shrink-0 text-ink-3 transition-colors group-hover:text-ink"></i>
+        </div>
+        <div aria-hidden="true" class="mt-4 hidden h-32 flex-col justify-center gap-3 rounded-xl bg-paper-2 px-4 sm:flex">
+          <div class="flex items-center gap-2 rounded-lg bg-surface px-2.5 py-1.5 text-[11px] text-ink-2"><i data-lucide="globe" class="h-3.5 w-3.5 text-ink"></i><span class="font-mono">tusitio.cl</span></div>
+          <div class="flex justify-between px-1">
+            <!-- Anillos: r=15.915 hace que la circunferencia mida 100, así dashoffset = 100 - puntaje -->
+            <span class="relative flex h-10 w-10 items-center justify-center text-[11px] font-medium"><svg viewBox="0 0 36 36" class="absolute inset-0 -rotate-90"><circle cx="18" cy="18" r="15.915" fill="none" stroke="rgb(var(--line))" stroke-width="3"/><circle cx="18" cy="18" r="15.915" fill="none" stroke="rgb(var(--ok))" stroke-width="3" stroke-linecap="round" stroke-dasharray="100" stroke-dashoffset="2"/></svg>98</span>
+            <span class="relative flex h-10 w-10 items-center justify-center text-[11px] font-medium"><svg viewBox="0 0 36 36" class="absolute inset-0 -rotate-90"><circle cx="18" cy="18" r="15.915" fill="none" stroke="rgb(var(--ok))" stroke-width="3"/></svg>100</span>
+            <span class="relative flex h-10 w-10 items-center justify-center text-[11px] font-medium"><svg viewBox="0 0 36 36" class="absolute inset-0 -rotate-90"><circle cx="18" cy="18" r="15.915" fill="none" stroke="rgb(var(--ok))" stroke-width="3"/></svg>100</span>
+            <span class="relative flex h-10 w-10 items-center justify-center text-[11px] font-medium"><svg viewBox="0 0 36 36" class="absolute inset-0 -rotate-90"><circle cx="18" cy="18" r="15.915" fill="none" stroke="rgb(var(--ok))" stroke-width="3"/></svg>100</span>
+          </div>
+        </div>
+        <p class="mt-4 hidden text-sm leading-snug text-ink-2 sm:block">Sitios y herramientas fáciles de encontrar.</p>
+      </a>
+    </li>
+  </ul>
+</section>
+
+<!-- ================= [EVI] Evidencia: banda oscura ================= -->
+<section aria-labelledby="evidencia-titulo" class="night px-2 sm:px-4">
+  <div class="mx-auto max-w-[90rem] rounded-[1.75rem] bg-ink text-on-night sm:rounded-[2rem]">
+    <div class="container-page py-14 md:py-20 lg:py-24">
+      <div class="grid gap-12 lg:grid-cols-12 lg:gap-12">
+        <div class="lg:col-span-6">
+          <p class="text-sm font-medium text-on-night-2">La IA en las empresas chilenas</p>
+          <p class="mt-5 max-w-md text-lg leading-snug text-on-night-2 md:text-xl">91% de las empresas en Chile está explorando la IA o la tiene en piloto.</p>
+          <h2 id="evidencia-titulo" class="mt-4">
+            <span class="block text-[4.5rem] font-semibold leading-none tracking-[-0.045em] text-accent md:text-[7rem]">Solo 9%</span>
+            <span class="mt-2 block text-[1.75rem] font-semibold leading-tight tracking-[-0.025em] md:text-[2.5rem]">llegó a escala.</span>
+          </h2>
+          <!-- 9 de 100: la barra refuerza la cifra -->
+          <div aria-hidden="true" class="mt-8 h-1.5 max-w-md rounded-full bg-line-night"><div class="h-full w-[9%] rounded-full bg-accent"></div></div>
+        </div>
+
+        <ul class="lg:col-span-6 lg:col-start-7 lg:self-end">
+          <li class="flex items-baseline gap-5 border-t border-line-night py-5 md:gap-8 md:py-6">
+            <span class="w-[4.5rem] shrink-0 text-[2rem] font-semibold leading-none tracking-[-0.03em] md:w-24 md:text-[2.5rem]">85%</span>
+            <span class="text-[0.9375rem] leading-relaxed text-on-night-2 md:text-base">no tiene un comité formal de gobierno de IA.</span>
+          </li>
+          <li class="flex items-baseline gap-5 border-t border-line-night py-5 md:gap-8 md:py-6">
+            <span class="w-[4.5rem] shrink-0 text-[2rem] font-semibold leading-none tracking-[-0.03em] md:w-24 md:text-[2.5rem]">79%</span>
+            <span class="text-[0.9375rem] leading-relaxed text-on-night-2 md:text-base">no mide el retorno de la IA.</span>
+          </li>
+          <li class="flex items-baseline gap-5 border-y border-line-night py-5 md:gap-8 md:py-6">
+            <span class="w-[4.5rem] shrink-0 text-[2rem] font-semibold leading-none tracking-[-0.03em] md:w-24 md:text-[2.5rem]">58%</span>
+            <span class="text-[0.9375rem] leading-relaxed text-on-night-2 md:text-base">declara que sus equipos no han recibido formación básica en IA.</span>
+          </li>
+        </ul>
+      </div>
+
+      <p class="mt-10 text-[0.8125rem] leading-relaxed text-on-night-2 md:mt-14">
+        Fuente:
+        <a href="https://www.df.cl/df-lab/tech-empresas/empresas-en-chile-no-logran-escalar-la-ia-por-falta-de-gobernanza-datos" class="underline decoration-line-night underline-offset-4 transition-colors hover:text-on-night">Índice de Transformación Digital en IA 2026 · CCS, Corfo y PMG Chile · agosto 2026 · 740 empresas<i data-lucide="arrow-up-right" class="ml-0.5 inline h-3.5 w-3.5 align-[-2px]"></i></a>
+      </p>
+    </div>
+  </div>
+</section>
+
+<!-- ================= [SERV] Servicios ================= -->
+<section id="servicios" class="container-page pt-20 md:pt-28 lg:pt-32">
+  <header class="max-w-3xl">
+    <p class="eyebrow">Servicios</p>
+    <h2 class="h-section mt-3">Cuatro formas de que tu gente y tu tecnología trabajen mejor juntas.</h2>
+    <p class="lead mt-5 max-w-2xl">Puedes partir por cualquiera. Recomendamos empezar por un diagnóstico, del tamaño que necesites.</p>
+  </header>
+
+  <div class="mt-12 md:mt-16">
+
+    <!-- ---------- 01 Diagnóstico ---------- -->
+    <article id="diagnostico" aria-labelledby="diagnostico-titulo" class="grid gap-10 border-t border-line py-12 lg:grid-cols-12 lg:gap-12 lg:py-20">
+      <div class="lg:col-span-5">
+        <p class="index">01</p>
+        <h3 id="diagnostico-titulo" class="h-line mt-2">Diagnóstico</h3>
+        <p class="mt-3 text-lg text-ink-2">Entender antes de proponer.</p>
+
+        <ul class="mt-8 divide-y divide-line border-y border-line">
+          <li class="flex gap-4 py-5">
+            <i data-lucide="search" class="mt-0.5 h-5 w-5 shrink-0"></i>
+            <div>
+              <h4 class="font-medium">Diagnóstico Sint</h4>
+              <p class="mt-1.5 text-[0.9375rem] leading-relaxed text-ink-2">Entrevistas a líderes, encuestas a los equipos y revisión de herramientas y datos. Entrega un informe de punto de partida, oportunidades priorizadas, reglas de uso de la IA y un plan de acción. Su profundidad se ajusta a lo que necesitas.</p>
+            </div>
+          </li>
+          <li class="flex gap-4 py-5">
+            <i data-lucide="chart-column" class="mt-0.5 h-5 w-5 shrink-0"></i>
+            <div>
+              <h4 class="font-medium">Estudios con encuestas y entrevistas</h4>
+              <p class="mt-1.5 text-[0.9375rem] leading-relaxed text-ink-2">Investigación cualitativa y cuantitativa con tus equipos o tus clientes, para decidir con datos.</p>
+            </div>
+          </li>
+        </ul>
+        <a href="https://cal.com/jose-latorre/15min" class="link-arrow mt-7">Conversemos sobre un diagnóstico <i data-lucide="arrow-right" class="h-4 w-4"></i></a>
+      </div>
+
+      <figure class="stage lg:sticky lg:top-24 lg:col-span-7 lg:self-start" data-seq-root>
+        <figcaption class="stage-label"><span class="tag-ejemplo">Ejemplo</span>Informe de punto de partida</figcaption>
+        <div class="mock p-5 sm:p-7">
+          <div class="flex items-center gap-3 border-b border-line pb-4">
+            <span class="flex h-9 w-9 items-center justify-center rounded-lg bg-accent-soft text-accent-ink"><i data-lucide="file-text" class="h-[18px] w-[18px]"></i></span>
+            <div class="leading-tight">
+              <p class="text-[0.9375rem] font-medium">Informe de punto de partida</p>
+              <p class="mt-0.5 text-[0.8125rem] text-ink-3">Tu organización · Diagnóstico Sint</p>
+            </div>
+          </div>
+
+          <p class="mt-5 text-xs font-medium text-ink-3">Nivel por dimensión</p>
+          <ul class="mt-3 space-y-3">
+            <!-- Nivel en palabras; los tres tramos solo lo refuerzan. Inicial = 1 tramo, En desarrollo = 2 -->
+            <li class="flex items-center gap-4 text-sm">
+              <span class="w-20 shrink-0">Gobierno</span>
+              <span aria-hidden="true" class="grid flex-1 grid-cols-3 gap-1"><span class="seq-bar h-1.5 rounded-full bg-ink" style="--i:0"></span><span class="h-1.5 rounded-full bg-line"></span><span class="h-1.5 rounded-full bg-line"></span></span>
+              <span class="w-24 shrink-0 text-right text-[0.8125rem] text-ink-2">Inicial</span>
+            </li>
+            <li class="flex items-center gap-4 text-sm">
+              <span class="w-20 shrink-0">Datos</span>
+              <span aria-hidden="true" class="grid flex-1 grid-cols-3 gap-1"><span class="seq-bar h-1.5 rounded-full bg-ink" style="--i:1"></span><span class="seq-bar h-1.5 rounded-full bg-ink" style="--i:2"></span><span class="h-1.5 rounded-full bg-line"></span></span>
+              <span class="w-24 shrink-0 text-right text-[0.8125rem] text-ink-2">En desarrollo</span>
+            </li>
+            <li class="flex items-center gap-4 text-sm">
+              <span class="w-20 shrink-0">Medición</span>
+              <span aria-hidden="true" class="grid flex-1 grid-cols-3 gap-1"><span class="seq-bar h-1.5 rounded-full bg-ink" style="--i:2"></span><span class="h-1.5 rounded-full bg-line"></span><span class="h-1.5 rounded-full bg-line"></span></span>
+              <span class="w-24 shrink-0 text-right text-[0.8125rem] text-ink-2">Inicial</span>
+            </li>
+            <li class="flex items-center gap-4 text-sm">
+              <span class="w-20 shrink-0">Formación</span>
+              <span aria-hidden="true" class="grid flex-1 grid-cols-3 gap-1"><span class="seq-bar h-1.5 rounded-full bg-ink" style="--i:3"></span><span class="seq-bar h-1.5 rounded-full bg-ink" style="--i:4"></span><span class="h-1.5 rounded-full bg-line"></span></span>
+              <span class="w-24 shrink-0 text-right text-[0.8125rem] text-ink-2">En desarrollo</span>
+            </li>
+          </ul>
+
+          <p class="mt-7 text-xs font-medium text-ink-3">Oportunidades priorizadas</p>
+          <ol class="mt-3 space-y-2" style="--step:0.35s">
+            <li class="seq flex items-start gap-3 rounded-xl bg-paper px-3.5 py-3 text-sm" style="--i:3"><span class="mt-px font-mono text-xs text-accent-ink">01</span>Respuestas a clientes por WhatsApp</li>
+            <li class="seq flex items-start gap-3 rounded-xl bg-paper px-3.5 py-3 text-sm" style="--i:4"><span class="mt-px font-mono text-xs text-accent-ink">02</span>Cotizaciones preparadas con los datos de tus planillas</li>
+            <li class="seq flex items-start gap-3 rounded-xl bg-paper px-3.5 py-3 text-sm" style="--i:5"><span class="mt-px font-mono text-xs text-accent-ink">03</span>Formación práctica para el equipo comercial</li>
+          </ol>
+        </div>
+      </figure>
+    </article>
+
+    <!-- ---------- 02 Formación ---------- -->
+    <article id="formacion" aria-labelledby="formacion-titulo" class="grid gap-10 border-t border-line py-12 lg:grid-cols-12 lg:gap-12 lg:py-20">
+      <div class="lg:col-span-5">
+        <p class="index">02</p>
+        <h3 id="formacion-titulo" class="h-line mt-2">Formación</h3>
+        <p class="mt-3 text-lg text-ink-2">Equipos que saben usar la IA en su trabajo diario.</p>
+
+        <ul class="mt-8 divide-y divide-line border-y border-line">
+          <li class="flex gap-4 py-5">
+            <i data-lucide="users" class="mt-0.5 h-5 w-5 shrink-0"></i>
+            <div>
+              <h4 class="font-medium">Talleres y cursos de IA</h4>
+              <p class="mt-1.5 text-[0.9375rem] leading-relaxed text-ink-2">Cursos prácticos con los casos de tu empresa, presenciales o en línea, con franquicia tributaria SENCE mediante OTEC asociado.</p>
+            </div>
+          </li>
+          <li class="flex gap-4 py-5">
+            <i data-lucide="graduation-cap" class="mt-0.5 h-5 w-5 shrink-0"></i>
+            <div>
+              <h4 class="font-medium">Academias internas</h4>
+              <p class="mt-1.5 text-[0.9375rem] leading-relaxed text-ink-2">Programas, rutas por cargo e inducción para la academia o universidad corporativa de tu organización.</p>
+            </div>
+          </li>
+          <li class="flex gap-4 py-5">
+            <i data-lucide="compass" class="mt-0.5 h-5 w-5 shrink-0"></i>
+            <div>
+              <h4 class="font-medium">Adopción y gestión del cambio</h4>
+              <p class="mt-1.5 text-[0.9375rem] leading-relaxed text-ink-2">Liderazgo, comunicación y seguimiento para que lo aprendido se use en el trabajo diario.</p>
+            </div>
+          </li>
+        </ul>
+        <a href="https://cal.com/jose-latorre/15min" class="link-arrow mt-7">Conversemos sobre formación <i data-lucide="arrow-right" class="h-4 w-4"></i></a>
+      </div>
+
+      <figure class="stage lg:sticky lg:top-24 lg:col-span-7 lg:self-start" data-seq-root>
+        <figcaption class="stage-label"><span class="tag-ejemplo">Ejemplo</span>Programa de un taller</figcaption>
+        <div class="mock p-5 sm:p-7">
+          <div class="border-b border-line pb-4">
+            <div class="flex items-center justify-between gap-4">
+              <p class="text-[0.8125rem] text-ink-3">Taller</p>
+              <span class="shrink-0 rounded-full bg-accent-soft px-2.5 py-1 text-xs font-medium text-accent-ink">Franquicia SENCE</span>
+            </div>
+            <p class="mt-1.5 text-[1.0625rem] font-medium leading-tight tracking-[-0.01em]">IA para el equipo comercial</p>
+          </div>
+
+          <ol class="mt-2 divide-y divide-line" style="--step:0.3s">
+            <li class="seq flex items-center gap-3.5 py-3.5" style="--i:0">
+              <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-ink text-white"><i data-lucide="check" class="h-3.5 w-3.5"></i></span>
+              <div class="text-sm leading-snug"><p class="font-medium">Fundamentos y uso responsable</p><p class="mt-0.5 text-[0.8125rem] text-ink-3">Qué puede y qué no debe hacer la IA en tu trabajo</p></div>
+            </li>
+            <li class="seq flex items-center gap-3.5 py-3.5" style="--i:1">
+              <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-ink text-white"><i data-lucide="check" class="h-3.5 w-3.5"></i></span>
+              <div class="text-sm leading-snug"><p class="font-medium">Casos de tu área</p><p class="mt-0.5 text-[0.8125rem] text-ink-3">Cotizaciones, seguimiento y respuestas a clientes</p></div>
+            </li>
+            <li class="seq flex items-center gap-3.5 py-3.5" style="--i:2">
+              <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border-2 border-accent font-mono text-xs text-accent-ink">3</span>
+              <div class="text-sm leading-snug"><p class="font-medium">Práctica con tus propios datos</p><p class="mt-0.5 text-[0.8125rem] text-ink-3">Cada persona resuelve una tarea real de su semana</p></div>
+            </li>
+            <li class="seq flex items-center gap-3.5 py-3.5" style="--i:3">
+              <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-line-2 font-mono text-xs text-ink-3">4</span>
+              <div class="text-sm leading-snug"><p class="font-medium">Plan de adopción</p><p class="mt-0.5 text-[0.8125rem] text-ink-3">Acuerdos con las jefaturas para sostener el uso</p></div>
+            </li>
+          </ol>
+
+          <div class="mt-2 flex flex-wrap gap-2 border-t border-line pt-4 text-xs text-ink-2">
+            <span class="inline-flex items-center gap-1.5 rounded-full border border-line px-2.5 py-1"><i data-lucide="users" class="h-3.5 w-3.5"></i>Presencial o en línea</span>
+            <span class="inline-flex items-center gap-1.5 rounded-full border border-line px-2.5 py-1"><i data-lucide="briefcase" class="h-3.5 w-3.5"></i>Con los casos de tu empresa</span>
+          </div>
+        </div>
+      </figure>
+    </article>
+
+    <!-- ---------- 03 Agentes IA ---------- -->
+    <article id="agentes" aria-labelledby="agentes-titulo" class="grid gap-10 border-t border-line py-12 lg:grid-cols-12 lg:gap-12 lg:py-20">
+      <div class="lg:col-span-5">
+        <p class="index">03</p>
+        <h3 id="agentes-titulo" class="h-line mt-2">Agentes IA</h3>
+        <p class="mt-3 text-lg text-ink-2">IA conectada a tus herramientas, al servicio de tu equipo.</p>
+
+        <ul class="mt-8 divide-y divide-line border-y border-line">
+          <li class="flex gap-4 py-5">
+            <i data-lucide="message-circle" class="mt-0.5 h-5 w-5 shrink-0"></i>
+            <div>
+              <h4 class="font-medium">Atención a clientes</h4>
+              <p class="mt-1.5 text-[0.9375rem] leading-relaxed text-ink-2">Asistentes que responden, califican y derivan consultas por WhatsApp y web, a toda hora, y pasan a una persona lo que no deben resolver solos.</p>
+            </div>
+          </li>
+          <li class="flex gap-4 py-5">
+            <i data-lucide="file-text" class="mt-0.5 h-5 w-5 shrink-0"></i>
+            <div>
+              <h4 class="font-medium">Documentos y reportes automáticos</h4>
+              <p class="mt-1.5 text-[0.9375rem] leading-relaxed text-ink-2">Agentes que preparan cotizaciones, informes y reportes con los datos de tus planillas y sistemas en la nube.</p>
+            </div>
+          </li>
+          <li class="flex gap-4 py-5">
+            <i data-lucide="book-open" class="mt-0.5 h-5 w-5 shrink-0"></i>
+            <div>
+              <h4 class="font-medium">Conocimiento interno</h4>
+              <p class="mt-1.5 text-[0.9375rem] leading-relaxed text-ink-2">Asistentes que responden con tus manuales, contratos y políticas vigentes, y citan la fuente.</p>
+            </div>
+          </li>
+        </ul>
+        <p class="mt-5 text-sm leading-relaxed text-ink-3">Cada agente se entrega con un periodo de acompañamiento y, si quieres, sigue con mantención mensual.</p>
+        <a href="https://cal.com/jose-latorre/15min" class="link-arrow mt-6">Conversemos sobre un agente <i data-lucide="arrow-right" class="h-4 w-4"></i></a>
+      </div>
+
+      <figure class="stage lg:sticky lg:top-24 lg:col-span-7 lg:self-start" data-seq-root>
+        <figcaption class="stage-label"><span class="tag-ejemplo">Ejemplo</span>Conversación con un agente</figcaption>
+        <div class="mock max-w-[26rem] overflow-hidden">
+          <div class="flex items-center gap-3 border-b border-line px-4 py-3.5">
+            <span aria-hidden="true" class="flex h-9 w-9 items-center justify-center rounded-full bg-ink font-mono text-sm text-white">s<span class="text-accent">_</span></span>
+            <div class="leading-tight">
+              <p class="text-[0.9375rem] font-medium">Asistente de ventas</p>
+              <p class="mt-0.5 flex items-center gap-1.5 text-xs text-ok"><span class="h-1.5 w-1.5 rounded-full bg-ok"></span>en línea</p>
+            </div>
+          </div>
+
+          <ul class="flex flex-col gap-2.5 bg-paper/60 px-4 py-5" style="--step:0.9s">
+            <li class="seq max-w-[82%] self-end rounded-2xl rounded-br-md bg-ink px-4 py-2.5 text-sm leading-snug text-white" style="--i:0"><span class="sr-only">Cliente: </span>Hola, ¿me pueden cotizar 40 sillas de oficina para el 20 de diciembre?</li>
+            <li class="seq max-w-[82%] self-start rounded-2xl rounded-bl-md border border-line bg-surface px-4 py-2.5 text-sm leading-snug" style="--i:1"><span class="sr-only">Asistente: </span>Claro. Revisé el inventario y tenemos 40 unidades disponibles. Te envío la cotización en PDF.</li>
+            <li class="seq flex max-w-[82%] items-center gap-3 self-start rounded-2xl rounded-bl-md border border-line bg-surface px-3 py-2.5 text-sm leading-snug" style="--i:2">
+              <span class="sr-only">Asistente: </span>
+              <span class="flex h-10 w-10 shrink-0 items-center justify-center rounded-lg bg-accent-soft text-accent-ink"><i data-lucide="file-text" class="h-5 w-5"></i></span>
+              <span><span class="block font-medium">Cotización · Sillas de oficina.pdf</span><span class="block text-xs text-ink-3">PDF</span></span>
+            </li>
+            <li class="seq max-w-[82%] self-start rounded-2xl rounded-bl-md border border-line bg-surface px-4 py-2.5 text-sm leading-snug" style="--i:3"><span class="sr-only">Asistente: </span>¿Quieres que una ejecutiva te llame para coordinar la entrega?</li>
+          </ul>
+
+          <div aria-hidden="true" class="flex items-center gap-2 border-t border-line px-4 py-3">
+            <span class="flex h-10 flex-1 items-center rounded-full bg-paper-2 px-4 text-sm text-ink-3">Escribe un mensaje</span>
+            <span class="flex h-10 w-10 items-center justify-center rounded-full bg-ink text-white"><i data-lucide="arrow-up" class="h-4 w-4"></i></span>
+          </div>
+        </div>
+      </figure>
+    </article>
+
+    <!-- ---------- 04 Plataformas ---------- -->
+    <article id="plataformas" aria-labelledby="plataformas-titulo" class="grid gap-10 border-y border-line py-12 lg:grid-cols-12 lg:gap-12 lg:py-20">
+      <div class="lg:col-span-5">
+        <p class="index">04</p>
+        <h3 id="plataformas-titulo" class="h-line mt-2">Plataformas</h3>
+        <p class="mt-3 text-lg text-ink-2">Sitios y herramientas rápidos, accesibles y fáciles de encontrar.</p>
+
+        <ul class="mt-8 divide-y divide-line border-y border-line">
+          <li class="flex gap-4 py-5">
+            <i data-lucide="globe" class="mt-0.5 h-5 w-5 shrink-0"></i>
+            <div>
+              <h4 class="font-medium">Sitios web corporativos e institucionales</h4>
+              <p class="mt-1.5 text-[0.9375rem] leading-relaxed text-ink-2">Diseño, desarrollo y un administrador de contenidos para que tu equipo publique sin depender de nadie.</p>
+            </div>
+          </li>
+          <li class="flex gap-4 py-5">
+            <i data-lucide="sparkles" class="mt-0.5 h-5 w-5 shrink-0"></i>
+            <div>
+              <h4 class="font-medium">Posicionamiento en Google y buscadores con IA</h4>
+              <p class="mt-1.5 text-[0.9375rem] leading-relaxed text-ink-2">SEO y AEO: que Google y los asistentes de IA encuentren tu sitio y describan bien a tu organización.</p>
+            </div>
+          </li>
+          <li class="flex gap-4 py-5">
+            <i data-lucide="code-xml" class="mt-0.5 h-5 w-5 shrink-0"></i>
+            <div>
+              <h4 class="font-medium">Plataformas y portales a medida</h4>
+              <p class="mt-1.5 text-[0.9375rem] leading-relaxed text-ink-2">Herramientas internas y portales para clientes, construidos sobre una especificación que apruebas.</p>
+            </div>
+          </li>
+          <li class="flex gap-4 py-5">
+            <i data-lucide="layout-dashboard" class="mt-0.5 h-5 w-5 shrink-0"></i>
+            <div>
+              <h4 class="font-medium">Tableros de datos</h4>
+              <p class="mt-1.5 text-[0.9375rem] leading-relaxed text-ink-2">Reunimos tu información en un solo lugar y la convertimos en tableros para decidir.</p>
+            </div>
+          </li>
+        </ul>
+        <a href="https://cal.com/jose-latorre/15min" class="link-arrow mt-7">Conversemos sobre tu sitio o plataforma <i data-lucide="arrow-right" class="h-4 w-4"></i></a>
+      </div>
+
+      <figure class="stage lg:sticky lg:top-24 lg:col-span-7 lg:self-start" data-seq-root>
+        <figcaption class="stage-label"><span class="tag-ejemplo">Ejemplo</span>Tu sitio, bien descrito por un asistente de IA</figcaption>
+        <div class="mock p-5 sm:p-7">
+          <!-- Pregunta -->
+          <div class="flex justify-end">
+            <p class="seq max-w-[85%] rounded-2xl rounded-br-md bg-paper-2 px-4 py-2.5 text-sm" style="--i:0">¿Qué hace <span class="font-medium">Tu organización</span>?</p>
+          </div>
+          <!-- Respuesta: las barras representan los datos propios de cada organización -->
+          <div class="seq mt-5 flex gap-3" style="--i:1">
+            <span aria-hidden="true" class="mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded-full border border-line text-ink"><i data-lucide="sparkles" class="h-3.5 w-3.5"></i></span>
+            <div class="min-w-0 flex-1">
+              <p class="text-xs font-medium text-ink-3">Respuesta del asistente</p>
+              <p class="mt-2 text-sm leading-[1.9]">
+                <span class="font-medium">Tu organización</span> es una empresa chilena que ofrece
+                <span aria-hidden="true" class="inline-block h-2.5 w-24 rounded-full bg-line align-middle"></span>
+                <span class="sr-only">sus servicios</span> a
+                <span aria-hidden="true" class="inline-block h-2.5 w-16 rounded-full bg-line align-middle"></span>
+                <span class="sr-only">sus clientes</span> en todo el país. Atiende por
+                <span aria-hidden="true" class="inline-block h-2.5 w-20 rounded-full bg-line align-middle"></span>
+                <span class="sr-only">sus canales</span> y mantiene su información al día.
+              </p>
+              <p class="mt-3 inline-flex items-center gap-1.5 rounded-full border border-line bg-paper px-2.5 py-1 text-xs text-ink-2"><i data-lucide="globe" class="h-3.5 w-3.5"></i>Fuente: <span class="font-mono">tusitio.cl</span></p>
+            </div>
+          </div>
+
+          <!-- Indicadores de calidad -->
+          <p class="mt-7 border-t border-line pt-5 text-xs font-medium text-ink-3">Indicadores de calidad del sitio</p>
+          <ul class="mt-4 grid grid-cols-2 gap-x-2 gap-y-5 text-center sm:grid-cols-4">
+            <li>
+              <span class="relative mx-auto flex h-14 w-14 items-center justify-center text-[0.9375rem] font-medium sm:h-16 sm:w-16 sm:text-base"><svg viewBox="0 0 36 36" class="absolute inset-0 -rotate-90" aria-hidden="true"><circle cx="18" cy="18" r="15.915" fill="none" stroke="rgb(var(--line))" stroke-width="2.5"/><circle class="seq-ring" style="--i:2;--off:2" cx="18" cy="18" r="15.915" fill="none" stroke="rgb(var(--ok))" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="100" stroke-dashoffset="2"/></svg>98</span>
+              <span class="mt-2 block text-xs leading-tight text-ink-2">Rendimiento</span>
+            </li>
+            <li>
+              <span class="relative mx-auto flex h-14 w-14 items-center justify-center text-[0.9375rem] font-medium sm:h-16 sm:w-16 sm:text-base"><svg viewBox="0 0 36 36" class="absolute inset-0 -rotate-90" aria-hidden="true"><circle cx="18" cy="18" r="15.915" fill="none" stroke="rgb(var(--line))" stroke-width="2.5"/><circle class="seq-ring" style="--i:3;--off:0" cx="18" cy="18" r="15.915" fill="none" stroke="rgb(var(--ok))" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="100" stroke-dashoffset="0"/></svg>100</span>
+              <span class="mt-2 block text-xs leading-tight text-ink-2">Accesibilidad</span>
+            </li>
+            <li>
+              <span class="relative mx-auto flex h-14 w-14 items-center justify-center text-[0.9375rem] font-medium sm:h-16 sm:w-16 sm:text-base"><svg viewBox="0 0 36 36" class="absolute inset-0 -rotate-90" aria-hidden="true"><circle cx="18" cy="18" r="15.915" fill="none" stroke="rgb(var(--line))" stroke-width="2.5"/><circle class="seq-ring" style="--i:4;--off:0" cx="18" cy="18" r="15.915" fill="none" stroke="rgb(var(--ok))" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="100" stroke-dashoffset="0"/></svg>100</span>
+              <span class="mt-2 block text-xs leading-tight text-ink-2">Buenas prácticas</span>
+            </li>
+            <li>
+              <span class="relative mx-auto flex h-14 w-14 items-center justify-center text-[0.9375rem] font-medium sm:h-16 sm:w-16 sm:text-base"><svg viewBox="0 0 36 36" class="absolute inset-0 -rotate-90" aria-hidden="true"><circle cx="18" cy="18" r="15.915" fill="none" stroke="rgb(var(--line))" stroke-width="2.5"/><circle class="seq-ring" style="--i:5;--off:0" cx="18" cy="18" r="15.915" fill="none" stroke="rgb(var(--ok))" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="100" stroke-dashoffset="0"/></svg>100</span>
+              <span class="mt-2 block text-xs leading-tight text-ink-2">SEO</span>
+            </li>
+          </ul>
+        </div>
+      </figure>
+    </article>
+  </div>
+</section>
+
+<!-- ================= [POR] Por qué Sint ================= -->
+<section aria-labelledby="por-que-titulo" class="container-page py-20 md:py-28">
+  <div class="grid gap-10 lg:grid-cols-12 lg:gap-12">
+    <h2 id="por-que-titulo" class="h-section lg:col-span-4">Por qué Sint</h2>
+    <ul class="grid gap-10 sm:grid-cols-3 sm:gap-8 lg:col-span-8">
+      <li>
+        <i data-lucide="user-check" class="h-6 w-6"></i>
+        <h3 class="mt-5 text-lg font-medium leading-snug tracking-[-0.01em]">Hablas con quienes hacen el trabajo</h3>
+        <p class="mt-2.5 text-[0.9375rem] leading-relaxed text-ink-2">Un equipo pequeño y senior, sin intermediarios.</p>
+      </li>
+      <li>
+        <i data-lucide="users" class="h-6 w-6"></i>
+        <h3 class="mt-5 text-lg font-medium leading-snug tracking-[-0.01em]">Personas y tecnología en el mismo equipo</h3>
+        <p class="mt-2.5 text-[0.9375rem] leading-relaxed text-ink-2">Ciencias sociales para entender a tu organización, ingeniería para construir lo que necesita.</p>
+      </li>
+      <li>
+        <i data-lucide="zap" class="h-6 w-6"></i>
+        <h3 class="mt-5 text-lg font-medium leading-snug tracking-[-0.01em]">Remoto y ágil</h3>
+        <p class="mt-2.5 text-[0.9375rem] leading-relaxed text-ink-2">Construimos con agentes de IA y especificaciones escritas, y vamos a terreno cuando hace falta.</p>
+      </li>
+    </ul>
+  </div>
+</section>
+
+<!-- ================= [MET] Cómo trabajamos: banda suave ================= -->
+<section id="como-trabajamos" class="px-2 sm:px-4">
+  <div class="mx-auto max-w-[90rem] rounded-[1.75rem] bg-paper-2 sm:rounded-[2rem]">
+    <div class="container-page py-16 md:py-24">
+      <header class="max-w-3xl">
+        <p class="eyebrow">Cómo trabajamos</p>
+        <h2 class="h-section mt-3">De la primera conversación a la operación.</h2>
+      </header>
+
+      <ol class="mt-12 grid gap-x-8 gap-y-10 sm:grid-cols-2 md:mt-16 lg:grid-cols-4">
+        <li class="border-t border-ink pt-5">
+          <div class="flex items-center justify-between"><span class="index">01</span><i data-lucide="search" class="h-5 w-5"></i></div>
+          <h3 class="mt-8 text-xl font-medium tracking-[-0.015em]">Entendemos</h3>
+          <p class="mt-2.5 text-[0.9375rem] leading-relaxed text-ink-2">Conocemos procesos, personas y herramientas antes de proponer.</p>
+        </li>
+        <li class="border-t border-ink pt-5">
+          <div class="flex items-center justify-between"><span class="index">02</span><i data-lucide="file-check" class="h-5 w-5"></i></div>
+          <h3 class="mt-8 text-xl font-medium tracking-[-0.015em]">Especificamos</h3>
+          <p class="mt-2.5 text-[0.9375rem] leading-relaxed text-ink-2">Acordamos por escrito el alcance y los criterios de aceptación.</p>
+        </li>
+        <li class="border-t border-ink pt-5">
+          <div class="flex items-center justify-between"><span class="index">03</span><i data-lucide="hammer" class="h-5 w-5"></i></div>
+          <h3 class="mt-8 text-xl font-medium tracking-[-0.015em]">Construimos o formamos</h3>
+          <p class="mt-2.5 text-[0.9375rem] leading-relaxed text-ink-2">Ejecutamos lo acordado y te mostramos avances con una vista previa en cada entrega.</p>
+        </li>
+        <li class="border-t border-ink pt-5">
+          <div class="flex items-center justify-between"><span class="index">04</span><i data-lucide="life-buoy" class="h-5 w-5"></i></div>
+          <h3 class="mt-8 text-xl font-medium tracking-[-0.015em]">Acompañamos</h3>
+          <p class="mt-2.5 text-[0.9375rem] leading-relaxed text-ink-2">Medimos el uso real, damos soporte y ajustamos.</p>
+        </li>
+      </ol>
+
+      <div class="mt-12 rounded-2xl bg-surface p-6 md:mt-16 md:p-8">
+        <h3 class="text-sm font-medium text-ink-3">Nuestras garantías</h3>
+        <ul class="mt-5 grid gap-6 md:grid-cols-3 md:gap-8">
+          <li class="flex gap-3.5"><i data-lucide="key-round" class="mt-0.5 h-5 w-5 shrink-0 text-accent-ink"></i><p class="leading-relaxed">La especificación, el código y los contenidos son tuyos.</p></li>
+          <li class="flex gap-3.5"><i data-lucide="lock" class="mt-0.5 h-5 w-5 shrink-0 text-accent-ink"></i><p class="leading-relaxed">Las reglas de acceso a tus datos se acuerdan por escrito antes de empezar.</p></li>
+          <li class="flex gap-3.5"><i data-lucide="user-check" class="mt-0.5 h-5 w-5 shrink-0 text-accent-ink"></i><p class="leading-relaxed">Las decisiones sensibles quedan en manos de una persona de tu organización.</p></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ================= [EQ] Equipo ================= -->
+<section id="equipo" class="container-page py-20 md:py-28">
+  <header class="max-w-3xl">
+    <p class="eyebrow">Quiénes somos</p>
+    <h2 class="h-section mt-3">Un equipo que une personas y tecnología.</h2>
+  </header>
+
+  <ul class="mt-12 grid gap-12 md:mt-16 md:grid-cols-2 md:gap-12 lg:gap-20">
+    <li class="flex flex-col gap-6 sm:flex-row md:flex-col lg:flex-row">
+      <img src="../../../public/images/equipo/jose-latorre.webp" alt="Fotografía de José Latorre" width="160" height="160" loading="lazy" class="h-28 w-28 shrink-0 rounded-2xl object-cover lg:h-40 lg:w-40">
+      <div>
+        <h3 class="text-2xl font-semibold tracking-[-0.02em]">José Latorre</h3>
+        <p class="mt-1 text-[0.9375rem] font-medium text-accent-ink">Fundador</p>
+        <p class="mt-0.5 text-[0.9375rem] text-ink-3">Sociólogo · PUC</p>
+        <p class="mt-4 text-[0.9375rem] leading-relaxed text-ink-2">Certificado en gestión del cambio (Vanderbilt University). Ha dirigido proyectos de consultoría, investigación cualitativa y cuantitativa, y marketing estratégico para empresas de distintos tamaños e industrias. Trabaja con IA desde GPT-3. En Sint dirige los diagnósticos y la formación.</p>
+        <a href="https://www.linkedin.com/in/joselatorrem" class="link-arrow mt-5">LinkedIn<span class="sr-only"> de José Latorre</span> <i data-lucide="arrow-up-right" class="h-4 w-4"></i></a>
+      </div>
+    </li>
+    <li class="flex flex-col gap-6 sm:flex-row md:flex-col lg:flex-row">
+      <img src="../../../public/images/equipo/carlos-martinez.webp" alt="Fotografía de Carlos Martínez" width="160" height="160" loading="lazy" class="h-28 w-28 shrink-0 rounded-2xl object-cover lg:h-40 lg:w-40">
+      <div>
+        <h3 class="text-2xl font-semibold tracking-[-0.02em]">Carlos Martínez</h3>
+        <p class="mt-1 text-[0.9375rem] font-medium text-accent-ink">Dirección técnica</p>
+        <p class="mt-0.5 text-[0.9375rem] text-ink-3">Sistemas de Información · U. de Chile</p>
+        <p class="mt-4 text-[0.9375rem] leading-relaxed text-ink-2">Crea sitios web desde 2004. Desde 2009 trabaja en la Universidad de Chile, donde dirige la unidad que desarrolla sus sitios, como tv.uchile.cl. Experto en CMS, rendimiento, SEO y AEO. Hoy diseña cómo trabajan los equipos con agentes de IA. En Sint dirige la parte técnica de cada proyecto.</p>
+      </div>
+    </li>
+  </ul>
+
+  <p class="mt-12 border-t border-line pt-6 text-[0.9375rem] leading-relaxed text-ink-2 md:mt-16">Según el proyecto, sumamos desarrolladores y especialistas que trabajan en remoto con nosotros.</p>
+</section>
+
+<!-- ================= [FAQ] Preguntas frecuentes ================= -->
+<section id="preguntas" class="container-page border-t border-line py-20 md:py-28">
+  <div class="grid gap-10 lg:grid-cols-12 lg:gap-12">
+    <header class="lg:col-span-4">
+      <p class="eyebrow">Preguntas frecuentes</p>
+      <h2 class="h-section mt-3">Lo que más nos preguntan.</h2>
+    </header>
+
+    <div class="divide-y divide-line border-y border-line lg:col-span-8">
+      <details class="group" open>
+        <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-5 md:py-6">
+          <h3 class="text-[1.0625rem] font-medium md:text-lg">¿Qué es Sint?</h3>
+          <i data-lucide="plus" class="faq-icon h-5 w-5 shrink-0 text-ink-3 transition-transform duration-200"></i>
+        </summary>
+        <p class="max-w-2xl pb-6 pr-8 leading-relaxed text-ink-2">Sint (Sistemas Inteligentes) es una empresa chilena que ayuda a las organizaciones a que personas y tecnología trabajen mejor juntas, con diagnóstico, formación, agentes de IA y plataformas a medida.</p>
+      </details>
+      <details class="group">
+        <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-5 md:py-6">
+          <h3 class="text-[1.0625rem] font-medium md:text-lg">¿Hay que partir con un diagnóstico?</h3>
+          <i data-lucide="plus" class="faq-icon h-5 w-5 shrink-0 text-ink-3 transition-transform duration-200"></i>
+        </summary>
+        <p class="max-w-2xl pb-6 pr-8 leading-relaxed text-ink-2">No. Es el punto de partida que recomendamos, pero también puedes contratar directamente formación, agentes IA o plataformas. Siempre partimos con una conversación.</p>
+      </details>
+      <details class="group">
+        <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-5 md:py-6">
+          <h3 class="text-[1.0625rem] font-medium md:text-lg">¿Las capacitaciones tienen franquicia SENCE?</h3>
+          <i data-lucide="plus" class="faq-icon h-5 w-5 shrink-0 text-ink-3 transition-transform duration-200"></i>
+        </summary>
+        <p class="max-w-2xl pb-6 pr-8 leading-relaxed text-ink-2">Sí. Los cursos pueden acceder a franquicia tributaria SENCE mediante nuestro OTEC asociado.</p>
+      </details>
+      <details class="group">
+        <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-5 md:py-6">
+          <h3 class="text-[1.0625rem] font-medium md:text-lg">¿Cuánto cuesta?</h3>
+          <i data-lucide="plus" class="faq-icon h-5 w-5 shrink-0 text-ink-3 transition-transform duration-200"></i>
+        </summary>
+        <p class="max-w-2xl pb-6 pr-8 leading-relaxed text-ink-2">Depende del alcance. Después de la primera conversación te enviamos una propuesta técnica y económica a medida.</p>
+      </details>
+      <details class="group">
+        <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-5 md:py-6">
+          <h3 class="text-[1.0625rem] font-medium md:text-lg">¿Trabajan en terreno o en remoto?</h3>
+          <i data-lucide="plus" class="faq-icon h-5 w-5 shrink-0 text-ink-3 transition-transform duration-200"></i>
+        </summary>
+        <p class="max-w-2xl pb-6 pr-8 leading-relaxed text-ink-2">Desarrollamos en remoto y vamos a terreno para entrevistas, talleres y presentaciones.</p>
+      </details>
+      <details class="group">
+        <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-5 md:py-6">
+          <h3 class="text-[1.0625rem] font-medium md:text-lg">¿Qué agentes de IA construyen?</h3>
+          <i data-lucide="plus" class="faq-icon h-5 w-5 shrink-0 text-ink-3 transition-transform duration-200"></i>
+        </summary>
+        <p class="max-w-2xl pb-6 pr-8 leading-relaxed text-ink-2">Asistentes de atención a clientes por WhatsApp y web, agentes que preparan documentos y reportes, y asistentes que responden con el conocimiento interno de tu organización.</p>
+      </details>
+      <details class="group">
+        <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-5 md:py-6">
+          <h3 class="text-[1.0625rem] font-medium md:text-lg">¿Con qué herramientas trabajan?</h3>
+          <i data-lucide="plus" class="faq-icon h-5 w-5 shrink-0 text-ink-3 transition-transform duration-200"></i>
+        </summary>
+        <p class="max-w-2xl pb-6 pr-8 leading-relaxed text-ink-2">Con las que tu organización ya usa: planillas, Google Workspace o Microsoft 365, tu sitio web y el modelo de IA que prefieras.</p>
+      </details>
+    </div>
+  </div>
+</section>
+
+<!-- ================= [CIE] Cierre: banda oscura ================= -->
+<section id="contacto" class="night px-2 sm:px-4">
+  <div class="mx-auto max-w-[90rem] rounded-[1.75rem] bg-ink text-on-night sm:rounded-[2rem]">
+    <div class="container-page py-16 md:py-24 lg:py-28">
+      <h2 class="max-w-[16ch] text-balance text-[2.25rem] font-semibold leading-[1.05] tracking-[-0.035em] md:text-[3.75rem]">Conversemos sobre tu organización.</h2>
+      <p class="mt-5 max-w-xl text-[1.0625rem] leading-relaxed text-on-night-2 md:text-xl md:leading-relaxed">Cuéntanos qué quieres resolver y te decimos por dónde partiríamos.</p>
+
+      <div class="mt-8 flex flex-col gap-3 sm:flex-row md:mt-10">
+        <a href="https://cal.com/jose-latorre/15min" class="btn btn-accent">Agenda una conversación</a>
+        <a href="https://wa.me/56956303337" class="btn btn-night">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>
+          Escríbenos por WhatsApp
+        </a>
+      </div>
+
+      <ul class="mt-12 flex flex-col gap-3 border-t border-line-night pt-6 text-[0.9375rem] text-on-night-2 sm:flex-row sm:gap-10 md:mt-16">
+        <li><a href="mailto:jose@sint.cl" class="inline-flex items-center gap-2 transition-colors hover:text-on-night"><i data-lucide="mail" class="h-4 w-4"></i>Correo · jose@sint.cl</a></li>
+        <li><a href="https://wa.me/56956303337" class="inline-flex items-center gap-2 transition-colors hover:text-on-night"><i data-lucide="message-circle" class="h-4 w-4"></i>WhatsApp · +56 9 5630 3337</a></li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<!-- ================= [PIE] Pie ================= -->
+<footer class="container-page pb-10 pt-16 md:pt-20">
+  <div class="grid gap-10 md:grid-cols-12 md:gap-12">
+    <div class="md:col-span-6">
+      <p class="font-mono text-xl font-medium tracking-tight">sint<span class="text-accent">_</span></p>
+      <p class="mt-3 font-medium">Sint. Sistemas Inteligentes</p>
+      <p class="mt-1 text-ink-2">Personas y tecnología, trabajando mejor juntas.</p>
+      <p class="mt-5 max-w-md text-sm leading-relaxed text-ink-3">Sint (Sistemas Inteligentes) es una empresa chilena que ayuda a las organizaciones a que personas y tecnología trabajen mejor juntas, con diagnóstico, formación, agentes de IA y plataformas a medida.</p>
+      <p class="mt-3 text-sm text-ink-3">Santiago, Chile</p>
+    </div>
+
+    <nav aria-label="Secciones" class="md:col-span-3">
+      <p class="text-sm font-medium text-ink-3">Secciones</p>
+      <ul class="mt-4 space-y-3 text-[0.9375rem]">
+        <li><a href="#servicios" class="text-ink-2 transition-colors hover:text-ink">Servicios</a></li>
+        <li><a href="#como-trabajamos" class="text-ink-2 transition-colors hover:text-ink">Cómo trabajamos</a></li>
+        <li><a href="#equipo" class="text-ink-2 transition-colors hover:text-ink">Equipo</a></li>
+        <li><a href="#preguntas" class="text-ink-2 transition-colors hover:text-ink">Preguntas frecuentes</a></li>
+      </ul>
+    </nav>
+
+    <div class="md:col-span-3">
+      <p class="text-sm font-medium text-ink-3">Contacto</p>
+      <ul class="mt-4 space-y-3 text-[0.9375rem]">
+        <li><a href="https://cal.com/jose-latorre/15min" class="text-ink-2 transition-colors hover:text-ink">Agenda una conversación</a></li>
+        <li><a href="https://wa.me/56956303337" class="text-ink-2 transition-colors hover:text-ink">WhatsApp · +56 9 5630 3337</a></li>
+        <li><a href="mailto:jose@sint.cl" class="text-ink-2 transition-colors hover:text-ink">jose@sint.cl</a></li>
+      </ul>
+    </div>
+  </div>
+  <p class="mt-14 border-t border-line pt-6 text-sm text-ink-3">© 2026 Sint.</p>
+</footer>
+
+<script src="https://unpkg.com/lucide@0.577.0/dist/umd/lucide.min.js"></script>
+<script>
+  lucide.createIcons({ attrs: { "stroke-width": 1.75, "aria-hidden": "true" } });
+
+  // Equivalente al componente <Secuencia> del sitio: anima cada ejemplo una sola vez, al entrar en pantalla.
+  (function () {
+    const quieto = location.search.includes("estatico") || matchMedia("(prefers-reduced-motion: reduce)").matches;
+    if (quieto || !("IntersectionObserver" in window)) return;
+    const io = new IntersectionObserver((entries) => {
+      for (const e of entries) {
+        if (!e.isIntersecting) continue;
+        e.target.dataset.seq = "run";
+        io.unobserve(e.target);
+      }
+    }, { threshold: 0.35 });
+    document.querySelectorAll("[data-seq-root]").forEach((el) => {
+      el.dataset.seq = "wait";
+      io.observe(el);
+    });
+  })();
+</script>
+</body>
+</html>

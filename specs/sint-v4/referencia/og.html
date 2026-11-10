@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="es-CL">
+<head>
+<meta charset="utf-8">
+<title>Imagen para redes · sint.cl v4</title>
+<!--
+  Fuente de public/og-image.png (1200 x 630). Para regenerarla:
+    firefox --headless --no-remote --profile "$(mktemp -d)" --window-size=1200,630 \
+      --screenshot public/og-image.png "file://$PWD/specs/sint-v4/referencia/og.html"
+-->
+<link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400..700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
+<style>
+  * { box-sizing: border-box; margin: 0; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; }
+  body {
+    display: flex; flex-direction: column; justify-content: space-between;
+    padding: 64px 72px 60px;
+    background: #16140F; color: #F5F3EE;
+    font-family: "Inter", system-ui, sans-serif;
+    -webkit-font-smoothing: antialiased;
+  }
+  .top { display: flex; align-items: baseline; justify-content: space-between; }
+  .logo { font-family: "JetBrains Mono", monospace; font-weight: 500; font-size: 44px; letter-spacing: -0.02em; }
+  .logo span { color: #FF6B4A; }
+  .name { font-size: 24px; color: #A8A39A; }
+  h1 { font-size: 92px; line-height: 1.02; font-weight: 600; letter-spacing: -0.04em; max-width: 1000px; }
+  .lines { display: flex; gap: 14px; border-top: 1px solid #34312B; padding-top: 28px; font-size: 27px; color: #A8A39A; }
+  .lines b { font-weight: 500; color: #F5F3EE; }
+  .lines i { font-style: normal; color: #FF6B4A; }
+</style>
+</head>
+<body>
+  <div class="top">
+    <p class="logo">sint<span>_</span></p>
+    <p class="name">Sistemas Inteligentes</p>
+  </div>
+  <h1>Personas y tecnología, trabajando mejor juntas.</h1>
+  <p class="lines"><b>Diagnóstico</b><i>·</i><b>Formación</b><i>·</i><b>Agentes IA</b><i>·</i><b>Plataformas</b></p>
+</body>
+</html>
