@@ -36,9 +36,6 @@ export const metadata: Metadata = {
     description: site.tagline,
     images: [ogImage],
   },
-  icons: {
-    icon: "/icon.svg",
-  },
 };
 
 export const viewport: Viewport = {
