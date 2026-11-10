@@ -9,6 +9,14 @@ export const WhatsAppIcon = ({ size = 20 }: { size?: number }) => (
   </svg>
 );
 
+// Clases completas (no armadas con plantillas) para que Tailwind las conserve al compilar.
+const variants = {
+  primary: "btn btn-primary",
+  secondary: "btn btn-secondary",
+  accent: "btn btn-accent",
+  night: "btn btn-night",
+};
+
 type ButtonProps = { label?: string; className?: string; onClick?: () => void };
 
 /** Botón que lleva a la agenda. "primary" en la página; "accent" solo en el cierre. */
@@ -19,7 +27,7 @@ export function AgendaButton({
   onClick,
 }: ButtonProps & { variant?: "primary" | "accent" }) {
   return (
-    <a href={links.agenda} {...external} onClick={onClick} className={`btn btn-${variant} ${className}`.trim()}>
+    <a href={links.agenda} {...external} onClick={onClick} className={`${variants[variant]} ${className}`.trim()}>
       {label}
     </a>
   );
@@ -32,7 +40,7 @@ export function WhatsAppButton({
   className = "",
 }: ButtonProps & { variant?: "secondary" | "night" }) {
   return (
-    <a href={links.whatsapp} {...external} className={`btn btn-${variant} ${className}`.trim()}>
+    <a href={links.whatsapp} {...external} className={`${variants[variant]} ${className}`.trim()}>
       <WhatsAppIcon size={18} />
       {label}
     </a>
