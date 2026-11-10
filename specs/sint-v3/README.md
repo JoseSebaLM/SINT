@@ -1,5 +1,8 @@
 # sint.cl v3 · Punto de partida
 
+> **Reemplazado por `specs/sint-v4/` (10 de noviembre de 2026).** Se conserva como historia.
+> El prototipo construido con estos archivos está en el branch `sint_v3-prototipo`.
+
 Esta carpeta reúne la dirección propuesta para la nueva página principal de sint.cl: qué queremos comunicar, el texto sugerido y un plan técnico inicial. Es un punto de partida, no un contrato.
 
 ## Cómo llegamos aquí
