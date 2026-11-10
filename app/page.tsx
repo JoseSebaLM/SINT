@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Navbar from "./sections/Navbar";
 import Footer from "./sections/Footer";
 import Hero from "./sections/Hero";
+import Evidencia from "./sections/Evidencia";
 import { jsonLd } from "./content/schema";
 
 // La página principal declara su URL canónica.
@@ -21,6 +22,7 @@ export default function Home() {
       <Navbar />
       <main id="contenido">
         <Hero />
+        <Evidencia />
       </main>
       <Footer />
       <script type="application/ld+json" dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }} />
