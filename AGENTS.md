@@ -4,9 +4,10 @@
 **Última actualización:** 10 de noviembre de 2026. La página principal v4 está en desarrollo en el branch `sint_v4`.
 
 > **Trabajo en curso: sint.cl v4.** Antes de tocar la página principal, lee `specs/sint-v4/README.md`.
-> Ahí están la oferta vigente, las decisiones de José y los límites técnicos. Donde este archivo
-> contradiga a `specs/sint-v4/`, para la página principal manda `specs/sint-v4/`.
-> Las secciones sobre backend y `/diagnostico` siguen vigentes.
+> Ahí están la oferta vigente, las decisiones de José y las reglas de trabajo. Donde este archivo
+> contradiga a `specs/sint-v4/`, manda `specs/sint-v4/`.
+> En v4 se retira `/diagnostico` del sitio. El backend en Fly.io queda sin uso hasta que José y
+> Carlos decidan qué hacer con él; las secciones de abajo sobre backend son solo referencia.
 
 ---
 
@@ -127,8 +128,7 @@ Carpetas en el equipo de José: `~/Escritorio/SINT/SINT-v4` (worktree del branch
 
 ## Sistema de Diseño (v2, en revisión)
 
-> Para la página principal v4, el sistema visual lo define `specs/sint-v4/design.md`, aprobado por José.
-> Esta tabla sigue aplicando a `/diagnostico`.
+> Reemplazado en v4: el sistema visual lo define `specs/sint-v4/design.md`. Esta tabla queda como historia.
 
 | Token | Hex | Uso |
 |-------|-----|-----|

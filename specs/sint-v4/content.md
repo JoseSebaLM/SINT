@@ -1,8 +1,8 @@
 # sint.cl v4 · Contenido propuesto
 
-Texto sugerido para cada sección. Se puede ajustar la redacción, el orden y la extensión. **No se agregan servicios, cifras ni afirmaciones de experiencia que no estén aquí o en `spec.md`.**
+Texto sugerido para cada sección. Fable puede ajustar la redacción, el orden y la extensión. Si quiere agregar o quitar servicios, cifras o afirmaciones de experiencia, lo consulta con José (ver `spec.md` §2).
 
-Hoy los textos viven en `app/content/home.ts` (estructura de v3). Hay que actualizarlos con este documento.
+Hoy los textos viven en `app/content/home.ts`, con la estructura de v3. Hay que actualizarlos con este documento.
 
 Enlaces:
 
@@ -11,18 +11,11 @@ Enlaces:
 - Correo: `jose@sint.cl`
 - LinkedIn de José: `https://www.linkedin.com/in/joselatorrem`
 
-Marcas usadas en este documento:
-
-- **[SENCE]**: se muestra solo si `features.sence` está activo.
-- **[ALUMBRA]**: se muestra solo si `features.alumbra` está activo.
-
-Ambos interruptores parten apagados (ver `spec.md` §8).
-
 ---
 
 ## [CANON] Frase canónica
 
-> Sint (Sistemas Inteligentes) es una empresa chilena que ayuda a las organizaciones a que personas y tecnología trabajen mejor juntas, con diagnóstico, formación, agentes de IA y desarrollo web a medida.
+> Sint (Sistemas Inteligentes) es una empresa chilena que ayuda a las organizaciones a que personas y tecnología trabajen mejor juntas, con diagnóstico, formación, agentes de IA y plataformas a medida.
 
 Se usa igual en el pie, en el JSON-LD, en la primera pregunta frecuente y en el "Acerca de" de LinkedIn.
 
@@ -30,8 +23,8 @@ Se usa igual en el pie, en el JSON-LD, en la primera pregunta frecuente y en el 
 
 | Campo | Texto |
 | --- | --- |
-| Título de la pestaña | Sint. Sistemas Inteligentes · Formación en IA, agentes de IA y desarrollo web |
-| Descripción | Personas y tecnología, trabajando mejor juntas. Formación en IA para equipos, agentes de IA y desarrollo web para empresas e instituciones en Chile. |
+| Título de la pestaña | Sint. Sistemas Inteligentes · Diagnóstico, formación, agentes IA y plataformas |
+| Descripción | Personas y tecnología, trabajando mejor juntas. Diagnóstico organizacional, formación en IA con franquicia SENCE, agentes de IA y plataformas web para organizaciones en Chile. |
 | Título para redes | Sint. Sistemas Inteligentes |
 | Descripción para redes | Personas y tecnología, trabajando mejor juntas. |
 | Imagen para redes | Rehacer `public/og-image.png` (1200 × 630) con el nuevo estilo visual |
@@ -39,16 +32,18 @@ Se usa igual en el pie, en el JSON-LD, en la primera pregunta frecuente y en el 
 ## [NAV] Encabezado
 
 - Logo `sint_`.
-- Enlaces: Servicios · Cómo trabajamos · Equipo · Preguntas
+- Enlaces: Servicios · Cómo trabajamos · Equipo · Preguntas. Fable puede preferir enlazar las cuatro líneas.
 - Botón: **Conversemos** → agenda
 
 ## [HERO] Portada
 
+- Antetítulo: Sint · Sistemas Inteligentes
 - Titular: **Personas y tecnología, trabajando mejor juntas.**
-- Bajada: Formamos a tus equipos en inteligencia artificial y construimos los agentes y plataformas web que necesitan, a la medida de tu organización.
+- Bajada: Diagnóstico, formación, agentes IA y plataformas, a la medida de tu organización.
+- Las cuatro líneas, visibles: Diagnóstico · Formación · Agentes IA · Plataformas
 - Botón principal: **Agenda una conversación** → agenda
 - Botón secundario: **Escríbenos por WhatsApp** → WhatsApp
-- Visual: no usar foto de banco. Usar una composición de producto, por ejemplo la conversación con un agente animada, con la etiqueta "Ejemplo".
+- Visual: sin foto de banco. Una composición de producto, por ejemplo la conversación con un agente o el informe, con la etiqueta "Ejemplo".
 
 ## [EVI] Evidencia
 
@@ -59,36 +54,37 @@ Se mantiene de v3, con su fuente:
 - Cifras de apoyo: **85%** no tiene un comité formal de gobierno de IA · **79%** no mide el retorno de la IA · **58%** declara que sus equipos no han recibido formación básica en IA.
 - Fuente: Índice de Transformación Digital en IA 2026 · CCS, Corfo y PMG Chile · agosto 2026 · 740 empresas — `https://www.df.cl/df-lab/tech-empresas/empresas-en-chile-no-logran-escalar-la-ia-por-falta-de-gobernanza-datos`
 
-## [INICIO] Por dónde partimos
-
-- Etiqueta: Por dónde partimos
-- Título: **Primero entendemos, después proponemos.**
-- Texto: Cada proyecto parte por conocer tu organización. Tú eliges la profundidad.
-
-| Opción | Texto |
-| --- | --- |
-| Conversación y propuesta | Una o dos reuniones con tu equipo y una propuesta técnica y económica a la medida. |
-| Diagnóstico Sint | Entrevistas a líderes, encuestas a los equipos y revisión de sus herramientas y datos. Entrega un informe de punto de partida, oportunidades priorizadas, reglas de uso de la IA y un plan de acción. |
-
-- Botón: **Agenda una conversación**
-- Ejemplo visual: informe de punto de partida (se mantiene de v3). Dimensiones con nivel en palabras: Gobierno · Inicial / Datos · En desarrollo / Medición · Inicial / Formación · En desarrollo. Oportunidades: Respuestas a clientes por WhatsApp / Cotizaciones preparadas con los datos de tus planillas / Formación práctica para el equipo comercial.
-
 ## [SERV] Servicios
 
 - Etiqueta: Servicios
-- Título: **Formamos equipos y construimos la tecnología que necesitan.**
+- Título: **Cuatro formas de que tu gente y tu tecnología trabajen mejor juntas.**
+- Introducción: Puedes partir por cualquiera. Recomendamos empezar por un diagnóstico, del tamaño que necesites.
+
+### Diagnóstico
+
+Frase: Entender antes de proponer.
+
+| Ícono (lucide) | Servicio | Texto |
+| --- | --- | --- |
+| `Search` | Diagnóstico Sint | Entrevistas a líderes, encuestas a los equipos y revisión de herramientas y datos. Entrega un informe de punto de partida, oportunidades priorizadas, reglas de uso de la IA y un plan de acción. Su profundidad se ajusta a lo que necesitas. |
+| `ChartColumn` | Estudios con encuestas y entrevistas | Investigación cualitativa y cuantitativa con tus equipos o tus clientes, para decidir con datos. |
+
+Ejemplo visual: informe de punto de partida (se mantiene de v3).
+
+- Dimensiones con nivel en palabras: Gobierno · Inicial / Datos · En desarrollo / Medición · Inicial / Formación · En desarrollo.
+- Oportunidades priorizadas: Respuestas a clientes por WhatsApp / Cotizaciones preparadas con los datos de tus planillas / Formación práctica para el equipo comercial.
 
 ### Formación
 
 Frase: Equipos que saben usar la IA en su trabajo diario.
 
-| Ícono (lucide) | Servicio | Texto |
+| Ícono | Servicio | Texto |
 | --- | --- | --- |
-| `Users` | Talleres y cursos de IA | Cursos prácticos con los casos de tu empresa, presenciales o en línea. [SENCE] Con franquicia tributaria SENCE mediante OTEC asociado. |
+| `Users` | Talleres y cursos de IA | Cursos prácticos con los casos de tu empresa, presenciales o en línea, con franquicia tributaria SENCE mediante OTEC asociado. |
 | `GraduationCap` | Academias internas | Programas, rutas por cargo e inducción para la academia o universidad corporativa de tu organización. |
 | `Compass` | Adopción y gestión del cambio | Liderazgo, comunicación y seguimiento para que lo aprendido se use en el trabajo diario. |
 
-### Agentes de IA
+### Agentes IA
 
 Frase: IA conectada a tus herramientas, al servicio de tu equipo.
 
@@ -107,27 +103,22 @@ Ejemplo visual: conversación (se mantiene de v3).
 3. Asistente (adjunto): Cotización · Sillas de oficina.pdf
 4. Asistente: ¿Quieres que una ejecutiva te llame para coordinar la entrega?
 
-### Web y plataformas
+### Plataformas
 
-Frase: Sitios rápidos, accesibles y fáciles de encontrar.
+Frase: Sitios y herramientas rápidos, accesibles y fáciles de encontrar.
 
 | Ícono | Servicio | Texto |
 | --- | --- | --- |
 | `Globe` | Sitios web corporativos e institucionales | Diseño, desarrollo y un administrador de contenidos para que tu equipo publique sin depender de nadie. |
-| `Search` | Posicionamiento en Google y buscadores con IA | SEO y AEO: que Google y los asistentes de IA encuentren tu sitio y describan bien a tu organización. |
+| `Sparkles` | Posicionamiento en Google y buscadores con IA | SEO y AEO: que Google y los asistentes de IA encuentren tu sitio y describan bien a tu organización. |
 | `CodeXml` | Plataformas y portales a medida | Herramientas internas y portales para clientes, construidos sobre una especificación que apruebas. |
 | `LayoutDashboard` | Tableros de datos | Reunimos tu información en un solo lugar y la convertimos en tableros para decidir. |
 
-Ejemplo visual nuevo, que reemplaza al de integración. Muestra lo que Carlos sabe hacer:
+Ejemplo visual nuevo, que reemplaza al de integración y muestra lo que Carlos sabe hacer:
 
 - Una tarjeta de respuesta de un asistente de IA a la pregunta "¿Qué hace [Tu organización]?", con una respuesta clara que cita "tusitio.cl".
 - Junto a ella, cuatro indicadores de calidad: Rendimiento 98 · Accesibilidad 100 · Buenas prácticas 100 · SEO 100.
-- Etiqueta "Ejemplo". No usar el nombre de un buscador real como si fuera una captura.
-
-## [ALI] Alianza [ALUMBRA]
-
-- Texto: Para operaciones con drones y visión computacional (seguridad industrial, agricultura), trabajamos con **Alumbra.ai**.
-- Enlace: pendiente de José.
+- Etiqueta "Ejemplo". No imitar la interfaz de un buscador real como si fuera una captura.
 
 ## [POR] Por qué Sint
 
@@ -175,13 +166,13 @@ Bloque breve, sin cifras:
 [CANON]
 
 **¿Hay que partir con un diagnóstico?**
-No. Es el punto de partida que recomendamos, pero también puedes contratar directamente formación, agentes de IA o desarrollo web. Siempre partimos con una conversación.
+No. Es el punto de partida que recomendamos, pero también puedes contratar directamente formación, agentes IA o plataformas. Siempre partimos con una conversación.
 
-**¿Con qué organizaciones trabajan?**
-Con empresas e instituciones en Chile que tienen un desafío concreto y presupuesto para resolverlo. Cada proyecto es a medida.
+**¿Las capacitaciones tienen franquicia SENCE?**
+Sí. Los cursos pueden acceder a franquicia tributaria SENCE mediante nuestro OTEC asociado.
 
 **¿Cuánto cuesta?**
-Depende del alcance. Después de la primera conversación te enviamos una propuesta técnica y económica.
+Depende del alcance. Después de la primera conversación te enviamos una propuesta técnica y económica a medida.
 
 **¿Trabajan en terreno o en remoto?**
 Desarrollamos en remoto y vamos a terreno para entrevistas, talleres y presentaciones.
@@ -191,9 +182,6 @@ Asistentes de atención a clientes por WhatsApp y web, agentes que preparan docu
 
 **¿Con qué herramientas trabajan?**
 Con las que tu organización ya usa: planillas, Google Workspace o Microsoft 365, tu sitio web y el modelo de IA que prefieras.
-
-**¿Las capacitaciones tienen franquicia SENCE?** [SENCE]
-Sí. Los cursos pueden acceder a franquicia tributaria SENCE mediante nuestro OTEC asociado.
 
 ## [CIE] Cierre
 
@@ -205,6 +193,7 @@ Sí. Los cursos pueden acceder a franquicia tributaria SENCE mediante nuestro OT
 ## [PIE] Pie
 
 - Logo `sint_` y "Sint. Sistemas Inteligentes"
+- Propósito: Personas y tecnología, trabajando mejor juntas.
 - [CANON]
 - Santiago, Chile
 - Enlaces a las secciones y de contacto; "© 2026 Sint."
@@ -213,8 +202,8 @@ Sí. Los cursos pueden acceder a franquicia tributaria SENCE mediante nuestro OT
 
 Igual que en v3 (`app/content/schema.ts`), con estos cambios:
 
-- `description`: el nuevo [CANON].
-- `knowsAbout`: Diagnóstico organizacional · Investigación social · Gestión del cambio · Capacitación en IA · Agentes de IA · Desarrollo web · SEO y AEO.
-- `hasOfferCatalog`: Diagnóstico Sint y los 10 servicios de [SERV], derivados automáticamente de `home.ts`.
-- `FAQPage`: solo con las preguntas visibles; la de SENCE entra solo si el interruptor está activo.
+- `description`: el nuevo [CANON]. `slogan`: el propósito.
+- `knowsAbout`: Diagnóstico organizacional · Investigación social · Gestión del cambio · Capacitación en IA · Franquicia SENCE · Agentes de IA · Desarrollo web · SEO y AEO.
+- `hasOfferCatalog`: las 4 líneas con sus 12 servicios, derivados automáticamente de `home.ts`.
+- `FAQPage`: con las preguntas visibles.
 - `sameAs` de la organización: agregarlo cuando José pase la URL de LinkedIn de Sint.
