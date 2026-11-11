@@ -1,4 +1,5 @@
 import Logo from "../components/Logo";
+import { SinOfuscar } from "../components/ui";
 import { cta, footer, links, nav, site } from "../content/home";
 
 const external = { target: "_blank", rel: "noopener noreferrer" } as const;
@@ -45,9 +46,11 @@ export default function Footer() {
               </a>
             </li>
             <li>
-              <a href={`mailto:${links.email}`} className={linkClass}>
-                {links.email}
-              </a>
+              <SinOfuscar>
+                <a href={`mailto:${links.email}`} className={linkClass}>
+                  {links.email}
+                </a>
+              </SinOfuscar>
             </li>
             <li>
               <a href={links.linkedinSint} {...external} className={linkClass}>
