@@ -39,6 +39,8 @@ José lo ve "bonito, pero no profesional". Estas son las causas y lo que cambia.
 
 ## 3. Tokens
 
+> **Cambio del 11 de noviembre de 2026:** José eligió la paleta C de Carlos ("blanco y verde") para alejarse del marfil con coral. Los valores vigentes están en `app/globals.css`: fondo blanco, tinta `#111214`, acento verde Sint `#2EB886` (texto `#157A56`) y el naranja `#FF6B4A` solo en el guion del logo (token `brand`). La tabla de abajo es la paleta original "papel y tinta", solo historia; las reglas de uso siguen iguales.
+
 Se definen como variables CSS en `app/globals.css` y se exponen en `tailwind.config.ts`. **En los componentes no se escribe ningún color en hexadecimal.** (Única excepción: los dos tonos de `hover` de los botones, que viven en `globals.css`.)
 
 | Token | Hex | Uso | Contraste |

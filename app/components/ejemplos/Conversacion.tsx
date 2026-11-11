@@ -15,7 +15,7 @@ export default function Conversacion() {
           aria-hidden="true"
           className="flex h-9 w-9 items-center justify-center rounded-full bg-ink font-mono text-sm text-white"
         >
-          s<span className="text-accent">_</span>
+          s<span className="text-brand">_</span>
         </span>
         <div className="leading-tight">
           <p className="text-[0.9375rem] font-medium">{header}</p>
