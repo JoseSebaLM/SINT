@@ -144,7 +144,7 @@ Los títulos de servicios, pasos y preguntas van en peso 500 (`font-medium`), no
 | Encabezado de sección | `.eyebrow` + `.h-section` + `.lead` | Alineado a la izquierda, ancho máximo `max-w-3xl` |
 | Marco de ejemplo | `.stage` + `.stage-label` + `.tag-ejemplo` + `.mock` | `<figure>` con `<figcaption>`. La etiqueta "Ejemplo" va siempre |
 | Íconos | `lucide-react`, `strokeWidth={1.75}`, `aria-hidden` | 20 px en listas, 24 px en "Por qué Sint". Color `ink`; sin cajas de color alrededor |
-| Logo | `font-mono font-medium` + guion `text-accent` | El guion parpadea tres veces al cargar y descansa (`.logo-cursor`). En el pie, sin parpadeo |
+| Logo | `font-mono font-medium` + guion `text-accent` | El guion parpadea siempre, en el encabezado y en el pie (`.logo-cursor`, 1,2 s), como el logo original. Cambio pedido por José el 11 de noviembre de 2026 |
 
 Todos los enlaces externos (agenda, WhatsApp, LinkedIn, fuente) llevan `target="_blank" rel="noopener noreferrer"`.
 
@@ -191,7 +191,7 @@ Movimiento con intención: mostrar algo funcionando, una sola vez.
 
 | Qué | Cómo |
 | --- | --- |
-| Cursor del logo | Parpadea tres veces al cargar (`.logo-cursor`) |
+| Cursor del logo | Parpadea siempre (1,2 s, baja a 20 % de opacidad), como el logo original de Sint |
 | Ejemplos de Servicios | Al entrar en pantalla se reproducen una vez: los mensajes aparecen uno tras otro (0,9 s entre cada uno), las barras del informe se llenan, los módulos del taller aparecen en orden y los anillos se dibujan |
 | Tarjetas, botones y enlaces | Solo transición de color o sombra al pasar el cursor (200 a 300 ms) |
 
@@ -201,7 +201,7 @@ Mecánica (ya escrita en la maqueta):
 - **Por defecto todo está en su estado final.** Un componente de cliente, `Secuencia`, pone `data-seq="wait"` al montar y `data-seq="run"` cuando el ejemplo entra en pantalla (`IntersectionObserver`, umbral 0,35). Sin JavaScript, la página se ve completa.
 - Con `prefers-reduced-motion: reduce`, `Secuencia` no hace nada y el CSS anula animaciones y transiciones.
 - Solo se animan `opacity`, `transform` y `stroke-dashoffset`: nada mueve el diseño (sin saltos de contenido).
-- No hay animaciones en bucle en ninguna parte.
+- La única animación en bucle es el guion del logo (identidad de Sint). Con movimiento reducido se detiene.
 
 ## 10. Accesibilidad y rendimiento
 
