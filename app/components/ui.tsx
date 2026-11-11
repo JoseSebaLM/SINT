@@ -18,6 +18,21 @@ const variants = {
   night: "btn btn-night",
 };
 
+/**
+ * En sint.cl, Cloudflare ofusca los correos del HTML y React deja de reconocer la página al cargarla
+ * (error 418: la vuelve a dibujar entera). Los comentarios email_off le piden a Cloudflare no tocar lo que encierran.
+ */
+const Raw = ({ html }: { html: string }) => <span dangerouslySetInnerHTML={{ __html: html }} />;
+export function SinOfuscar({ children }: { children: ReactNode }) {
+  return (
+    <>
+      <Raw html="<!--email_off-->" />
+      {children}
+      <Raw html="<!--/email_off-->" />
+    </>
+  );
+}
+
 type ButtonProps = { label?: string; className?: string; onClick?: () => void };
 
 /** Botón que lleva a la agenda. "primary" en la página; "accent" solo en el cierre. */

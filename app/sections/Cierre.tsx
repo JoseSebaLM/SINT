@@ -1,5 +1,5 @@
 import { Mail, MessageCircle } from "lucide-react";
-import { AgendaButton, WhatsAppButton } from "../components/ui";
+import { AgendaButton, SinOfuscar, WhatsAppButton } from "../components/ui";
 import { cierre, links } from "../content/home";
 
 const linkClass = "inline-flex items-center gap-2 transition-colors hover:text-on-night";
@@ -23,10 +23,12 @@ export default function Cierre() {
 
           <ul className="mt-12 flex flex-col gap-3 border-t border-line-night pt-6 text-[0.9375rem] text-on-night-2 sm:flex-row sm:gap-10 md:mt-16">
             <li>
-              <a href={`mailto:${links.email}`} className={linkClass}>
-                <Mail className="h-4 w-4" strokeWidth={1.75} aria-hidden="true" />
-                {cierre.contact.email}
-              </a>
+              <SinOfuscar>
+                <a href={`mailto:${links.email}`} className={linkClass}>
+                  <Mail className="h-4 w-4" strokeWidth={1.75} aria-hidden="true" />
+                  {cierre.contact.email}
+                </a>
+              </SinOfuscar>
             </li>
             <li>
               <a href={links.whatsapp} target="_blank" rel="noopener noreferrer" className={linkClass}>
