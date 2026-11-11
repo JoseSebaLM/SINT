@@ -130,7 +130,7 @@ Carpetas en el equipo de José: `~/Escritorio/SINT/SINT-v4` (worktree del branch
 
 ## Sistema de Diseño
 
-> **El sistema visual vigente es el de `specs/sint-v4/design.md`** (tema claro "papel y tinta"):
+> **El sistema visual vigente es el de `specs/sint-v4/design.md`** (tema claro; desde el 11 de noviembre de 2026, paleta C "blanco y verde"):
 > tokens como variables CSS en `app/globals.css`, expuestos en `tailwind.config.ts`. En los
 > componentes no se escriben colores en hexadecimal. La tabla de abajo es la paleta v2, solo historia.
 
@@ -152,7 +152,7 @@ Fuentes: Inter (cuerpo) · JetBrains Mono (logo, código)
 
 ```
 app/
-├── layout.tsx              fuentes, metadatos, themeColor #FAF9F6
+├── layout.tsx              fuentes, metadatos, themeColor #FFFFFF
 ├── page.tsx                orden de las secciones + JSON-LD
 ├── globals.css             tokens y clases de la maqueta
 ├── icon.svg · favicon.ico · apple-icon.png
