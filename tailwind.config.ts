@@ -1,22 +1,26 @@
 import type { Config } from "tailwindcss";
 
+const c = (v: string) => `rgb(var(--${v}) / <alpha-value>)`;
+
 const config: Config = {
-  content: [
-    "./pages/**/*.{js,ts,jsx,tsx,mdx}",
-    "./components/**/*.{js,ts,jsx,tsx,mdx}",
-    "./app/**/*.{js,ts,jsx,tsx,mdx}",
-  ],
+  content: ["./app/**/*.{ts,tsx}"],
   theme: {
     extend: {
       colors: {
-        "deep-zinc": "#09090B",
-        "brand-flux-orange": "#FF6B4A",
-        "accent-terminal-green": "#2EB886",
-        "accent-synth-purple": "#A371F7",
-        "accent-cyan-ray": "#06B6D4",
-        "text-off-white": "#E5E6EB",
-        "text-cool-grey": "#8A8F98",
-        "ds-amber": "#F59E0B",
+        paper: c("paper"), "paper-2": c("paper-2"), surface: c("surface"),
+        ink: c("ink"), "ink-2": c("ink-2"), "ink-3": c("ink-3"),
+        line: c("line"), "line-2": c("line-2"),
+        accent: c("accent"), "accent-ink": c("accent-ink"), "accent-soft": c("accent-soft"),
+        ok: c("ok"), brand: c("brand"),
+        "on-night": c("on-night"), "on-night-2": c("on-night-2"), "line-night": c("line-night"),
+      },
+      fontFamily: {
+        sans: ["var(--font-sans)", "system-ui", "sans-serif"],
+        mono: ["var(--font-mono)", "ui-monospace", "monospace"],
+      },
+      boxShadow: {
+        card: "0 1px 2px rgb(17 18 20 / 0.04), 0 8px 24px -6px rgb(17 18 20 / 0.08)",
+        float: "0 2px 4px rgb(17 18 20 / 0.04), 0 24px 48px -12px rgb(17 18 20 / 0.14)",
       },
     },
   },

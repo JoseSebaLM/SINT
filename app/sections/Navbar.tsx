@@ -1,113 +1,71 @@
 "use client";
 
-import { useState, useEffect } from "react";
-import Link from "next/link";
+import { useEffect, useState } from "react";
 import { Menu, X } from "lucide-react";
 import Logo from "../components/Logo";
+import { AgendaButton } from "../components/ui";
+import { cta, nav } from "../content/home";
 
 export default function Navbar() {
-  const [scrolled, setScrolled] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [open, setOpen] = useState(false);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolled(window.scrollY > 60);
-    };
-
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
-  }, []);
-
-  const navLinks = [
-    { label: "Pipeline", href: "#pipeline" },
-    { label: "Servicios", href: "#servicios" },
-    { label: "Equipo", href: "#equipo" },
-  ];
+    if (!open) return;
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [open]);
 
   return (
-    <nav
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        scrolled
-          ? "bg-[#09090B] backdrop-blur-sm border-b border-white/[0.08]"
-          : "bg-transparent"
-      }`}
-    >
-      <div className="flex justify-between items-center h-16 px-6 md:px-12">
-        {/* Left: Logo */}
-        <button
-          onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-          className="cursor-pointer"
-          aria-label="Ir al inicio"
-        >
-          <Logo className="text-2xl" animated={true} />
-        </button>
+    <header className="sticky top-0 z-50 border-b border-line/80 bg-paper/85 backdrop-blur-md">
+      <nav aria-label="Principal" className="container-page flex h-16 items-center justify-between gap-4">
+        <a href="#inicio" aria-label="Sint, ir al inicio" className="text-[1.375rem] text-ink">
+          <Logo animated />
+        </a>
 
-        {/* Center: Navigation Links (Desktop) */}
-        <div className="hidden md:flex items-center gap-8">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="text-sm text-[#8A8F98] hover:text-[#E5E6EB] transition-colors"
-            >
-              {link.label}
-            </a>
+        <ul className="hidden items-center gap-8 text-[0.9375rem] text-ink-2 md:flex">
+          {nav.map((l) => (
+            <li key={l.href}>
+              <a href={l.href} className="transition-colors hover:text-ink">
+                {l.label}
+              </a>
+            </li>
           ))}
-          <Link
-            href="/diagnostico"
-            className="text-sm text-[#8A8F98] hover:text-[#E5E6EB] transition-colors"
+        </ul>
+
+        <div className="flex items-center gap-1.5">
+          <AgendaButton label={cta.nav} className="btn-sm" />
+          <button
+            type="button"
+            className="-mr-2 flex h-11 w-11 items-center justify-center rounded-full text-ink md:hidden"
+            onClick={() => setOpen(!open)}
+            aria-expanded={open}
+            aria-controls="menu-movil"
+            aria-label={open ? "Cerrar menú" : "Abrir menú"}
           >
-            Diagnóstico
-          </Link>
+            {open ? (
+              <X className="h-6 w-6" strokeWidth={1.75} aria-hidden="true" />
+            ) : (
+              <Menu className="h-6 w-6" strokeWidth={1.75} aria-hidden="true" />
+            )}
+          </button>
         </div>
+      </nav>
 
-        {/* Right: CTA Button (Desktop) */}
-        <Link
-          href="/diagnostico"
-          className="hidden md:block bg-[#FF6B4A] text-black font-bold px-4 py-2 rounded hover:scale-105 transition-transform text-sm"
-        >
-          Iniciar Diagnóstico →
-        </Link>
-
-        {/* Mobile Menu Button */}
-        <button
-          className="md:hidden text-[#E5E6EB] p-2"
-          onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-          aria-label="Toggle menu"
-        >
-          {mobileMenuOpen ? <X size={24} /> : <Menu size={24} />}
-        </button>
-      </div>
-
-      {/* Mobile Menu Overlay */}
-      {mobileMenuOpen && (
-        <div className="md:hidden fixed inset-0 top-16 bg-[#09090B] z-40 flex flex-col items-center justify-start pt-12 gap-8">
-          {navLinks.map((link) => (
-            <a
-              key={link.href}
-              href={link.href}
-              className="text-lg text-[#8A8F98] hover:text-[#E5E6EB] transition-colors"
-              onClick={() => setMobileMenuOpen(false)}
-            >
-              {link.label}
-            </a>
-          ))}
-          <Link
-            href="/diagnostico"
-            className="text-lg text-[#8A8F98] hover:text-[#E5E6EB] transition-colors"
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            Diagnóstico
-          </Link>
-          <Link
-            href="/diagnostico"
-            className="bg-[#FF6B4A] text-black font-bold px-6 py-3 rounded hover:scale-105 transition-transform text-base mt-4"
-            onClick={() => setMobileMenuOpen(false)}
-          >
-            Iniciar Diagnóstico →
-          </Link>
+      {open && (
+        <div id="menu-movil" className="h-[calc(100svh-4rem)] border-t border-line bg-paper px-5 pb-8 pt-2 md:hidden">
+          <ul>
+            {nav.map((l) => (
+              <li key={l.href}>
+                <a href={l.href} onClick={() => setOpen(false)} className="block border-b border-line py-4 text-lg">
+                  {l.label}
+                </a>
+              </li>
+            ))}
+          </ul>
+          <AgendaButton label={cta.nav} className="mt-8 w-full" onClick={() => setOpen(false)} />
         </div>
       )}
-    </nav>
+    </header>
   );
 }
