@@ -208,3 +208,9 @@ Comparar siempre contra `referencia/capturas/escritorio-1280.png` y `celular-375
 1. **Pie, "Preguntas frecuentes".** En el pie la maqueta dice "Preguntas frecuentes" y en el encabezado "Preguntas", pero `home.ts` solo tiene una etiqueta (`nav`). Se dejó el texto largo fijo en `Footer.tsx`. Si se quiere editar desde `home.ts`, falta un campo `footer.faqLabel`.
 2. **Archivos sin uso.** `app/fonts/GeistVF.woff` y `GeistMonoVF.woff` (de la plantilla inicial) no se usan. No se borraron porque ninguna tarea lo pide. ¿Se eliminan?
 3. **`AGENTS.md`, "Arquitectura de Producción".** Sigue nombrando `NEXT_PUBLIC_BACKEND_URL` en Cloudflare Pages. El sitio ya no la usa; se puede quitar de la configuración de Cloudflare cuando José decida sobre el backend.
+
+**Respuestas de José, 11 de noviembre de 2026**
+
+1. Da lo mismo: queda como está.
+2. Sí: se borraron.
+3. Se retira el backend completo (ver `AGENTS.md`, "Backend retirado"). La variable se quita de Cloudflare junto con la app de Fly.io.
